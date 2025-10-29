@@ -5,7 +5,7 @@ using namespace std;
 
 //constructor sin finalizar
 Vehiculo::Vehiculo(string p, string m, string mod, string tl, double pd, char c, string e) {
-    
+    //hola
 }
 
 
