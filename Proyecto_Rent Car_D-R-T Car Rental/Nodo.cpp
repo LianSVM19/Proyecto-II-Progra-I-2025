@@ -17,9 +17,9 @@ Nodo::Nodo(Vehiculo* el, Nodo* s) {
 // ----------------------
 Nodo::~Nodo() {
     // Esencial: El nodo es dueño de la memoria de su elemento, debe liberarla.
-    if (elem != nullptr) {
+    if (elem != NULL) {
         delete elem;
-        elem = nullptr;
+        elem = NULL;
     }
 }
 
@@ -29,7 +29,7 @@ Nodo::~Nodo() {
 
 void Nodo::setElemento(Vehiculo* nuevoElem) {
     // Si ya existe un elemento, se libera su memoria antes de reasignar
-    if (elem != nullptr) {
+    if (elem != NULL) {
         delete elem;
     }
     elem = nuevoElem;
@@ -43,23 +43,23 @@ void Nodo::setSig(Nodo* nuevoSig) {
 // Getters
 // ----------------------
 
-Vehiculo* Nodo::getElemento() const {
+Vehiculo* Nodo::getElemento(){
     return elem;
 }
 
-Nodo* Nodo::getSig() const {
+Nodo* Nodo::getSig() {
     return sig;
 }
 
 // ----------------------
 // Función "to string" (siguiendo el estilo de tabulación y endl)
 // ----------------------
-string Nodo::toStringNodo() const {
+string Nodo::toStringNodo() {
     stringstream s;
 
     s << "\t\t***********************************" << endl;
 
-    if (elem != nullptr) {
+    if (elem != NULL) {
         // Llama al toString() del objeto Vehiculo apuntado por elem
         s << elem->toString();
     }
@@ -68,7 +68,7 @@ string Nodo::toStringNodo() const {
     }
 
     s << "\t\tPuntero Siguiente (sig): ";
-    if (sig != nullptr) {
+    if (sig != NULL) {
         s << "ENLAZADO A OTRO NODO." << endl;
     }
     else {

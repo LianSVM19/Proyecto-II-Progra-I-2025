@@ -15,7 +15,7 @@ private:
 
 public:
     // Constructor
-    Nodo(Vehiculo* elem, Nodo* sig = nullptr);
+    Nodo(Vehiculo* elem, Nodo* sig = NULL);
 
     // Destructor (CRÍTICO para liberar la memoria de 'elem')
     ~Nodo();
@@ -25,11 +25,11 @@ public:
     void setSig(Nodo* nuevoSig);
 
     // Getters
-    Vehiculo* getElemento() const; // Retorna el puntero
-    Nodo* getSig() const;
+    Vehiculo* getElemento(); // Retorna el puntero
+    Nodo* getSig();
 
     // Función "to string"
-    string toStringNodo() const;
+    string toStringNodo();
 };
 
 #endif

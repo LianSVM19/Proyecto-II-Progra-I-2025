@@ -26,11 +26,11 @@ public:
     // bool eliminar(const string& placaEliminar); // Pendiente de implementar
 
     // Getters y utilidades
-    int getTamano() const;
-    bool estaVacia() const;
+    int getTamano() ;
+    bool estaVacia() ;
 
     // Función "to string"
-    string toString() const;
+    string toString();
 };
 
 #endif // LISTAENLAZADA_H
