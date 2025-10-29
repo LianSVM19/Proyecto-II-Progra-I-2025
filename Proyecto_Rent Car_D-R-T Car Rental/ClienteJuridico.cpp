@@ -22,7 +22,7 @@ ClienteJuridico::ClienteJuridico(string ced, string nom, string corr, string tel
 ClienteJuridico::~ClienteJuridico() {}
 
 // ----------------------
-// Getters y Setters (Sin const)
+// Getters y Setters 
 // ----------------------
 double ClienteJuridico::getPorcentajeDescuento() { return porcentajeDescuento; }
 string ClienteJuridico::getActividadEconomica() { return actividadEconomica; }
