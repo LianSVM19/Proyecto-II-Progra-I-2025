@@ -37,18 +37,18 @@ void ListaEnlazada::agregarAlInicio(Vehiculo* nuevoDato) {
 // ----------------------
 // Getters y Utilidades
 // ----------------------
-int ListaEnlazada::getTamano() const {
+int ListaEnlazada::getTamano() {
     return tamano;
 }
 
-bool ListaEnlazada::estaVacia() const {
+bool ListaEnlazada::estaVacia() {
     return cabeza == nullptr;
 }
 
 // ----------------------
 // Función "to string" (siguiendo el estilo solicitado)
 // ----------------------
-string ListaEnlazada::toString() const {
+string ListaEnlazada::toString() {
     stringstream s;
     s << "\t\t=====================================" << endl;
     s << "\t\tLISTA ENLAZADA: INVENTARIO DE VEHÍCULOS" << endl;
