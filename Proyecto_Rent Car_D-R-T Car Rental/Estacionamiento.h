@@ -1,3 +1,4 @@
+// Estacionamiento.h
 #ifndef ESTACIONAMIENTO_H
 #define ESTACIONAMIENTO_H
 
@@ -10,16 +11,23 @@ class Estacionamiento {
 private:
     string codigo;
     bool ocupado;
+
 public:
-    Estacionamiento(string cod) : codigo(cod), ocupado(false) {}
+    Estacionamiento(string cod);
 
-    void ocupar() { ocupado = true; }
-    void desocupar() { ocupado = false; }
-    bool estaOcupado() const { return ocupado; }
-    string getCodigo() const { return codigo; }
+    // Getters
+    string getCodigo();
+    bool getOcupado();
 
-    // Función "to string"
-    string toString() const;
+    // Setters
+    void setCodigo(string cod);
+    void setOcupado(bool estado);
+
+    // Métodos especificos
+    void ocupar();
+    void desocupar();
+
+    string toString();
 };
 
 #endif

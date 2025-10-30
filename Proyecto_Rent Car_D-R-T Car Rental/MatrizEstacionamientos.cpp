@@ -1,90 +1,108 @@
+// MatrizEstacionamientos.cpp
 #include "MatrizEstacionamientos.h"
+#include <iostream>
 
 using namespace std;
 
 // ----------------------
 // Constructor (Asignación Dinámica de la Matriz)
 // ----------------------
-MatrizEstacionamientos::MatrizEstacionamientos(int f, int c)
-    : filas(f), columnas(c), matriz(nullptr) {
+MatrizEstacionamientos::MatrizEstacionamientos(int f, int c) {
+    filas = f;
+    columnas = c;
+    matriz = NULL;
 
-    // 1. Asignar memoria para el arreglo de punteros a filas (Estacionamiento**)
+    // 1. Asignar memoria para el arreglo principal
     matriz = new Estacionamiento * *[filas];
 
     for (int i = 0; i < filas; ++i) {
-        // 2. Asignar memoria para cada fila (arreglo de punteros a Estacionamiento*)
+        // 2. Asignar memoria para cada fila (arreglo de punteros)
         matriz[i] = new Estacionamiento * [columnas];
 
         for (int j = 0; j < columnas; ++j) {
-            // 3. Asignar memoria para cada objeto Estacionamiento
-
-            // Generar código único (ej: A01, B10, etc.)
-            stringstream codigoSS;
+            // Generación de código
+            stringstream codigoSS; //varible como el "s" que contiene texto
             codigoSS << (char)('A' + i);
-            codigoSS << (j < 10 ? "0" : "") << j + 1; // +1 para que inicie en 01
+            codigoSS << (j + 1 < 10 ? "0" : "") << j + 1;
 
+            // 3. Asignar memoria para cada objeto Estacionamiento
             matriz[i][j] = new Estacionamiento(codigoSS.str());
         }
     }
 }
 
 // ----------------------
-// Destructor (Liberación de Triple Capa CRÍTICO)
+// Destructor (Liberación de Memoria TRIPLE PUNTERO)
 // ----------------------
 MatrizEstacionamientos::~MatrizEstacionamientos() {
-    if (matriz != nullptr) {
+    if (matriz != NULL) {
         for (int i = 0; i < filas; ++i) {
-            if (matriz[i] != nullptr) {
+            if (matriz[i] != NULL) {
                 for (int j = 0; j < columnas; ++j) {
-                    // 3. Liberar cada objeto Estacionamiento
+                    // 3. Liberar cada objeto
                     delete matriz[i][j];
                 }
-                // 2. Liberar la fila (el arreglo de punteros)
+                // 2. Liberar la fila
                 delete[] matriz[i];
             }
         }
         // 1. Liberar el arreglo principal
         delete[] matriz;
-        matriz = nullptr;
+        matriz = NULL;
     }
 }
 
 // ----------------------
-// Getters
+// Getters 
 // ----------------------
-int MatrizEstacionamientos::getFilas() const { return filas; }
-int MatrizEstacionamientos::getColumnas() const { return columnas; }
+int MatrizEstacionamientos::getFilas() { return filas; }
+int MatrizEstacionamientos::getColumnas() { return columnas; }
 
-Estacionamiento* MatrizEstacionamientos::getEstacionamiento(int fila, int columna) const {
+Estacionamiento* MatrizEstacionamientos::getEstacionamiento(int fila, int columna) {
     if (fila >= 0 && fila < filas && columna >= 0 && columna < columnas) {
         return matriz[fila][columna];
     }
-    return nullptr; // Manejo de error o índice inválido
+    return NULL;
+}
+
+// ----------------------
+// Setters
+// ----------------------
+
+// Nota: Cambiar las filas/columnas requiere reasignar TODA la matriz
+// La implementación simplificada solo cambia los atributos, no la estructura en sí.
+void MatrizEstacionamientos::setFilas(int f) {
+    if (f > 0) filas = f;
+}
+
+void MatrizEstacionamientos::setColumnas(int c) {
+    if (c > 0) columnas = c;
 }
 
 // ----------------------
 // Función "to string"
 // ----------------------
-string MatrizEstacionamientos::toString() const {
+string MatrizEstacionamientos::toString() {
     stringstream s;
-    s << "\t\t=====================================" << endl;
-    s << "\t\tVISUALIZACIÓN DE ESTACIONAMIENTOS" << endl;
-    s << "\t\tFilas: " << filas << ", Columnas: " << columnas << endl;
-    s << "\t\tLeyenda: [Código - E] (E=Ocupado/D=Disponible)" << endl;
+
+    s << "\t\t*************************************" << endl;
+    s << "\t\t[MATRIZ DE ESTACIONAMIENTOS (" << filas << "x" << columnas << ")]" << endl;
+    s << "\t\t-------------------------------------" << endl;
+    s << "\t\tLeyenda: [Código - E] (O=Ocupado, D=Disponible)" << endl;
     s << "\t\t-------------------------------------" << endl;
 
     for (int i = 0; i < filas; ++i) {
-        s << "\t\t[FILA " << (char)('A' + i) << "]: ";
+        s << "\t\tFILA " << (char)('A' + i) << ": ";
         for (int j = 0; j < columnas; ++j) {
             Estacionamiento* espacio = matriz[i][j];
-            if (espacio != nullptr) {
+            if (espacio != NULL) {
                 s << "[" << espacio->getCodigo() << "-"
-                    << (espacio->estaOcupado() ? "O" : "D") << "] ";
+                    << (espacio->getOcupado() ? "O" : "D") << "] ";
             }
         }
         s << endl;
     }
 
-    s << "\t\t=====================================" << endl;
+    s << "\t\t*************************************" << endl;
     return s.str();
 }

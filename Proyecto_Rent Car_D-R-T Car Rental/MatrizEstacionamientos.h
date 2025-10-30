@@ -3,13 +3,13 @@
 
 #include <string>
 #include <sstream>
-#include "Estacionamiento.h" // La clase que almacena
+#include "Estacionamiento.h" 
 
 using namespace std;
 
 class MatrizEstacionamientos {
 private:
-    // Estructura clave: Puntero a puntero a puntero (triple puntero)
+    // **TRIPLE PUNTERO para Matriz Dinámica**
     Estacionamiento*** matriz;
     int filas;
     int columnas;
@@ -21,13 +21,17 @@ public:
     // Destructor: Libera las tres capas de memoria dinámica
     ~MatrizEstacionamientos();
 
-    // Métodos de acceso
-    int getFilas() const;
-    int getColumnas() const;
-    Estacionamiento* getEstacionamiento(int fila, int columna) const;
+    // Getters 
+    int getFilas();
+    int getColumnas();
+    Estacionamiento* getEstacionamiento(int fila, int columna);
 
-    // Función "to string"
-    string toString() const;
+    // Setters 
+    void setFilas(int f);
+    void setColumnas(int c);
+
+    // Función "to string" 
+    string toString();
 };
 
 #endif
