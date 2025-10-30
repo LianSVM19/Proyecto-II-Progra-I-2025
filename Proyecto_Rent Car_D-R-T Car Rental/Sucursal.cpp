@@ -29,7 +29,7 @@ Sucursal::~Sucursal() {
 }
 
 // ----------------------
-// Getters y Setters (Sin const)
+// Getters
 // ----------------------
 string Sucursal::getCodigoSucursal() { return codigoSucursal; }
 string Sucursal::getNombre() { return nombre; }
@@ -37,6 +37,9 @@ string Sucursal::getDireccion() { return direccion; }
 string Sucursal::getTelefono() { return telefono; }
 ListaEnlazada* Sucursal::getPlanteles() { return planteles; }
 
+// ----------------------
+// Setters
+// ----------------------
 void Sucursal::setNombre(string nom) { nombre = nom; }
 void Sucursal::setDireccion(string dir) { direccion = dir; }
 void Sucursal::setTelefono(string tel) { telefono = tel; }
