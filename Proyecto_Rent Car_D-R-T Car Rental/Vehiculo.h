@@ -21,7 +21,7 @@ public:
     Vehiculo(string /*placa*/, string/*marca*/, string/*modelo*/, 
     string/*tipo licencia*/, double/*preciodiario*/,
     char/*categoria*/, string/*estado*/);
-
+    Vehiculo();
     void setPlaca(string );
     void setMarca(string );
     void setModelo(string );
