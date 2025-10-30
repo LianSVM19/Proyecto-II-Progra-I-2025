@@ -16,7 +16,7 @@ private:
 
 public:
     // Constructor: Asigna toda la memoria dinámicamente
-    MatrizEstacionamientos(int f, int c);
+    MatrizEstacionamientos(int, int);
 
     // Destructor: Libera las tres capas de memoria dinámica
     ~MatrizEstacionamientos();
@@ -24,11 +24,11 @@ public:
     // Getters 
     int getFilas();
     int getColumnas();
-    Estacionamiento* getEstacionamiento(int fila, int columna);
+    Estacionamiento* getEstacionamiento(int, int);
 
     // Setters 
-    void setFilas(int f);
-    void setColumnas(int c);
+    void setFilas(int);
+    void setColumnas(int);
 
     // Función "to string" 
     string toString();

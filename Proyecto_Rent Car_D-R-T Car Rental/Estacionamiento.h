@@ -13,15 +13,15 @@ private:
     bool ocupado;
 
 public:
-    Estacionamiento(string cod);
+    Estacionamiento(string);
 
     // Getters
     string getCodigo();
     bool getOcupado();
 
     // Setters
-    void setCodigo(string cod);
-    void setOcupado(bool estado);
+    void setCodigo(string);
+    void setOcupado(bool);
 
     // Métodos especificos
     void ocupar();
