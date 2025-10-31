@@ -33,65 +33,77 @@ void Vehiculo::setPrecioDiario(double pd) {
 };
 void Vehiculo::setCategoria(char c) {
     switch (c) {
-    case 'A'://para que caiga por el siguiente case, ya que no hay break.
+    case 'A':
     case 'a':
-        categoria = c;
-        cout << "Categoria "<<c<<" anadida" << endl;
-        break;
-    case 'B'://igual que linea 45
+    case 'B':
     case 'b':
-        categoria = c;
-        cout << "Categoria " << c << " anadida" << endl;
-        break;
-    case 'C'://igual que linea 45
+    case 'C':
     case 'c':
-        categoria = c;
-        cout << "Categoria " << c << " anadida" << endl;
-        break;
-    case 'D'://igual que linea 45
+    case 'D':
     case 'd':
+        // Si pasa cualquiera de los casos, normalizamos a mayúscula
+        // (Si la entrada fue 'a', 'a' - 'a' + 'A' = 'A')
+        if (c >= 'a' && c <= 'z') {
+            c = c - 'a' + 'A';
+        }
         categoria = c;
         cout << "Categoria " << c << " anadida" << endl;
         break;
     default:
-        cout << "Categoria de vehiculo invalida";
+        cout << "Categoria de vehiculo invalida" << endl;
     }
-};
+}
 void Vehiculo::setEstado(string e) {
 
+    // El método debe verificar si el NUEVO estado 'e' es una transición permitida
+    // desde el ESTADO ACTUAL 'estado'.
+
+    // Caso 1: Disponible (Estado Actual)
     if (estado == "Disponible") {
-        if (e == "Alquilado" || e == "Revision" || e == "Lavado") {
+        if (e == "Alquilado" || e == "Revisión" || e == "Lavado") {
             estado = e;
-            cout << "Estado nuevo del carro: " << e << endl;
+            cout << "Transicion valida: Nuevo estado del carro: " << e << endl;
+            return; // Salir de la función si se actualizó el estado
         }
     }
-    if (estado=="Alquilado") {
-        if (e == "Disponible" || e == "Devuelto") {
+    // Caso 2: Alquilado (Estado Actual)
+    else if (estado == "Alquilado") {
+        // Según la matriz, solo Devuelto es SI.
+        if (e == "Devuelto") {
             estado = e;
-            cout << "Estado nuevo del carro: " << e << endl;
+            cout << "Transicion valida: Nuevo estado del carro: " << e << endl;
+            return;
         }
     }
-    if (estado == "Devuelto") {
-        if (e == "Revision" || e == "Lavado") {
+    // Caso 3: Devuelto (Estado Actual)
+    else if (estado == "Devuelto") {
+        if (e == "Revisión" || e == "Lavado") {
             estado = e;
-            cout << "Estado nuevo del carro: " << e << endl;
+            cout << "Transicion valida: Nuevo estado del carro: " << e << endl;
+            return;
         }
     }
-    if (estado == "Revision") {
+    // Caso 4: Revisión (Estado Actual)
+    else if (estado == "Revisión") {
         if (e == "Lavado") {
             estado = e;
-            cout << "Estado nuevo del carro: " << e << endl;
+            cout << "Transicion valida: Nuevo estado del carro: " << e << endl;
+            return;
         }
     }
-    if (estado == "Lavado") {
-        if (e == "Disponible" || e == "Revision") {
+    // Caso 5: Lavado (Estado Actual)
+    else if (estado == "Lavado") {
+        if (e == "Disponible" || e == "Revisión") {
             estado = e;
-            cout << "Estado nuevo del carro: " << e << endl;
+            cout << "Transicion valida: Nuevo estado del carro: " << e << endl;
+            return;
         }
     }
-    else { cout << "Estado del carro invalido o no compatible." << endl; }
-};
 
+    // Si la función llega hasta aquí, la transición no fue válida o el estado es desconocido.
+    cout << "ERROR: Transicion de estado invalida o no compatible." << endl;
+    cout << "El carro NO puede pasar de [" << estado << "] a [" << e << "]." << endl;
+}
 
 
 // get
@@ -123,15 +135,17 @@ string Vehiculo::getEstado() {
 // Implementación del toString con el estilo solicitado (usando sstream y endl)
 string Vehiculo::toString() const {
     stringstream s;
+    s << "\t\t*********************************" << endl;
     s << "\t\t--- Datos del Vehículo ---" << endl;
-    s << "\t\tPlaca del Vehículo: " << placa << endl;
+    s << "\t\tPlaca: " << placa << endl;
     s << "\t\tMarca: " << marca << endl;
     s << "\t\tModelo: " << modelo << endl;
-    // Se muestra el double directamente, sin formateo con iomanip
-    s << "\t\tPrecio Diario: " << precioDiario << endl;
-    s << "\t\t--------------------------" << endl;
+    s << "\t\tCategoria: " << categoria << endl;
+    s << "\t\tTipo Licencia Requerida: " << tipoLicencia << endl;
+    s << "\t\tPrecio Diario: $" << precioDiario << endl;
+    s << "\t\tESTADO ACTUAL: " << estado << endl;
+    s << "\t\t*********************************" << endl;
 
     return s.str();
-}
 
 Vehiculo::~Vehiculo() {};
