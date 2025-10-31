@@ -17,18 +17,18 @@ public:
     // Constructor: Recibe los datos base y los datos de Cliente
     Cliente(string, string, string, string, char, string, string);
 
-    // Destructor (No virtual, por solicitud)
+    // Destructor
     ~Cliente();
 
-    // Getters (Sin const)
+    // Getters
     string getFechaNacimiento();
     string getFechaInscripcion();
 
-    // Setters (Sin const)
+    // Setters
     void setFechaNacimiento(string);
     void setFechaInscripcion(string);
 
-    // Función "to string" (Sobrescrita sin virtual)
+    // Función "to string" 
     string toString();
 };
 

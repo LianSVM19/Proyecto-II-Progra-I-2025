@@ -131,6 +131,7 @@
     <ClCompile Include="ContratoAlquiler.cpp" />
     <ClCompile Include="D-R-T_Car_Rental.cpp" />
     <ClCompile Include="Estacionamiento.cpp" />
+    <ClCompile Include="Estado.cpp" />
     <ClCompile Include="ListaEnlazada.cpp" />
     <ClCompile Include="MatrizEstacionamientos.cpp" />
     <ClCompile Include="Nodo.cpp" />
@@ -149,6 +150,7 @@
     <ClInclude Include="Colaborador.h" />
     <ClInclude Include="ContratoAlquiler.h" />
     <ClInclude Include="Estacionamiento.h" />
+    <ClInclude Include="Estado.h" />
     <ClInclude Include="ListaEnlazada.h" />
     <ClInclude Include="MatrizEstacionamientos.h" />
     <ClInclude Include="Nodo.h" />

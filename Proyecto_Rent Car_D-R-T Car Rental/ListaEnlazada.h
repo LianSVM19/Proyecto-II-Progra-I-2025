@@ -21,7 +21,7 @@ public:
     ~ListaEnlazada();
 
     // Métodos de gestión de la colección
-    void agregarAlInicio(Vehiculo* nuevoDato);
+    void agregarAlInicio(Vehiculo*);
     // Vehiculo* buscar(const string& placaBuscada) const; // Pendiente de implementar
     // bool eliminar(const string& placaEliminar); // Pendiente de implementar
 

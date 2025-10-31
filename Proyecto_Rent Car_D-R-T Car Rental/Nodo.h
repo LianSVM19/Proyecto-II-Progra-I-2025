@@ -15,14 +15,14 @@ private:
 
 public:
     // Constructor
-    Nodo(Vehiculo* elem, Nodo* sig = NULL);
+    Nodo(Vehiculo* , Nodo* = NULL);
 
     // Destructor (CRÍTICO para liberar la memoria de 'elem')
     ~Nodo();
 
     // Setters
-    void setElemento(Vehiculo* nuevoElem);
-    void setSig(Nodo* nuevoSig);
+    void setElemento(Vehiculo*);
+    void setSig(Nodo*);
 
     // Getters
     Vehiculo* getElemento(); // Retorna el puntero
