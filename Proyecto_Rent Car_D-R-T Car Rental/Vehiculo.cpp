@@ -67,11 +67,38 @@ void Vehiculo::setCategoria(char c) {
     }
 };
 void Vehiculo::setEstado(string e) {
-    if (e == "Disponible" || "Alquilado" || "Devuelto" || "Revision" || "Lavado") {
-        estado = e;
-        cout << "Estado del carro: " << e << endl;
+
+    if (estado == "Disponible") {
+        if (e == "Alquilado" || e == "Revision" || e == "Lavado") {
+            estado = e;
+            cout << "Estado nuevo del carro: " << e << endl;
+        }
     }
-    else { cout << "Estado del carro invalido" << endl; }
+    if (estado=="Alquilado") {
+        if (e == "Disponible" || e == "Devuelto") {
+            estado = e;
+            cout << "Estado nuevo del carro: " << e << endl;
+        }
+    }
+    if (estado == "Devuelto") {
+        if (e == "Revision" || e == "Lavado") {
+            estado = e;
+            cout << "Estado nuevo del carro: " << e << endl;
+        }
+    }
+    if (estado == "Revision") {
+        if (e == "Lavado") {
+            estado = e;
+            cout << "Estado nuevo del carro: " << e << endl;
+        }
+    }
+    if (estado == "Lavado") {
+        if (e == "Disponible" || e == "Revision") {
+            estado = e;
+            cout << "Estado nuevo del carro: " << e << endl;
+        }
+    }
+    else { cout << "Estado del carro invalido o no compatible." << endl; }
 };
 
 
