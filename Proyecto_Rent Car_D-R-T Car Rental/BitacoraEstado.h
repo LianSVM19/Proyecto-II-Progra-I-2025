@@ -35,7 +35,7 @@ public:
     // Getters
     NodoEstado* getCab();
 
-    // Setters (Sin const - Opcional, para reemplazar toda la lista si es necesario)
+    // Setters 
     void setCab(NodoEstado*);
 
     // Método para agregar un nuevo estado
