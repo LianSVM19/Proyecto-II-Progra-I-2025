@@ -2,22 +2,22 @@
 
 using namespace std;
 
-ListaEnlazada::ListaEnlazada() : cabeza(nullptr), tamano(0) {}
+ListaEnlazada::ListaEnlazada() : cabeza(NULL), tamano(0) {}
 
 // ----------------------
 // Destructor (CRÍTICO: Liberación total de memoria dinámica)
 // ----------------------
 ListaEnlazada::~ListaEnlazada() {
     Nodo* actual = cabeza;
-    Nodo* siguiente = nullptr;
+    Nodo* siguiente = NULL;
 
-    while (actual != nullptr) {
+    while (actual != NULL) {
         siguiente = actual->getSig();
         // El destructor de Nodo libera el Vehiculo* y el puntero actual
         delete actual;
         actual = siguiente;
     }
-    cabeza = nullptr;
+    cabeza = NULL;
     tamano = 0;
 }
 
@@ -42,7 +42,7 @@ int ListaEnlazada::getTamano() {
 }
 
 bool ListaEnlazada::estaVacia() {
-    return cabeza == nullptr;
+    return cabeza == NULL;
 }
 
 // ----------------------
@@ -55,14 +55,14 @@ string ListaEnlazada::toString() {
     s << "\t\tTamaño actual de la lista: " << tamano << endl;
     s << "\t\t=====================================" << endl;
 
-    if (cabeza == nullptr) {
+    if (cabeza == NULL) {
         s << "\t\tLa lista está vacía." << endl;
         return s.str();
     }
 
     Nodo* actual = cabeza;
     int contador = 1;
-    while (actual != nullptr) {
+    while (actual != NULL) {
         s << "\t\t[POSICIÓN #" << contador << "]:" << endl;
         // Llama al toStringNodo del Nodo para mostrar su contenido
         s << actual->toStringNodo();

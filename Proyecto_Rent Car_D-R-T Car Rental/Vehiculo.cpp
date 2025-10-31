@@ -148,4 +148,5 @@ string Vehiculo::toString() const {
 
     return s.str();
 
+}
 Vehiculo::~Vehiculo() {};
