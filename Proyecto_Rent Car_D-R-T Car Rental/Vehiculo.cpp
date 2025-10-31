@@ -14,15 +14,6 @@ Vehiculo::Vehiculo(string pla, string mar, string mod, string til, double prd, c
     categoria = ca;
     estado = es;
 }
-Vehiculo::Vehiculo() {
-    placa = "";
-    marca = "";
-    modelo = "";
-    tipoLicencia = "";
-    precioDiario = 0,0;
-    categoria = ' ';
-    estado = "";
-}
 
 //set
 void Vehiculo::setPlaca(string p) {
@@ -142,3 +133,5 @@ string Vehiculo::toString() const {
 
     return s.str();
 }
+
+Vehiculo::~Vehiculo() {};

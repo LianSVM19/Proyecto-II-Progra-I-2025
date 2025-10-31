@@ -7,12 +7,14 @@ int main() {
     cout << "peroquehacesaquicompañero" << endl;
 
     //prueba de clase vehiculo.
-    char x;
-    Vehiculo* n = new Vehiculo();
+    
+    
+    /*char x;
+    Vehiculo* n = new Vehiculo(); //este constructor esta malo pero aja.
     cout << "Categorias: " << endl;
     cout << "A, B, C, D" << endl;
     cin >> x;
     n->setCategoria(x);
-    delete n;
+    delete n;*/
     return 0;
 }
