@@ -28,15 +28,31 @@ public:
 	SolicitudAlquiler(string, Cliente*, Colaborador*, Sucursal*, Vehiculo*, string, string);
 	~SolicitudAlquiler();
 
+	//setters
 	void setfechIni(string);
 	void setfechFin(string);
 	void setCodigoSoli(string);
 	void setCanDiasAlqui(int);
 
+	//setters para punteros
+	void setCliente(Cliente*);
+	void setColaborador(Colaborador*);
+	void setSucursal(Sucursal*);
+	void setVehiculo(Vehiculo*);
+
+	//getters
 	string getFechIni();
 	string getFechFin();
 	string getCodigoSoli();
 	int getCanDiasAlqui();
+
+	//getters para punteros
+	Cliente* getCliente();
+	Colaborador* getColaborador();
+	Sucursal* getSucursal();
+	Vehiculo* getVehiculo();
+
+
 	string toString();
 };
 
