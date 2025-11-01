@@ -119,7 +119,7 @@ Cliente* Utilidades::leerDatosCliente() {
             cout << "\t\tValor inválido. Ingrese un número para el descuento: ";
         }
 
-        cin.ignore(10000, '\n'); // 💡 CORRECCIÓN VITAL: Limpia el buffer antes del siguiente getline
+        cin.ignore(10000, '\n'); // 
 
         cout << "\t\tIngrese la actividad económica: ";
         getline(cin, actividad);
@@ -142,7 +142,7 @@ void Utilidades::ingresarCliente() {
         cout << "\t\tERROR: No se pudo crear el cliente." << endl;
     }
 }
-void Utilidades::ingresarColaborador() {
+Colaborador* Utilidades::leerDatosColaborador() {
     string cedula, nombre, correo, telefono, fNacimiento, fInscripcion, fechaIngreso, puesto;
     char sexo;
     int tipoColaborador = -1;
@@ -182,9 +182,12 @@ void Utilidades::ingresarColaborador() {
 
         // Crear el objeto dinámico
         nuevoColaborador = new Colaborador(cedula, nombre, correo, telefono, sexo, fNacimiento, fInscripcion);
+        return nuevoColaborador;
+}
 
-   
-    // 3. Agregar a la lista
+void Utilidades::ingresarColaborador() {
+    Colaborador* nuevoColaborador = leerDatosColaborador();
+    
     if (nuevoColaborador != NULL) {
         listaColaboradores->agregarColaborador(nuevoColaborador);
         cout << "\n\t\tColaborador registrado con éxito." << endl;
@@ -279,7 +282,7 @@ void Utilidades::gestionarClientesPorSucursal(int operacion) {
     
     getline(cin, codigoSucursal);
 
-    Sucursal* sucursal = listaSucursales->buscar(codigoSucursal); // CLAVE: Buscar la sucursal
+    Sucursal* sucursal = listaSucursales->buscar(codigoSucursal); 
 
     if (sucursal == NULL) {
         cout << "\t\tERROR: Sucursal con código " << codigoSucursal << " no encontrada." << endl;
@@ -291,7 +294,7 @@ void Utilidades::gestionarClientesPorSucursal(int operacion) {
     if (operacion == 1) { // Ingreso
         cout << "\n\t\t>> INGRESANDO CLIENTE en Sucursal: " << sucursal->getNombre() << endl;
 
-        // 💡 LÓGICA CORREGIDA
+       
         Cliente* c = leerDatosCliente(); // Llama a la función que pide los datos y lo crea
 
         if (c != NULL) {
@@ -348,10 +351,18 @@ void Utilidades::gestionarColaboradoresPorSucursal(int operacion) {
     if (operacion == 1) { // Ingreso
         ingresarColaborador();
         cout << "\n\t\t>> INGRESANDO COLABORADOR en Sucursal: " << sucursal->getNombre() << endl;
-        // Lógica para pedir datos del colaborador y añadirlo a la lista interna
-        // Colaborador* nuevoColaborador = leerDatosColaborador();
-        // listaColaboradoresSucursal->agregarColaborador(nuevoColaborador);
-        cout << "\t\t(PENDIENTE: Lógica de ingreso del colaborador y añadirlo a la lista interna.)" << endl;
+        Colaborador* c = leerDatosColaborador(); // Llama a la función que pide los datos y lo crea
+
+        if (c != NULL) {
+            // Decides a dónde añadirlo:
+            listaColaboradoresSucursal->agregarColaborador(c); // Añadir a la lista de la sucursal
+
+            cout << "\n\t\t Cliente registrado con éxito en la sucursal." << endl;
+            cout << "\t\tDatos del nuevo cliente:\n" << c->toString() << endl;
+        }
+        else {
+            cout << "\t\t ERROR: No se pudo completar el registro del cliente." << endl;
+        }
 
     }
     else if (operacion == 2) { // Visualización

@@ -35,7 +35,7 @@ public:
     void ingresarCliente();
     void ingresarColaborador();
     Cliente* leerDatosCliente();
-
+    Colaborador* leerDatosColaborador();
     // ====================================================
     // 1. GESTIÓN DIRECTA DE SUCURSALES
     // ====================================================
