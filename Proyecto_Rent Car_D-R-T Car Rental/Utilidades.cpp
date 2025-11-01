@@ -13,6 +13,7 @@ Utilidades::Utilidades() {
     // Inicializar la lista de clientes
     listaClientes = new ListaCliente();
     listaSucursales = new ListaSucursal();
+    listaColaboradores = new ListaColaborador();
 }
 
 Utilidades::~Utilidades() {
@@ -169,10 +170,10 @@ void Utilidades::ingresarColaborador() {
         cout << "\t\tIngrese el sexo (M/F): ";
         cin >> sexo;
 
-        cout << "Ingrese la fecha de ingreso (dd/mm/aaaa): ";
+        cout << "\t\tIngrese la fecha de ingreso (dd/mm/aaaa): ";
         getline(cin, fechaIngreso);
 
-        cout << "Ingrese el Puesto del Colaborador:";
+        cout << "\t\tIngrese el Puesto del Colaborador:";
         getline(cin, puesto);
 
         cin.ignore(10000, '\n'); // Limpiar buffer después de cin >> char
@@ -325,12 +326,11 @@ void Utilidades::gestionarColaboradoresPorSucursal(int operacion) {
 
     cout << "\n\t\t--- GESTIÓN DE COLABORADORES POR SUCURSAL ---" << endl;
     cout << "\t\tIngrese el código de la sucursal: ";
-    cin.get();
     getline(cin, codigoSucursal);
 
     Sucursal* sucursal = listaSucursales->buscar(codigoSucursal);
 
-    if (sucursal == nullptr) {
+    if (sucursal == NULL) {
         cout << "\t\tERROR: Sucursal con código " << codigoSucursal << " no encontrada." << endl;
         return;
     }

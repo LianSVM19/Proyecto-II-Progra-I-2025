@@ -189,7 +189,6 @@ Cliente* ListaCliente::getCliente() { //getCliente devuelve el Ultimo Cliente añ
     }
     return NULL; // Retorna NULL si no se encuentra
 }
-}
 
 bool ListaCliente::estaVacia() {
     return cab == NULL; // o return tamano == 0;
@@ -335,6 +334,19 @@ int ListaColaborador::getTamano() {
 bool ListaColaborador::estaVacia() {
     return cab == NULL; // o return tamano == 0;
 }
+
+Colaborador* ListaColaborador::getColaborador() {
+    NodoColaborador* actual = cab;
+    while (actual != NULL) {
+        // Accedemos al Colaborador* y luego a su método getId()
+        if (actual->getSiguiente() == NULL) {
+            return actual->getDato();
+        }
+    }
+    return NULL; // Retorna NULL si no se encuentra
+}
+
+
 
 // ----------------------
 // Función "to string"

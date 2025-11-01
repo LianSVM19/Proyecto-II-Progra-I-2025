@@ -85,6 +85,7 @@ public:
     // Getters y utilidades
     int getTamano();
     bool estaVacia();
+    Colaborador* getColaborador();
 
     // Función "to string" para mostrar todos los Colaboradores
     string toString();
