@@ -119,11 +119,11 @@ void Utilidades::ingresarCliente() {
             cin.ignore(10000, '\n');
             cout << "\t\tValor inválido. Ingrese un número para el descuento: ";
         }
-        
+        cin.ignore(10000, '\n'); // Limpiar buffer después de cin >> double
 
         cout << "\t\tIngrese la actividad económica: ";
         getline(cin, actividad);
-        cin.ignore(10000, '\n'); // Limpiar buffer después de cin >> double
+       
         // Crear el objeto dinámico. 'N' como sexo por defecto para empresas.
         nuevoCliente = new ClienteJuridico(cedula, nombre, correo, telefono, sexo, fNacimiento, fInscripcion, descuento, actividad);
     }
