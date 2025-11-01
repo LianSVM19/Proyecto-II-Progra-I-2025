@@ -34,6 +34,7 @@ public:
     // Método que gestiona el ingreso de un nuevo cliente
     void ingresarCliente();
     void ingresarColaborador();
+    Cliente* leerDatosCliente();
 
     // ====================================================
     // 1. GESTIÓN DIRECTA DE SUCURSALES

@@ -30,29 +30,32 @@ Utilidades::~Utilidades() {
 }
 
 //Implementacion de cositas jajaj
-void Utilidades::ingresarCliente() {
+
+
+Cliente* Utilidades::leerDatosCliente() {
     string cedula, nombre, correo, telefono, fNacimiento, fInscripcion;
     char sexo;
     int tipoCliente = -1;
     Cliente* nuevoCliente = NULL;
     limpiarConsola();
-    cout << "\n\t\t--- INGRESO DE NUEVO CLIENTE ---" << endl;
+
+    cout << "\n\t\t--- LECTURA DE DATOS DEL CLIENTE ---" << endl;
 
     // 1. Determinar el tipo de cliente
     cout << "\t\t1. Cliente Físico" << endl;
     cout << "\t\t2. Cliente Jurídico" << endl;
     cout << "\t\tSeleccione el tipo de cliente (1 o 2): ";
-    tipoCliente = leerOpcion(1, 2);
+    tipoCliente = leerOpcion(1, 2); // Esta función ya limpia el buffer
+
     cout << "\n";
 
     // ===========================================
     // FLUJO PARA CLIENTE FÍSICO
     // ===========================================
     if (tipoCliente == 1) {
+        cout << "\t\t<< DATOS DE CLIENTE FÍSICO >>" << endl;
 
-        cout << "\t\t<< INGRESO DE CLIENTE FÍSICO >>" << endl;
-
-        // Pedir datos comunes (Asegurándonos de usar getline para strings con espacios)
+        // El buffer está limpio por leerOpcion()
         cout << "\t\tIngrese la cédula: ";
         getline(cin, cedula);
 
@@ -71,25 +74,22 @@ void Utilidades::ingresarCliente() {
         cout << "\t\tIngrese la fecha de inscripción (dd/mm/aaaa): ";
         getline(cin, fInscripcion);
 
-        // Pedir dato específico
         cout << "\t\tIngrese el sexo (M/F): ";
         cin >> sexo;
         cin.ignore(10000, '\n'); // Limpiar buffer después de cin >> char
 
-        // Crear el objeto dinámico
         nuevoCliente = new ClienteFisico(cedula, nombre, correo, telefono, sexo, fNacimiento, fInscripcion);
 
     }
     // ===========================================
-    // FLUJO PARA CLIENTE JURÍDICO
+    // FLUJO PARA CLIENTE JURÍDICO (Con corrección de bug)
     // ===========================================
     else if (tipoCliente == 2) {
         double descuento;
         string actividad;
 
-        cout << "\t\t<< INGRESO DE CLIENTE JURÍDICO >>" << endl;
+        cout << "\t\t<< DATOS DE CLIENTE JURÍDICO >>" << endl;
 
-        // Pedir datos comunes (Asegurándonos de usar getline para strings con espacios)
         cout << "\t\tIngrese la cédula jurídica: ";
         getline(cin, cedula);
 
@@ -110,31 +110,36 @@ void Utilidades::ingresarCliente() {
 
         cout << "\t\tIngrese el sexo (M/F): ";
         cin >> sexo;
+        cin.ignore(10000, '\n');
 
-        // Pedir datos específicos
         cout << "\t\tIngrese el porcentaje de descuento (0.0 a 100.0): ";
-        // Función para leer un double de forma segura
         while (!(cin >> descuento)) {
             cin.clear();
             cin.ignore(10000, '\n');
             cout << "\t\tValor inválido. Ingrese un número para el descuento: ";
         }
-        cin.ignore(10000, '\n'); // Limpiar buffer después de cin >> double
+
+        cin.ignore(10000, '\n'); // 💡 CORRECCIÓN VITAL: Limpia el buffer antes del siguiente getline
 
         cout << "\t\tIngrese la actividad económica: ";
         getline(cin, actividad);
-       
-        // Crear el objeto dinámico. 'N' como sexo por defecto para empresas.
+
         nuevoCliente = new ClienteJuridico(cedula, nombre, correo, telefono, sexo, fNacimiento, fInscripcion, descuento, actividad);
     }
-    // 3. Agregar a la lista
+
+    // Retorna el puntero, no lo añade a ninguna lista
+    return nuevoCliente;
+}
+void Utilidades::ingresarCliente() {
+    Cliente* nuevoCliente = leerDatosCliente(); // Usa la nueva función
+    
     if (nuevoCliente != NULL) {
         listaClientes->agregarCliente(nuevoCliente);
-        cout << "\n\t\tCliente registrado con éxito." << endl;
+        cout << "\n\t\tCliente registrado con éxito en la LISTA GLOBAL." << endl;
         cout << "\t\tDatos del nuevo cliente:\n" << nuevoCliente->toString() << endl;
     }
     else {
-        cout << "\t\tERROR: No se pudo crear el cliente (Tipo inválido)." << endl;
+        cout << "\t\tERROR: No se pudo crear el cliente." << endl;
     }
 }
 void Utilidades::ingresarColaborador() {
@@ -145,7 +150,7 @@ void Utilidades::ingresarColaborador() {
     limpiarConsola();
     cout << "\n\t\t--- INGRESO DE NUEVO Colaborador ---" << endl;
 
-        cout << "\t\t<< INGRESO DE CLIENTE FÍSICO >>" << endl;
+        cout << "\t\t<< INGRESO DE COLABORADOR >>" << endl;
 
         // Pedir datos comunes (Asegurándonos de usar getline para strings con espacios)
         cout << "\t\tIngrese la cédula: ";
@@ -170,11 +175,10 @@ void Utilidades::ingresarColaborador() {
         // Pedir dato específico
         cout << "\t\tIngrese el sexo (M/F): ";
         cin >> sexo;
+        cin.ignore(10000, '\n');
 
         cout << "\t\tIngrese el Puesto del Colaborador:";
         getline(cin, puesto);
-
-        cin.ignore(10000, '\n'); // Limpiar buffer después de cin >> char
 
         // Crear el objeto dinámico
         nuevoColaborador = new Colaborador(cedula, nombre, correo, telefono, sexo, fNacimiento, fInscripcion);
@@ -285,16 +289,22 @@ void Utilidades::gestionarClientesPorSucursal(int operacion) {
     ListaCliente* listaClientesSucursal = sucursal->getClientes(); // Acceder a la lista interna
 
     if (operacion == 1) { // Ingreso
-        ingresarCliente();
         cout << "\n\t\t>> INGRESANDO CLIENTE en Sucursal: " << sucursal->getNombre() << endl;
-        // Aquí se requiere una función auxiliar que pida los datos del cliente y lo retorne (ej. leerDatosCliente())
-        // CLIENTE* c = leerDatosCliente(false); // Podrías reutilizar parte de ingresarCliente
-        // listaClientesSucursal->agregarCliente(c);
 
-        listaClientesSucursal->agregarCliente(listaClientes->getCliente());
+        // 💡 LÓGICA CORREGIDA
+        Cliente* c = leerDatosCliente(); // Llama a la función que pide los datos y lo crea
 
-        cout << "\t\t(PENDIENTE: Lógica de ingreso del cliente y añadirlo a la lista interna.)" << endl;
+        if (c != NULL) {
+            // Decides a dónde añadirlo:
+            listaClientesSucursal->agregarCliente(c); // Añadir a la lista de la sucursal
+            // Opcional: listaClientes->agregarCliente(c); // Si también lo quieres en la lista global
 
+            cout << "\n\t\t Cliente registrado con éxito en la sucursal." << endl;
+            cout << "\t\tDatos del nuevo cliente:\n" << c->toString() << endl;
+        }
+        else {
+            cout << "\t\t ERROR: No se pudo completar el registro del cliente." << endl;
+        }
     }
     else if (operacion == 2) { // Visualización
         cout << "\n\t\t>> VISUALIZANDO Clientes de Sucursal: " << sucursal->getNombre() << endl;
