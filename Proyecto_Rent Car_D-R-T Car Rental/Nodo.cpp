@@ -122,8 +122,7 @@ string NodoCliente::toStringNodo() {
     if (dato != NULL) {
         // Llama al toString() del objeto Cliente (polimórfico)
         s << dato->toString();
-    }
-    else {
+    }else {
         s << "\t\tEl elemento (Cliente) del Nodo es NULL." << endl;
     }
     s << "\t\tPuntero Siguiente (siguiente): ";
