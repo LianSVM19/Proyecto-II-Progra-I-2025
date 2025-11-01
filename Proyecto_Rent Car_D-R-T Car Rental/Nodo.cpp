@@ -1,4 +1,3 @@
-
 #include "Nodo.h"
 #include <sstream>
 
@@ -126,6 +125,121 @@ string NodoCliente::toStringNodo() {
     }
     else {
         s << "\t\tEl elemento (Cliente) del Nodo es NULL." << endl;
+    }
+    s << "\t\tPuntero Siguiente (siguiente): ";
+    if (siguiente != NULL) {
+        s << "ENLAZADO A OTRO NODO." << endl;
+    }
+    else {
+        s << "NULL (Fin de la Lista)." << endl;
+    }
+    s << "\t\t***********************************" << endl;
+    return s.str();
+}
+// =====================================
+// IMPLEMENTACIÓN DE NODOCOLABORADOR
+// =====================================
+
+NodoColaborador::NodoColaborador(Colaborador* c, NodoColaborador* sig) {
+    dato = c;
+    siguiente = sig;
+}
+
+NodoColaborador::~NodoColaborador() {
+    // Si el dato no es nulo, liberamos el objeto Cliente (sea Físico o Jurídico)
+    if (dato != NULL) {
+        delete dato;
+        dato = NULL;
+    }
+}
+
+Colaborador* NodoColaborador::getDato() {
+    return dato;
+}
+
+NodoColaborador* NodoColaborador::getSiguiente() {
+    return siguiente;
+}
+
+void NodoColaborador::setDato(Colaborador* nuevoDato) {
+    // Liberar la memoria antigua antes de reasignar
+    if (dato != NULL) {
+        delete dato;
+    }
+    dato = nuevoDato;
+}
+
+void NodoColaborador::setSiguiente(NodoColaborador* sig) {
+    siguiente = sig;
+}
+
+string NodoColaborador::toStringNodo() {
+    stringstream s;
+    s << "\t\t***********************************" << endl;
+    if (dato != NULL) {
+        // Llama al toString() del objeto Cliente (polimórfico)
+        s << dato->toString();
+    }
+    else {
+        s << "\t\tEl elemento (Cliente) del Nodo es NULL." << endl;
+    }
+    s << "\t\tPuntero Siguiente (siguiente): ";
+    if (siguiente != NULL) {
+        s << "ENLAZADO A OTRO NODO." << endl;
+    }
+    else {
+        s << "NULL (Fin de la Lista)." << endl;
+    }
+    s << "\t\t***********************************" << endl;
+    return s.str();
+}
+
+// =====================================
+// IMPLEMENTACIÓN DE NODOSUCURSAL (NUEVO)
+// =====================================
+
+NodoSucursal::NodoSucursal(Sucursal* s, NodoSucursal* sig) {
+    dato = s;
+    siguiente = sig;
+}
+
+NodoSucursal::~NodoSucursal() {
+    // CRÍTICO: El nodo es dueño de la memoria de la Sucursal, debe liberarla.
+    if (dato != NULL) {
+        delete dato;
+        dato = NULL;
+    }
+}
+
+Sucursal* NodoSucursal::getDato() {
+    return dato;
+}
+
+NodoSucursal* NodoSucursal::getSiguiente() {
+    return siguiente;
+}
+
+void NodoSucursal::setDato(Sucursal* nuevoDato) {
+    // Si ya existe un elemento, liberamos la memoria antes de reasignar
+    if (dato != NULL) {
+        delete dato;
+    }
+    dato = nuevoDato;
+}
+
+void NodoSucursal::setSiguiente(NodoSucursal* sig) {
+    siguiente = sig;
+}
+
+string NodoSucursal::toStringNodo() {
+    stringstream s;
+    s << "\t\t***********************************" << endl;
+    if (dato != NULL) {
+        // Llama al toString() del objeto Sucursal
+        s << dato->toString();
+    }
+    else {
+        s << "\t\tEl elemento (Sucursal) del Nodo es NULL." << endl;
     }
     s << "\t\tPuntero Siguiente (siguiente): ";
     if (siguiente != NULL) {

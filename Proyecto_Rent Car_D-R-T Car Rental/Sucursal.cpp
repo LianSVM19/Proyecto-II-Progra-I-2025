@@ -2,6 +2,7 @@
 
 #include "ListaEnlazada.h"
 
+
 using namespace std;
 
 // ----------------------
@@ -15,6 +16,8 @@ Sucursal::Sucursal(string cod, string nom, string dir, string tel) {
 
     // **ASIGNACIÓN DINÁMICA DE LA LISTA ENLAZADA**
     planteles = new ListaVehiculo();
+    clientes = new ListaCliente();   
+    colaboradores = new ListaColaborador();
 }
 
 // ----------------------
@@ -26,6 +29,15 @@ Sucursal::~Sucursal() {
         delete planteles;
         planteles = NULL;
     }
+    if (clientes != NULL) { // <-- LIBERACIÓN DE CLIENTES
+        delete clientes;
+        clientes = NULL;
+    }
+
+    if (colaboradores != NULL) { // <-- LIBERACIÓN DE COLABORADORES
+        delete colaboradores;
+        colaboradores = NULL;
+    }
 }
 
 // ----------------------
@@ -36,6 +48,8 @@ string Sucursal::getNombre() { return nombre; }
 string Sucursal::getDireccion() { return direccion; }
 string Sucursal::getTelefono() { return telefono; }
 ListaVehiculo* Sucursal::getPlanteles() { return planteles; }
+ListaCliente* Sucursal::getClientes() { return clientes; }        // <-- GETTER DE CLIENTES
+ListaColaborador* Sucursal::getColaboradores() { return colaboradores; } // <-- GETTER DE COLABORADORES
 
 // ----------------------
 // Setters
@@ -56,17 +70,33 @@ string Sucursal::toString() {
     s << "\t\tNombre Comercial: " << nombre << endl;
     s << "\t\tDirección: " << direccion << endl;
     s << "\t\tTeléfono: " << telefono << endl;
+    s << "\t\t================================================" << endl;
 
-    s << "\t\t--- GESTIÓN DE PLANTELES (Estacionamientos) ---" << endl;
-
+    s << "\t\t--- PLANTELES (Vehículos) ---" << endl;
     if (planteles != NULL) {
-        
         s << planteles->toString();
     }
     else {
         s << "\t\tERROR: La colección de planteles no fue inicializada." << endl;
     }
+    s << "\t\t------------------------------------------------" << endl;
 
+    s << "\t\t--- CLIENTES ASIGNADOS ---" << endl;
+    if (clientes != NULL) {
+        s << clientes->toString();
+    }
+    else {
+        s << "\t\tERROR: La colección de clientes no fue inicializada." << endl;
+    }
+    s << "\t\t------------------------------------------------" << endl;
+
+    s << "\t\t--- COLABORADORES ASIGNADOS ---" << endl;
+    if (colaboradores != NULL) {
+        s << colaboradores->toString();
+    }
+    else {
+        s << "\t\tERROR: La colección de colaboradores no fue inicializada." << endl;
+    }
     s << "\t\t================================================" << endl;
 
     return s.str();

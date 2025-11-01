@@ -4,6 +4,8 @@
 #include <string>
 #include "Vehiculo.h" 
 #include "Cliente.h"
+#include "Colaborador.h"
+#include "Sucursal.h"
 
 using namespace std;
 
@@ -48,8 +50,58 @@ public:
     NodoCliente* getSiguiente();
 
     // Setters
-    void setSiguiente(NodoCliente* sig);
-    void setDato(Cliente* nuevoDato);
+    void setSiguiente(NodoCliente*);
+    void setDato(Cliente*);
+
+    // Función "to string"
+    string toStringNodo();
+};
+
+class NodoColaborador {
+private:
+    Colaborador* dato;
+    NodoColaborador* siguiente;
+public:
+    // Constructor (recibe el cliente a almacenar y el puntero al siguiente nodo)
+    NodoColaborador(Colaborador* c, NodoColaborador* sig = NULL);
+
+    // Destructor (debe liberar la memoria del cliente almacenado)
+    ~NodoColaborador();
+
+    // Getters
+    Colaborador* getDato();
+    NodoColaborador* getSiguiente();
+
+    // Setters
+    void setSiguiente(NodoColaborador*);
+    void setDato(Colaborador*);
+
+    // Función "to string"
+    string toStringNodo();
+};
+
+
+// =====================================
+// DEFINICIÓN DE NODOSUCURSAL (NUEVO)
+// =====================================
+class NodoSucursal {
+private:
+    Sucursal* dato;
+    NodoSucursal* siguiente;
+public:
+    // Constructor
+    NodoSucursal(Sucursal* s, NodoSucursal* sig = NULL);
+
+    // Destructor (debe liberar la memoria de la Sucursal almacenada)
+    ~NodoSucursal();
+
+    // Getters
+    Sucursal* getDato();
+    NodoSucursal* getSiguiente();
+
+    // Setters
+    void setSiguiente(NodoSucursal*);
+    void setDato(Sucursal*);
 
     // Función "to string"
     string toStringNodo();

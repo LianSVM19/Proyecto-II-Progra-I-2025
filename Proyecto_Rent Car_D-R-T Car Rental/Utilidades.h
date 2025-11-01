@@ -9,6 +9,7 @@
 
 // Declaraciones Anticipadas
 class ListaEnlazada;
+class ListaSucursal;
 class Sucursal;
 class Cliente;
 class ClienteFisico;
@@ -22,6 +23,7 @@ class Utilidades
 private:
     int op = -1;
     ListaCliente* listaClientes;
+    ListaSucursal* listaSucursales;
 public:
 
     Utilidades();
@@ -29,6 +31,20 @@ public:
 
     // Método que gestiona el ingreso de un nuevo cliente
     void ingresarCliente();
+
+    // ====================================================
+    // 1. GESTIÓN DIRECTA DE SUCURSALES
+    // ====================================================
+    void ingresarSucursal();
+    void eliminarSucursal();
+    void mostrarSucursales();
+
+    // ====================================================
+    // 2. GESTIÓN POR SUCURSAL
+    // Se usa un método auxiliar que recibe un entero: 1=Ingreso, 2=Visualización, 3=Eliminación.
+    // ====================================================
+    void gestionarClientesPorSucursal(int);
+    void gestionarColaboradoresPorSucursal(int);
 
     // ----------------------------------------------------
     // Funciones de Control de Interfaz y Consola (Instancia)

@@ -50,6 +50,8 @@ public:
 
     // Método para agregar un nuevo cliente al final de la lista
     void agregarCliente(Cliente* c);
+    Cliente* buscar(string);
+    bool eliminar(string);
 
     // Getters y utilidades
     int getTamano();
@@ -59,4 +61,59 @@ public:
     string toString();
 };
 
+// =====================================
+// DEFINICIÓN DE LISTACOLABORADOR
+// =====================================
+class ListaColaborador {
+private:
+    NodoColaborador* cab;
+    int tamano;
+
+public:
+    // Constructor (inicia la lista vacía)
+    ListaColaborador();
+
+    // Destructor (libera todos los nodos y sus Colaboradores)
+    ~ListaColaborador();
+
+    // Método para agregar un nuevo cliente al final de la lista
+    void agregarColaborador(Colaborador* c);
+    Colaborador* buscar(string);
+    bool eliminar(string);
+
+    // Getters y utilidades
+    int getTamano();
+    bool estaVacia();
+
+    // Función "to string" para mostrar todos los Colaboradores
+    string toString();
+};
+
+// =====================================
+// DEFINICIÓN DE LISTASUCURSAL (NUEVO)
+// =====================================
+class ListaSucursal {
+private:
+    NodoSucursal* cab;
+    int tamano;
+
+public:
+    // Constructor (inicia la lista vacía)
+    ListaSucursal();
+
+    // Destructor (libera todos los nodos y sus sucursales)
+    ~ListaSucursal();
+
+    // Métodos de gestión de la colección
+    void agregarSucursal(Sucursal*);
+    Sucursal* buscar(string); // Busca una sucursal por su código
+    bool eliminar(string); // Elimina una sucursal por su código
+
+    // Getters y utilidades
+    int getTamano();
+    bool estaVacia();
+
+    // Función "to string" para mostrar todas las sucursales
+    string toString();
+};
 #endif

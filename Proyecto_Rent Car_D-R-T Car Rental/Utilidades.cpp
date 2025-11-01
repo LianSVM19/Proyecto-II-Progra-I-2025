@@ -4,19 +4,28 @@
 #include "ListaEnlazada.h"
 #include "ClienteFisico.h"
 #include "ClienteJuridico.h"
+#include "Colaborador.h"
+#include <iostream>
 
 using namespace std;
 
 Utilidades::Utilidades() {
     // Inicializar la lista de clientes
     listaClientes = new ListaCliente();
-    // Aquí irían otras inicializaciones de listas (ej. listaSucursales = new ListaSucursal())
+    listaSucursales = new ListaSucursal();
 }
 
 Utilidades::~Utilidades() {
-    // Liberar la memoria de la lista de clientes al cerrar el sistema
-    delete listaClientes;
-    listaClientes = NULL; // Buenas prácticas
+    // Liberar la memoria de la lista de clientes
+    if (listaClientes != NULL) {
+        delete listaClientes;
+        listaClientes = NULL;
+    }
+    // Liberar la memoria de la lista de sucursales (NUEVO)
+    if (listaSucursales != NULL) {
+        delete listaSucursales;
+        listaSucursales = NULL;
+    }
 }
 
 //Implementacion de cositas jajaj
@@ -128,6 +137,175 @@ void Utilidades::ingresarCliente() {
     }
 }
 
+// ====================================================
+// IMPLEMENTACIÓN DE GESTIÓN DE SUCURSALES
+// ====================================================
+
+void Utilidades::ingresarSucursal() {
+    string codigo, nombre, direccion, telefono;
+
+    limpiarConsola();
+    cout << "\n\t\t--- INGRESO DE NUEVA SUCURSAL ---" << endl;
+
+    cout << "\t\tIngrese el código de la sucursal: ";
+    getline(cin, codigo);
+
+    // Opcional: Verificar si ya existe una sucursal con ese código
+    if (listaSucursales->buscar(codigo) != nullptr) {
+        cout << "\t\t❌ ERROR: Ya existe una sucursal con el código " << codigo << endl;
+        return;
+    }
+
+    cout << "\t\tIngrese el nombre de la sucursal: ";
+    getline(cin, nombre);
+
+    cout << "\t\tIngrese la dirección: ";
+    getline(cin, direccion);
+
+    cout << "\t\tIngrese el teléfono: ";
+    getline(cin, telefono);
+
+    // Asumiendo el constructor: Sucursal(codigo, nombre, direccion, telefono)
+    Sucursal* nuevaSucursal = new Sucursal(codigo, nombre, direccion, telefono);
+
+    listaSucursales->agregarSucursal(nuevaSucursal); // Asume método agregarSucursal en ListaSucursal
+
+    cout << "\n\t\t✅ Sucursal '" << nombre << "' registrada con éxito." << endl;
+}
+
+void Utilidades::mostrarSucursales() {
+    limpiarConsola();
+    cout << "\n\t\t--- VISUALIZACIÓN DE TODAS LAS SUCURSALES ---" << endl;
+    if (listaSucursales->estaVacia()) {
+        cout << "\t\tLa lista de sucursales está vacía." << endl;
+        return;
+    }
+    cout << listaSucursales->toString() << endl; // Asume método toString en ListaSucursal
+}
+
+
+void Utilidades::eliminarSucursal() {
+    string codigoEliminar;
+
+    limpiarConsola();
+    cout << "\n\t\t--- ELIMINAR SUCURSAL POR CÓDIGO ---" << endl;
+
+    if (listaSucursales->estaVacia()) {
+        cout << "\t\tLa lista de sucursales está vacía." << endl;
+        return;
+    }
+
+    cout << "\t\tIngrese el código de la sucursal a eliminar: ";
+    getline(cin, codigoEliminar);
+
+    // Asumiendo que ListaSucursal::eliminar(codigo) retorna bool
+    if (listaSucursales->eliminar(codigoEliminar)) {
+        cout << "\n\t\tLa sucursal con código " << codigoEliminar << " ha sido eliminada." << endl;
+    }
+    else {
+        cout << "\n\t\tERROR: No se encontró ninguna sucursal con el código " << codigoEliminar << endl;
+    }
+}
+
+// ====================================================
+// IMPLEMENTACIÓN DE GESTIÓN POR SUCURSAL
+// ====================================================
+
+// Funció auxiliar para encontrar la sucursal y operar en su lista interna de Clientes
+void Utilidades::gestionarClientesPorSucursal(int operacion) {
+    string codigoSucursal, cedulaCliente;
+    limpiarConsola();
+
+    cout << "\n\t\t--- GESTIÓN DE CLIENTES POR SUCURSAL ---" << endl;
+    cout << "\t\tIngrese el código de la sucursal: ";
+    cin.get();
+    getline(cin, codigoSucursal);
+
+    Sucursal* sucursal = listaSucursales->buscar(codigoSucursal); // CLAVE: Buscar la sucursal
+
+    if (sucursal == nullptr) {
+        cout << "\t\t❌ ERROR: Sucursal con código " << codigoSucursal << " no encontrada." << endl;
+        return;
+    }
+
+    ListaCliente* listaClientesSucursal = sucursal->getClientes(); // Acceder a la lista interna
+
+    if (operacion == 1) { // Ingreso
+        cout << "\n\t\t>> INGRESANDO CLIENTE en Sucursal: " << sucursal->getNombre() << endl;
+        // Aquí se requiere una función auxiliar que pida los datos del cliente y lo retorne (ej. leerDatosCliente())
+        // CLIENTE* c = leerDatosCliente(false); // Podrías reutilizar parte de ingresarCliente
+        // listaClientesSucursal->agregarCliente(c);
+        cout << "\t\t(PENDIENTE: Lógica de ingreso del cliente y añadirlo a la lista interna.)" << endl;
+
+    }
+    else if (operacion == 2) { // Visualización
+        cout << "\n\t\t>> VISUALIZANDO Clientes de Sucursal: " << sucursal->getNombre() << endl;
+        cout << listaClientesSucursal->toString() << endl;
+
+    }
+    else if (operacion == 3) { // Eliminación
+        cout << "\n\t\t>> ELIMINANDO Cliente de Sucursal: " << sucursal->getNombre() << endl;
+        cout << "\t\tIngrese la cédula del cliente a eliminar: ";
+        getline(cin, cedulaCliente);
+
+        // Asume ListaCliente::eliminar(cedula) en la lista de la Sucursal
+        if (listaClientesSucursal->eliminar(cedulaCliente)) {
+            cout << "\t\tCliente con cédula " << cedulaCliente << " eliminado de la sucursal." << endl;
+        }
+        else {
+            cout << "\t\tERROR: Cliente no encontrado en esta sucursal." << endl;
+        }
+    }
+}
+
+
+// Funció auxiliar para encontrar la sucursal y operar en su lista interna de Colaboradores
+void Utilidades::gestionarColaboradoresPorSucursal(int operacion) {
+    string codigoSucursal, idColaborador;
+    limpiarConsola();
+
+    cout << "\n\t\t--- GESTIÓN DE COLABORADORES POR SUCURSAL ---" << endl;
+    cout << "\t\tIngrese el código de la sucursal: ";
+    cin.get();
+    getline(cin, codigoSucursal);
+
+    Sucursal* sucursal = listaSucursales->buscar(codigoSucursal);
+
+    if (sucursal == nullptr) {
+        cout << "\t\tERROR: Sucursal con código " << codigoSucursal << " no encontrada." << endl;
+        return;
+    }
+
+    ListaColaborador* listaColaboradoresSucursal = sucursal->getColaboradores(); // Acceder a la lista interna
+
+    if (operacion == 1) { // Ingreso
+        cout << "\n\t\t>> INGRESANDO COLABORADOR en Sucursal: " << sucursal->getNombre() << endl;
+        // Lógica para pedir datos del colaborador y añadirlo a la lista interna
+        // Colaborador* nuevoColaborador = leerDatosColaborador();
+        // listaColaboradoresSucursal->agregarColaborador(nuevoColaborador);
+        cout << "\t\t(PENDIENTE: Lógica de ingreso del colaborador y añadirlo a la lista interna.)" << endl;
+
+    }
+    else if (operacion == 2) { // Visualización
+        cout << "\n\t\t>> VISUALIZANDO Colaboradores de Sucursal: " << sucursal->getNombre() << endl;
+        cout << listaColaboradoresSucursal->toString() << endl; // Asume ListaColaborador::toString
+
+    }
+    else if (operacion == 3) { // Eliminación
+        cout << "\n\t\t>> ELIMINANDO Colaborador de Sucursal: " << sucursal->getNombre() << endl;
+        cout << "\t\tIngrese el ID del colaborador a eliminar: ";
+        getline(cin, idColaborador);
+
+        // Asume ListaColaborador::eliminar(id) en la lista de la Sucursal
+        if (listaColaboradoresSucursal->eliminar(idColaborador)) {
+            cout << "\t\tColaborador con ID " << idColaborador << " eliminado de la sucursal." << endl;
+        }
+        else {
+            cout << "\t\tERROR: Colaborador no encontrado en esta sucursal." << endl;
+        }
+    }
+}
+
 
 // ----------------------------------------------------
 // Implementación de Control de Interfaz y Consola
@@ -218,26 +396,6 @@ void Utilidades::mostrarMenuPrincipal() {
     }
 
 
-/*void Utilidades::mostrarSubmenuSucursales(ListaEnlazada* listaSucursales) {
-    int opcion = -1;
-
-    while (opcion != 0) {
-        limpiarConsola();
-        cout << "\n\t\t======================================================" << endl;
-        cout << "\t\t             SUBMENÚ: GESTIÓN DE SUCURSALES           " << endl;
-        cout << "\t\t======================================================" << endl;
-        cout << "\t\t(1) Ingresar Nueva Sucursal" << endl;
-        cout << "\t\t(2) Visualizar Todas las Sucursales" << endl;
-        cout << "\t\t(3) Eliminar Sucursal (por Código)" << endl;
-        cout << "\t\t(0) Regresar al Menú Principal" << endl;
-        cout << "\t\t------------------------------------------------------" << endl;
-
-        opcion = leerOpcion(0, 3);
-        }
-  */  
-//}
-
-
 
 void Utilidades::mostrarSubmenuSucursales() {
     int opcionSubmenu = -1; // Inicializamos a un valor != 0 para entrar al bucle.
@@ -264,15 +422,15 @@ void Utilidades::mostrarSubmenuSucursales() {
         switch (opcionSubmenu) {
         case 1:
             cout << "\n\t\t>> Ejecutando: Ingresar Sucursal..." << endl;
-            // llamarAFuncionIngresoSucursal();
+            this->ingresarSucursal();
             break;
         case 2:
             cout << "\n\t\t>> Ejecutando: Mostrar Sucursales..." << endl;
-            // llamarAFuncionMostrarSucursales();
+            this->mostrarSucursales();
             break;
         case 3:
             cout << "\n\t\t>> Ejecutando: Eliminar Sucursal..." << endl;
-            // llamarAFuncionEliminarSucursal();
+            this->eliminarSucursal();
             break;
         case 0:
             // El bucle terminará automáticamente después de esta iteración.
@@ -315,15 +473,15 @@ void Utilidades::mostrarSubmenuColaboradores() {
         switch (opcionSubmenu) {
         case 1:
             cout << "\n\t\t>> Ejecutando: Incluir Colaborador en Sucursal..." << endl;
-            // llamar a funcion IncluirColaborador();
+            this->gestionarColaboradoresPorSucursal(1);
             break;
         case 2:
             cout << "\n\t\t>> Ejecutando: Mostrar Colaborador..." << endl;
-            // llamar a funcion MostrarColaborador();
+            this->gestionarColaboradoresPorSucursal(2);
             break;
         case 3:
             cout << "\n\t\t>> Ejecutando: Eliminar Colaborador..." << endl;
-            // llamar a funcion EliminarColaborador();
+            this->gestionarColaboradoresPorSucursal(3);
             break;
         case 4:
             cout << "\n\t\t>> Ejecutando: Reporte de Alquileres..." << endl;
@@ -528,15 +686,15 @@ void Utilidades::mostrarSubmenuClientes() {
         switch (opcionSubmenu) {
         case 1:
             cout << "\n\t\t>> Ejecutando: Ingresar Cliente..." << endl;
-            this->ingresarCliente();
+            this->gestionarClientesPorSucursal(1);
             break;
         case 2:
             cout << "\n\t\t>> Ejecutando: Mostrar Cliente..." << endl;
-            cout << listaClientes->toString() << endl;
+            this->gestionarClientesPorSucursal(2);
             break;
         case 3:
             cout << "\n\t\t>> Ejecutando: Eliminar Cliente..." << endl;
-            // llamarAFuncionEliminarCliente();
+            this->gestionarClientesPorSucursal(3);
             break;
         case 4:
             cout << "\n\t\t>> Ejecutando: Historial del Cliente..." << endl;
