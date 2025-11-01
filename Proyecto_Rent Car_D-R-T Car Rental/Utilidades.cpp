@@ -163,15 +163,13 @@ void Utilidades::ingresarColaborador() {
         cout << "\t\tIngrese la fecha de nacimiento (dd/mm/aaaa): ";
         getline(cin, fNacimiento);
 
-        cout << "\t\tIngrese la fecha de inscripción (dd/mm/aaaa): ";
+        cout << "\t\tIngrese la fecha de ingreso (dd/mm/aaaa): ";
         getline(cin, fInscripcion);
+        fechaIngreso = fInscripcion;
 
         // Pedir dato específico
         cout << "\t\tIngrese el sexo (M/F): ";
         cin >> sexo;
-
-        cout << "\t\tIngrese la fecha de ingreso (dd/mm/aaaa): ";
-        getline(cin, fechaIngreso);
 
         cout << "\t\tIngrese el Puesto del Colaborador:";
         getline(cin, puesto);
