@@ -179,6 +179,18 @@ int ListaCliente::getTamano() {
     return tamano;
 }
 
+Cliente* ListaCliente::getCliente() { //getCliente devuelve el Ultimo Cliente añadido.
+    NodoCliente* actual = cab;
+    while (actual != NULL) {
+        // Accedemos al Cliente*
+        if (actual->getSiguiente() == NULL) {
+            return actual->getDato();
+        }
+    }
+    return NULL; // Retorna NULL si no se encuentra
+}
+}
+
 bool ListaCliente::estaVacia() {
     return cab == NULL; // o return tamano == 0;
 }

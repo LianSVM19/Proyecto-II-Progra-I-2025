@@ -54,6 +54,7 @@ public:
     bool eliminar(string);
 
     // Getters y utilidades
+    Cliente* getCliente();
     int getTamano();
     bool estaVacia();
 

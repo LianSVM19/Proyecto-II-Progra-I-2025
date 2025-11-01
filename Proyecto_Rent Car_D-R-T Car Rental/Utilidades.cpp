@@ -236,6 +236,9 @@ void Utilidades::gestionarClientesPorSucursal(int operacion) {
         // Aquí se requiere una función auxiliar que pida los datos del cliente y lo retorne (ej. leerDatosCliente())
         // CLIENTE* c = leerDatosCliente(false); // Podrías reutilizar parte de ingresarCliente
         // listaClientesSucursal->agregarCliente(c);
+
+        listaClientesSucursal->agregarCliente(listaClientesSucursal->getCliente());
+
         cout << "\t\t(PENDIENTE: Lógica de ingreso del cliente y añadirlo a la lista interna.)" << endl;
 
     }
