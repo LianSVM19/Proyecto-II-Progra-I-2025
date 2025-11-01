@@ -279,7 +279,7 @@ void Utilidades::gestionarClientesPorSucursal(int operacion) {
     Sucursal* sucursal = listaSucursales->buscar(codigoSucursal); // CLAVE: Buscar la sucursal
 
     if (sucursal == NULL) {
-        cout << "\t\t❌ ERROR: Sucursal con código " << codigoSucursal << " no encontrada." << endl;
+        cout << "\t\tERROR: Sucursal con código " << codigoSucursal << " no encontrada." << endl;
         return;
     }
 
@@ -338,6 +338,7 @@ void Utilidades::gestionarColaboradoresPorSucursal(int operacion) {
     ListaColaborador* listaColaboradoresSucursal = sucursal->getColaboradores(); // Acceder a la lista interna
 
     if (operacion == 1) { // Ingreso
+        ingresarColaborador();
         cout << "\n\t\t>> INGRESANDO COLABORADOR en Sucursal: " << sucursal->getNombre() << endl;
         // Lógica para pedir datos del colaborador y añadirlo a la lista interna
         // Colaborador* nuevoColaborador = leerDatosColaborador();
