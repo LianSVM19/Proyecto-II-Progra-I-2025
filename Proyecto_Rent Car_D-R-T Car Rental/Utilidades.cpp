@@ -218,12 +218,12 @@ void Utilidades::gestionarClientesPorSucursal(int operacion) {
 
     cout << "\n\t\t--- GESTIÓN DE CLIENTES POR SUCURSAL ---" << endl;
     cout << "\t\tIngrese el código de la sucursal: ";
-    cin.get();
+    
     getline(cin, codigoSucursal);
 
     Sucursal* sucursal = listaSucursales->buscar(codigoSucursal); // CLAVE: Buscar la sucursal
 
-    if (sucursal == nullptr) {
+    if (sucursal == NULL) {
         cout << "\t\t❌ ERROR: Sucursal con código " << codigoSucursal << " no encontrada." << endl;
         return;
     }
@@ -231,6 +231,7 @@ void Utilidades::gestionarClientesPorSucursal(int operacion) {
     ListaCliente* listaClientesSucursal = sucursal->getClientes(); // Acceder a la lista interna
 
     if (operacion == 1) { // Ingreso
+        ingresarCliente();
         cout << "\n\t\t>> INGRESANDO CLIENTE en Sucursal: " << sucursal->getNombre() << endl;
         // Aquí se requiere una función auxiliar que pida los datos del cliente y lo retorne (ej. leerDatosCliente())
         // CLIENTE* c = leerDatosCliente(false); // Podrías reutilizar parte de ingresarCliente
