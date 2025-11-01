@@ -31,7 +31,13 @@ public:
     // ----------------------------------------------------
     // Funciones de Menú (Instancia)
     // ----------------------------------------------------
-    void mostrarMenuPrincipal();
+    void mostrarMenuPrincipal(); //Menu principal
+
+    //Submenus
+    void mostrarSubmenuSucursales();
+    void mostrarSubmenuColaboradores();
+    void mostrarSubmenuCarrosPlanteles();
+    void mostrarSubmenuSolicitudesContratos();
     void mostrarSubmenuClientes();
     //void mostrarSubmenuSucursales(ListaEnlazada* listaSucursales);
     void ejecutarSistema();

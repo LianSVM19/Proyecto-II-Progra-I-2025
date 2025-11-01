@@ -49,7 +49,23 @@ void Utilidades::ejecutarSistema() {
         opcion = this->op;
 
         switch (opcion) {
-            // ... (casos 1 a 4) ...
+            // ... (casos 0 a 5) ...
+        case 1:
+            // Llama al submenú de Sucursales
+            mostrarSubmenuSucursales();
+            break;
+        case 2:
+            // Llama al submenú de Colaboradores
+            mostrarSubmenuColaboradores();
+            break;
+        case 3:
+            // Llama al submenú de Carros y Planteles
+            mostrarSubmenuCarrosPlanteles();
+            break;
+        case 4:
+            // Llama al submenú de Solicitudes y Contratos
+            mostrarSubmenuSolicitudesContratos();
+            break;
         case 5:
             // Llama al submenú de Clientes
             mostrarSubmenuClientes();
@@ -78,6 +94,290 @@ void Utilidades::mostrarMenuPrincipal() {
         cout << "\t\t------------------------------------------------------" << endl;
         op = leerOpcion(0, 5);
     }
+
+
+/*void Utilidades::mostrarSubmenuSucursales(ListaEnlazada* listaSucursales) {
+    int opcion = -1;
+
+    while (opcion != 0) {
+        limpiarConsola();
+        cout << "\n\t\t======================================================" << endl;
+        cout << "\t\t             SUBMENÚ: GESTIÓN DE SUCURSALES           " << endl;
+        cout << "\t\t======================================================" << endl;
+        cout << "\t\t(1) Ingresar Nueva Sucursal" << endl;
+        cout << "\t\t(2) Visualizar Todas las Sucursales" << endl;
+        cout << "\t\t(3) Eliminar Sucursal (por Código)" << endl;
+        cout << "\t\t(0) Regresar al Menú Principal" << endl;
+        cout << "\t\t------------------------------------------------------" << endl;
+
+        opcion = leerOpcion(0, 3);
+        }
+  */  
+//}
+
+
+
+void Utilidades::mostrarSubmenuSucursales() {
+    int opcionSubmenu = -1; // Inicializamos a un valor != 0 para entrar al bucle.
+
+    // El bucle se ejecuta mientras la opción NO sea 0 (Regresar al Menú Principal).
+    while (opcionSubmenu != 0) {
+
+        // 1. Mostrar el menú
+        limpiarConsola();
+        cout << "\n\t\t======================================================" << endl;
+        cout << "\t\t                SUBMENÚ DE SUCURSALES                 " << endl;
+        cout << "\t\t======================================================" << endl;
+        cout << "\t\t(1) Ingresar Sucursal" << endl;
+        cout << "\t\t(2) Mostrar Sucursales" << endl;
+        cout << "\t\t(3) Eliminar Sucursal" << endl;
+        cout << "\t\t(0) Regresar al Menú Principal" << endl;
+        cout << "\t\t------------------------------------------------------" << endl;
+
+        // 2. Leer la opción (Rango de 0 a 3)
+        // Llamada a la función de la misma clase.
+        opcionSubmenu = leerOpcion(0, 3);
+
+        // 3. Ejecutar la lógica con switch
+        switch (opcionSubmenu) {
+        case 1:
+            cout << "\n\t\t>> Ejecutando: Ingresar Sucursal..." << endl;
+            // llamarAFuncionIngresoSucursal();
+            break;
+        case 2:
+            cout << "\n\t\t>> Ejecutando: Mostrar Sucursales..." << endl;
+            // llamarAFuncionMostrarSucursales();
+            break;
+        case 3:
+            cout << "\n\t\t>> Ejecutando: Eliminar Sucursal..." << endl;
+            // llamarAFuncionEliminarSucursal();
+            break;
+        case 0:
+            // El bucle terminará automáticamente después de esta iteración.
+            cout << "\n\t\tRegresando al Menú Principal..." << endl;
+            break;
+        }
+
+        // Si la opción NO es 0, hacemos una pausa para que el usuario vea el resultado de la acción.
+        if (opcionSubmenu != 0) {
+            cout << "\t\tPresione ENTER para volver al submenú...";
+            // usamos cin.get() aquí para esperar una pulsación.
+            cin.get();
+        }
+
+    } // Fin del while
+}
+void Utilidades::mostrarSubmenuColaboradores() {
+    int opcionSubmenu = -1; // Inicializamos a un valor != 0 para entrar al bucle.
+
+    // El bucle se ejecuta mientras la opción NO sea 0 (Regresar al Menú Principal).
+    while (opcionSubmenu != 0) {
+
+        // 1. Mostrar el menú
+        limpiarConsola();
+        cout << "\n\t\t======================================================" << endl;
+        cout << "\t\t               SUBMENÚ DE COLABORADORES               " << endl;
+        cout << "\t\t======================================================" << endl;
+        cout << "\t\t(1) Incluir Colaborador en Sucursal" << endl;
+        cout << "\t\t(2) Mostrar Colaborador" << endl;
+        cout << "\t\t(3) Eliminar Colaborador" << endl;
+        cout << "\t\t(4) Reporte de alquileres por colaborador" << endl;
+        cout << "\t\t(0) Regresar al Menú Principal" << endl;
+        cout << "\t\t------------------------------------------------------" << endl;
+
+        // 2. Leer la opción (Rango de 0 a 4)
+        // Llamada a la función de la misma clase.
+        opcionSubmenu = leerOpcion(0, 4);
+
+        // 3. Ejecutar la lógica con switch
+        switch (opcionSubmenu) {
+        case 1:
+            cout << "\n\t\t>> Ejecutando: Incluir Colaborador en Sucursal..." << endl;
+            // llamar a funcion IncluirColaborador();
+            break;
+        case 2:
+            cout << "\n\t\t>> Ejecutando: Mostrar Colaborador..." << endl;
+            // llamar a funcion MostrarColaborador();
+            break;
+        case 3:
+            cout << "\n\t\t>> Ejecutando: Eliminar Colaborador..." << endl;
+            // llamar a funcion EliminarColaborador();
+            break;
+        case 4:
+            cout << "\n\t\t>> Ejecutando: Reporte de Alquileres..." << endl;
+            // llamar a funcion ReporteAlquileres();
+            break;
+        case 0:
+            // El bucle terminará automáticamente después de esta iteración.
+            cout << "\n\t\tRegresando al Menú Principal..." << endl;
+            break;
+        }
+
+        // Si la opción NO es 0, hacemos una pausa para que el usuario vea el resultado de la acción.
+        if (opcionSubmenu != 0) {
+            cout << "\t\tPresione ENTER para volver al submenú...";
+            // usamos cin.get() aquí para esperar una pulsación.
+            cin.get();
+        }
+
+    } // Fin del while
+}
+
+
+
+void Utilidades::mostrarSubmenuCarrosPlanteles() {
+    int opcionSubmenu = -1; // Inicializamos a un valor != 0 para entrar al bucle.
+
+    // El bucle se ejecuta mientras la opción NO sea 0 (Regresar al Menú Principal).
+    while (opcionSubmenu != 0) {
+
+        // 1. Mostrar el menú
+        limpiarConsola();
+        cout << "\n\t\t======================================================" << endl;
+        cout << "\t\t            SUBMENÚ DE CARROS Y PLANTELES             " << endl;
+        cout << "\t\t======================================================" << endl;
+        cout << "\t\t(1) Crear Plantel" << endl;
+        cout << "\t\t(2) Visualizacion Grafica de Plantel" << endl;
+        cout << "\t\t(3) Ingreso de Vehiculo" << endl;
+        cout << "\t\t(4) Visualizacion de Vehiculo" << endl;
+        cout << "\t\t(5) Eliminacion de Vehiculo" << endl;
+        cout << "\t\t(6) Reasignacion de Vehiculo en Plantel" << endl;
+        cout << "\t\t(7) Cambio de Estado de Vehiculo" << endl;
+        cout << "\t\t(8) Estados de un Vehiculo especifico" << endl;
+        cout << "\t\t(9) Reportaje de porcentaje de ocupacion de los planteles" << endl;
+        cout << "\t\t(10) Traslado de Vehiculos a Plantel (OPTATIVO)" << endl;
+        cout << "\t\t(0) Regresar al Menú Principal" << endl;
+        cout << "\t\t------------------------------------------------------" << endl;
+
+        // 2. Leer la opción (Rango de 0 a 10)
+        // Llamada a la función de la misma clase.
+        opcionSubmenu = leerOpcion(0, 10);
+
+        // 3. Ejecutar la lógica con switch
+        switch (opcionSubmenu) {
+        case 1:
+            cout << "\n\t\t>> Ejecutando: Crear Plantel..." << endl;
+            // llamar a funcion CrearPlantel();
+            break;
+        case 2:
+            cout << "\n\t\t>> Ejecutando: Visualizacion Grafica de Plantel..." << endl;
+            // llamar a funcion VisualizacionPlantel();
+            break;
+        case 3:
+            cout << "\n\t\t>> Ejecutando: Ingreso de Vehiculo..." << endl;
+            // llamar a funcion IngresoVehiculo();
+            break;
+        case 4:
+            cout << "\n\t\t>> Ejecutando: Visualizacion de Vehiculo..." << endl;
+            // llamar a funcion VisualizacionVehiculo();
+            break;
+        case 5:
+            cout << "\n\t\t>> Ejecutando: Eliminacion de Vehiculo..." << endl;
+            // llamar a funcion EliminacionVehiculo();
+            break;
+
+        case 6:
+            cout << "\n\t\t>> Ejecutando: Reasignacion de Vehiculo en Plantel..." << endl;
+            // llamar a funcion ReasignaVehiculoPlantel();
+            break;
+        case 7:
+            cout << "\n\t\t>> Ejecutando: Cambio de Estado de Vehiculo..." << endl;
+            // llamar a funcion CambioEstadoVehiculo();
+            break;
+        case 8:
+            cout << "\n\t\t>> Ejecutando: Estados de un Vehiculo especifico..." << endl;
+            // llamar a funcion VerEstadosVehiculo();
+            break;
+        case 9:
+            cout << "\n\t\t>> Ejecutando: Reportaje de porcentaje de ocupacion de los planteles..." << endl;
+            // llamar a funcion PorcenOcupacionPlantel();
+            break;
+        case 10:
+            cout << "\n\t\t>> Ejecutando: Traslado de Vehiculos a Plantel (OPTATIVO)..." << endl;
+            // llamar a funcion TrasladoVehiculosPlantel();
+            break;
+        case 0:
+            // El bucle terminará automáticamente después de esta iteración.
+            cout << "\n\t\tRegresando al Menú Principal..." << endl;
+            break;
+        }
+
+        // Si la opción NO es 0, hacemos una pausa para que el usuario vea el resultado de la acción.
+        if (opcionSubmenu != 0) {
+            cout << "\t\tPresione ENTER para volver al submenú...";
+            // usamos cin.get() aquí para esperar una pulsación.
+            cin.get();
+        }
+
+    } // Fin del while
+}
+
+void Utilidades::mostrarSubmenuSolicitudesContratos() {
+    int opcionSubmenu = -1; // Inicializamos a un valor != 0 para entrar al bucle.
+
+    // El bucle se ejecuta mientras la opción NO sea 0 (Regresar al Menú Principal).
+    while (opcionSubmenu != 0) {
+
+        // 1. Mostrar el menú
+        limpiarConsola();
+        cout << "\n\t\t======================================================" << endl;
+        cout << "\t\t            SUBMENÚ DE CARROS Y PLANTELES             " << endl;
+        cout << "\t\t======================================================" << endl;
+        cout << "\t\t(1) Creacion de Solicitud" << endl;
+        cout << "\t\t(2) Visualización de solicitudes/contratos por sucursal" << endl;
+        cout << "\t\t(3) Visualización de solicitud/contratos especifica" << endl;
+        cout << "\t\t(4) Aprobación/rechazo de solicitud" << endl;
+        cout << "\t\t(5) Recepción de vehículo en prestado" << endl;
+        cout << "\t\t(6) Reporte de contratos para vehículos especifico" << endl;
+        cout << "\t\t(0) Regresar al Menú Principal" << endl;
+        cout << "\t\t------------------------------------------------------" << endl;
+
+        // 2. Leer la opción (Rango de 0 a 6)
+        // Llamada a la función de la misma clase.
+        opcionSubmenu = leerOpcion(0, 6);
+
+        // 3. Ejecutar la lógica con switch
+        switch (opcionSubmenu) {
+        case 1:
+            cout << "\n\t\t>> Ejecutando: Creación  de solicitud..." << endl;
+            // llamar a funcion CrearSolicitud();
+            break;
+        case 2:
+            cout << "\n\t\t>> Ejecutando: Visualización de solicitudes/contratos por sucursal..." << endl;
+            // llamar a funcion VerSoliCont_Sucursal();
+            break;
+        case 3:
+            cout << "\n\t\t>> Ejecutando: Visualización de solicitud/contratos especifica..." << endl;
+            // llamar a funcion VerSoliCont_Especifico();
+            break;
+        case 4:
+            cout << "\n\t\t>> Ejecutando: Aprobación/rechazo de solicitud..." << endl;
+            // llamar a funcion ManejoSolicitud();
+            break;
+        case 5:
+            cout << "\n\t\t>> Ejecutando: Recepción de vehículo en prestado ..." << endl;
+            // llamar a funcion RecibirVehiPrestado();
+            break;
+        case 6:
+            cout << "\n\t\t>> Ejecutando: Reporte de contratos para vehículos especifico..." << endl;
+            // llamar a funcion ReporteContratosVehiEspecifico();
+            break;
+        case 0:
+            // El bucle terminará automáticamente después de esta iteración.
+            cout << "\n\t\tRegresando al Menú Principal..." << endl;
+            break;
+        }
+
+        // Si la opción NO es 0, hacemos una pausa para que el usuario vea el resultado de la acción.
+        if (opcionSubmenu != 0) {
+            cout << "\t\tPresione ENTER para volver al submenú...";
+            // usamos cin.get() aquí para esperar una pulsación.
+            cin.get();
+        }
+
+    } // Fin del while
+}
+
 
 void Utilidades::mostrarSubmenuClientes() {
     int opcionSubmenu = -1; // Inicializamos a un valor != 0 para entrar al bucle.
@@ -139,22 +439,3 @@ void Utilidades::mostrarSubmenuClientes() {
 
     } // Fin del while
 }
-
-/*void Utilidades::mostrarSubmenuSucursales(ListaEnlazada* listaSucursales) {
-    int opcion = -1;
-
-    while (opcion != 0) {
-        limpiarConsola();
-        cout << "\n\t\t======================================================" << endl;
-        cout << "\t\t             SUBMENÚ: GESTIÓN DE SUCURSALES           " << endl;
-        cout << "\t\t======================================================" << endl;
-        cout << "\t\t(1) Ingresar Nueva Sucursal" << endl;
-        cout << "\t\t(2) Visualizar Todas las Sucursales" << endl;
-        cout << "\t\t(3) Eliminar Sucursal (por Código)" << endl;
-        cout << "\t\t(0) Regresar al Menú Principal" << endl;
-        cout << "\t\t------------------------------------------------------" << endl;
-
-        opcion = leerOpcion(0, 3);
-        }
-  */  
-//}
