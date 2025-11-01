@@ -8,17 +8,17 @@
 
 using namespace std;
 
-class ListaEnlazada {
+class ListaVehiculo {
 private:
-    Nodo* cabeza; // Puntero al primer nodo
+    NodoVehiculo* cabeza; // Puntero al primer nodo
     int tamano;
 
 public:
     // Constructor
-    ListaEnlazada();
+    ListaVehiculo();
 
     // Destructor (liberará toda la lista y los Vehiculos asociados)
-    ~ListaEnlazada();
+    ~ListaVehiculo();
 
     // Métodos de gestión de la colección
     void agregarAlInicio(Vehiculo*);

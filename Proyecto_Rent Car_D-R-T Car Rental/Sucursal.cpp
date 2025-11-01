@@ -14,7 +14,7 @@ Sucursal::Sucursal(string cod, string nom, string dir, string tel) {
     telefono = tel;
 
     // **ASIGNACIÓN DINÁMICA DE LA LISTA ENLAZADA**
-    planteles = new ListaEnlazada();
+    planteles = new ListaVehiculo();
 }
 
 // ----------------------
@@ -35,7 +35,7 @@ string Sucursal::getCodigoSucursal() { return codigoSucursal; }
 string Sucursal::getNombre() { return nombre; }
 string Sucursal::getDireccion() { return direccion; }
 string Sucursal::getTelefono() { return telefono; }
-ListaEnlazada* Sucursal::getPlanteles() { return planteles; }
+ListaVehiculo* Sucursal::getPlanteles() { return planteles; }
 
 // ----------------------
 // Setters

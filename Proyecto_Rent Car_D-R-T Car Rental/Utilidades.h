@@ -39,21 +39,8 @@ public:
     void mostrarSubmenuCarrosPlanteles();
     void mostrarSubmenuSolicitudesContratos();
     void mostrarSubmenuClientes();
-    //void mostrarSubmenuSucursales(ListaEnlazada* listaSucursales);
     void ejecutarSistema();
 
-    // ----------------------------------------------------
-    // FUNCIONES CRUD PARA SUCURSALES (Instancia)
-    // ----------------------------------------------------
-    //void ingresarSucursal(ListaEnlazada* listaSucursales);
-    //void visualizarSucursales(ListaEnlazada* listaSucursales);
-    //void eliminarSucursal(ListaEnlazada* listaSucursales);
-
-
-    // ----------------------------------------------------
-    // Funciones de Creación de Objetos
-    // ----------------------------------------------------
-    //Cliente* crearNuevoCliente();
 };
 
 #endif

@@ -1,4 +1,3 @@
-
 #ifndef NODO_H
 #define NODO_H
 
@@ -7,26 +6,26 @@
 
 using namespace std;
 
-class Nodo {
+class NodoVehiculo {
 private:
     // Puntero para la asignación dinámica de memoria (requisito del proyecto)
     Vehiculo* elem;
-    Nodo* sig;
+    NodoVehiculo* sig;
 
 public:
     // Constructor
-    Nodo(Vehiculo* , Nodo* = NULL);
+    NodoVehiculo(Vehiculo* , NodoVehiculo* = NULL);
 
     // Destructor (CRÍTICO para liberar la memoria de 'elem')
-    ~Nodo();
+    ~NodoVehiculo();
 
     // Setters
     void setElemento(Vehiculo*);
-    void setSig(Nodo*);
+    void setSig(NodoVehiculo*);
 
     // Getters
     Vehiculo* getElemento(); // Retorna el puntero
-    Nodo* getSig();
+    NodoVehiculo* getSig();
 
     // Función "to string"
     string toStringNodo();

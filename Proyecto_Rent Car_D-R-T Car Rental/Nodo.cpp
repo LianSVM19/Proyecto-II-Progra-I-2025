@@ -7,7 +7,7 @@ using namespace std; // Aplicado
 // ----------------------
 // Constructor
 // ----------------------
-Nodo::Nodo(Vehiculo* el, Nodo* s) {
+NodoVehiculo::NodoVehiculo(Vehiculo* el, NodoVehiculo* s) {
     elem = el;
     sig = s;
 }
@@ -15,7 +15,7 @@ Nodo::Nodo(Vehiculo* el, Nodo* s) {
 // ----------------------
 // Destructor (Manejo de Memoria Dinámica)
 // ----------------------
-Nodo::~Nodo() {
+NodoVehiculo::~NodoVehiculo() {
     // Esencial: El nodo es dueño de la memoria de su elemento, debe liberarla.
     if (elem != NULL) {
         delete elem;
@@ -27,7 +27,7 @@ Nodo::~Nodo() {
 // Setters
 // ----------------------
 
-void Nodo::setElemento(Vehiculo* nuevoElem) {
+void NodoVehiculo::setElemento(Vehiculo* nuevoElem) {
     // Si ya existe un elemento, se libera su memoria antes de reasignar
     if (elem != NULL) {
         delete elem;
@@ -35,7 +35,7 @@ void Nodo::setElemento(Vehiculo* nuevoElem) {
     elem = nuevoElem;
 }
 
-void Nodo::setSig(Nodo* nuevoSig) {
+void NodoVehiculo::setSig(NodoVehiculo* nuevoSig) {
     sig = nuevoSig;
 }
 
@@ -43,18 +43,18 @@ void Nodo::setSig(Nodo* nuevoSig) {
 // Getters
 // ----------------------
 
-Vehiculo* Nodo::getElemento(){
+Vehiculo* NodoVehiculo::getElemento(){
     return elem;
 }
 
-Nodo* Nodo::getSig() {
+NodoVehiculo* NodoVehiculo::getSig() {
     return sig;
 }
 
 // ----------------------
 // Función "to string" (siguiendo el estilo de tabulación y endl)
 // ----------------------
-string Nodo::toStringNodo() {
+string NodoVehiculo::toStringNodo() {
     stringstream s;
 
     s << "\t\t***********************************" << endl;

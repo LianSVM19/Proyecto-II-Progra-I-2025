@@ -2,14 +2,14 @@
 
 using namespace std;
 
-ListaEnlazada::ListaEnlazada() : cabeza(NULL), tamano(0) {}
+ListaVehiculo::ListaVehiculo() : cabeza(NULL), tamano(0) {}
 
 // ----------------------
 // Destructor (CRÍTICO: Liberación total de memoria dinámica)
 // ----------------------
-ListaEnlazada::~ListaEnlazada() {
-    Nodo* actual = cabeza;
-    Nodo* siguiente = NULL;
+ListaVehiculo::~ListaVehiculo() {
+    NodoVehiculo* actual = cabeza;
+    NodoVehiculo* siguiente = NULL;
 
     while (actual != NULL) {
         siguiente = actual->getSig();
@@ -24,9 +24,9 @@ ListaEnlazada::~ListaEnlazada() {
 // ----------------------
 // Agregar (Al inicio, por simplicidad en el recorrido)
 // ----------------------
-void ListaEnlazada::agregarAlInicio(Vehiculo* nuevoDato) {
+void ListaVehiculo::agregarAlInicio(Vehiculo* nuevoDato) {
     // Se crea un nuevo Nodo con el puntero a Vehiculo
-    Nodo* nuevoNodo = new Nodo(nuevoDato);
+    NodoVehiculo* nuevoNodo = new NodoVehiculo(nuevoDato);
 
     // Enlace de punteros
     nuevoNodo->setSig(cabeza);
@@ -37,18 +37,18 @@ void ListaEnlazada::agregarAlInicio(Vehiculo* nuevoDato) {
 // ----------------------
 // Getters y Utilidades
 // ----------------------
-int ListaEnlazada::getTamano() {
+int ListaVehiculo::getTamano() {
     return tamano;
 }
 
-bool ListaEnlazada::estaVacia() {
+bool ListaVehiculo::estaVacia() {
     return cabeza == NULL;
 }
 
 // ----------------------
 // Función "to string" (siguiendo el estilo solicitado)
 // ----------------------
-string ListaEnlazada::toString() {
+string ListaVehiculo::toString() {
     stringstream s;
     s << "\t\t=====================================" << endl;
     s << "\t\tLISTA ENLAZADA: INVENTARIO DE VEHÍCULOS" << endl;
@@ -60,7 +60,7 @@ string ListaEnlazada::toString() {
         return s.str();
     }
 
-    Nodo* actual = cabeza;
+    NodoVehiculo* actual = cabeza;
     int contador = 1;
     while (actual != NULL) {
         s << "\t\t[POSICIÓN #" << contador << "]:" << endl;
