@@ -79,3 +79,61 @@ string NodoVehiculo::toStringNodo() {
 
     return s.str();
 }
+
+// =====================================
+// IMPLEMENTACIÓN DE NODOCLIENTE
+// =====================================
+
+NodoCliente::NodoCliente(Cliente* c, NodoCliente* sig) {
+    dato = c;
+    siguiente = sig;
+}
+
+NodoCliente::~NodoCliente() {
+    // Si el dato no es nulo, liberamos el objeto Cliente (sea Físico o Jurídico)
+    if (dato != NULL) {
+        delete dato;
+        dato = NULL;
+    }
+}
+
+Cliente* NodoCliente::getDato() {
+    return dato;
+}
+
+NodoCliente* NodoCliente::getSiguiente() {
+    return siguiente;
+}
+
+void NodoCliente::setDato(Cliente* nuevoDato) {
+    // Liberar la memoria antigua antes de reasignar
+    if (dato != NULL) {
+        delete dato;
+    }
+    dato = nuevoDato;
+}
+
+void NodoCliente::setSiguiente(NodoCliente* sig) {
+    siguiente = sig;
+}
+
+string NodoCliente::toStringNodo() {
+    stringstream s;
+    s << "\t\t***********************************" << endl;
+    if (dato != NULL) {
+        // Llama al toString() del objeto Cliente (polimórfico)
+        s << dato->toString();
+    }
+    else {
+        s << "\t\tEl elemento (Cliente) del Nodo es NULL." << endl;
+    }
+    s << "\t\tPuntero Siguiente (siguiente): ";
+    if (siguiente != NULL) {
+        s << "ENLAZADO A OTRO NODO." << endl;
+    }
+    else {
+        s << "NULL (Fin de la Lista)." << endl;
+    }
+    s << "\t\t***********************************" << endl;
+    return s.str();
+}

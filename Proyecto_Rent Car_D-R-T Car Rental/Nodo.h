@@ -3,6 +3,7 @@
 
 #include <string>
 #include "Vehiculo.h" 
+#include "Cliente.h"
 
 using namespace std;
 
@@ -30,5 +31,29 @@ public:
     // Función "to string"
     string toStringNodo();
 };
+
+class NodoCliente {
+private:
+    Cliente* dato;
+    NodoCliente* siguiente;
+public:
+    // Constructor (recibe el cliente a almacenar y el puntero al siguiente nodo)
+    NodoCliente(Cliente* c, NodoCliente* sig = NULL);
+
+    // Destructor (debe liberar la memoria del cliente almacenado)
+    ~NodoCliente();
+
+    // Getters
+    Cliente* getDato();
+    NodoCliente* getSiguiente();
+
+    // Setters
+    void setSiguiente(NodoCliente* sig);
+    void setDato(Cliente* nuevoDato);
+
+    // Función "to string"
+    string toStringNodo();
+};
+
 
 #endif

@@ -15,10 +15,10 @@ public:
     // Constructor: Llama directamente al constructor de la clase base Cliente
     ClienteFisico(string, string, string, string, char, string, string);
 
-    // Destructor (No virtual, por solicitud)
+    // Destructor 
     ~ClienteFisico();
 
-    // Función "to string" (Sobrescrita sin virtual)
+    // Función "to string"
     string toString();
 };
 

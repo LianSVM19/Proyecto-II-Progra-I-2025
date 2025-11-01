@@ -7,6 +7,128 @@
 
 using namespace std;
 
+Utilidades::Utilidades() {
+    // Inicializar la lista de clientes
+    listaClientes = new ListaCliente();
+    // Aquí irían otras inicializaciones de listas (ej. listaSucursales = new ListaSucursal())
+}
+
+Utilidades::~Utilidades() {
+    // Liberar la memoria de la lista de clientes al cerrar el sistema
+    delete listaClientes;
+    listaClientes = NULL; // Buenas prácticas
+}
+
+//Implementacion de cositas jajaj
+void Utilidades::ingresarCliente() {
+    string cedula, nombre, correo, telefono, fNacimiento, fInscripcion;
+    char sexo;
+    int tipoCliente = -1;
+    Cliente* nuevoCliente = NULL;
+    limpiarConsola();
+    cout << "\n\t\t--- INGRESO DE NUEVO CLIENTE ---" << endl;
+
+    // 1. Determinar el tipo de cliente
+    cout << "\t\t1. Cliente Físico" << endl;
+    cout << "\t\t2. Cliente Jurídico" << endl;
+    cout << "\t\tSeleccione el tipo de cliente (1 o 2): ";
+    tipoCliente = leerOpcion(1, 2);
+    cout << "\n";
+
+    // ===========================================
+    // FLUJO PARA CLIENTE FÍSICO
+    // ===========================================
+    if (tipoCliente == 1) {
+
+        cout << "\t\t<< INGRESO DE CLIENTE FÍSICO >>" << endl;
+
+        // Pedir datos comunes (Asegurándonos de usar getline para strings con espacios)
+        cout << "\t\tIngrese la cédula: ";
+        getline(cin, cedula);
+
+        cout << "\t\tIngrese el nombre completo: ";
+        getline(cin, nombre);
+
+        cout << "\t\tIngrese el correo electrónico: ";
+        getline(cin, correo);
+
+        cout << "\t\tIngrese el número de teléfono: ";
+        getline(cin, telefono);
+
+        cout << "\t\tIngrese la fecha de nacimiento (dd/mm/aaaa): ";
+        getline(cin, fNacimiento);
+
+        cout << "\t\tIngrese la fecha de inscripción (dd/mm/aaaa): ";
+        getline(cin, fInscripcion);
+
+        // Pedir dato específico
+        cout << "\t\tIngrese el sexo (M/F): ";
+        cin >> sexo;
+        cin.ignore(10000, '\n'); // Limpiar buffer después de cin >> char
+
+        // Crear el objeto dinámico
+        nuevoCliente = new ClienteFisico(cedula, nombre, correo, telefono, sexo, fNacimiento, fInscripcion);
+
+    }
+    // ===========================================
+    // FLUJO PARA CLIENTE JURÍDICO
+    // ===========================================
+    else if (tipoCliente == 2) {
+        double descuento;
+        string actividad;
+
+        cout << "\t\t<< INGRESO DE CLIENTE JURÍDICO >>" << endl;
+
+        // Pedir datos comunes (Asegurándonos de usar getline para strings con espacios)
+        cout << "\t\tIngrese la cédula jurídica: ";
+        getline(cin, cedula);
+
+        cout << "\t\tIngrese el nombre completo: ";
+        getline(cin, nombre);
+
+        cout << "\t\tIngrese el correo electrónico: ";
+        getline(cin, correo);
+
+        cout << "\t\tIngrese el número de teléfono: ";
+        getline(cin, telefono);
+
+        cout << "\t\tIngrese la fecha de nacimiento (dd/mm/aaaa): ";
+        getline(cin, fNacimiento);
+
+        cout << "\t\tIngrese la fecha de inscripción (dd/mm/aaaa): ";
+        getline(cin, fInscripcion);
+
+        cout << "\t\tIngrese el sexo (M/F): ";
+        cin >> sexo;
+
+        // Pedir datos específicos
+        cout << "\t\tIngrese el porcentaje de descuento (0.0 a 100.0): ";
+        // Función para leer un double de forma segura
+        while (!(cin >> descuento)) {
+            cin.clear();
+            cin.ignore(10000, '\n');
+            cout << "\t\tValor inválido. Ingrese un número para el descuento: ";
+        }
+        cin.ignore(10000, '\n'); // Limpiar buffer después de cin >> double
+
+        cout << "\t\tIngrese la actividad económica: ";
+        getline(cin, actividad);
+
+        // Crear el objeto dinámico. 'N' como sexo por defecto para empresas.
+        nuevoCliente = new ClienteJuridico(cedula, nombre, correo, telefono, sexo, fNacimiento, fInscripcion, descuento, actividad);
+    }
+    // 3. Agregar a la lista
+    if (nuevoCliente != NULL) {
+        listaClientes->agregarCliente(nuevoCliente);
+        cout << "\n\t\tCliente registrado con éxito." << endl;
+        cout << "\t\tDatos del nuevo cliente:\n" << nuevoCliente->toString() << endl;
+    }
+    else {
+        cout << "\t\tERROR: No se pudo crear el cliente (Tipo inválido)." << endl;
+    }
+}
+
+
 // ----------------------------------------------------
 // Implementación de Control de Interfaz y Consola
 // ----------------------------------------------------
@@ -406,11 +528,11 @@ void Utilidades::mostrarSubmenuClientes() {
         switch (opcionSubmenu) {
         case 1:
             cout << "\n\t\t>> Ejecutando: Ingresar Cliente..." << endl;
-            // llamarAFuncionIngresoCliente();
+            this->ingresarCliente();
             break;
         case 2:
             cout << "\n\t\t>> Ejecutando: Mostrar Cliente..." << endl;
-            // llamarAFuncionMostrarCliente();
+            cout << listaClientes->toString() << endl;
             break;
         case 3:
             cout << "\n\t\t>> Ejecutando: Eliminar Cliente..." << endl;

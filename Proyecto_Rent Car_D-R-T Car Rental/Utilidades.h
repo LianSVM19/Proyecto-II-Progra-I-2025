@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include "ListaEnlazada.h"
 
 // Declaraciones Anticipadas
 class ListaEnlazada;
@@ -20,7 +21,15 @@ class Utilidades
 {
 private:
     int op = -1;
+    ListaCliente* listaClientes;
 public:
+
+    Utilidades();
+    ~Utilidades();
+
+    // Método que gestiona el ingreso de un nuevo cliente
+    void ingresarCliente();
+
     // ----------------------------------------------------
     // Funciones de Control de Interfaz y Consola (Instancia)
     // ----------------------------------------------------

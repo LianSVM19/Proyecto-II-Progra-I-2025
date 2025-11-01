@@ -29,7 +29,7 @@ public:
     void setFechaInscripcion(string);
 
     // Función "to string" 
-    string toString();
+    virtual string toString();
 };
 
 #endif
