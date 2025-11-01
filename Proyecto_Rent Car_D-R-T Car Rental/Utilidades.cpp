@@ -136,6 +136,61 @@ void Utilidades::ingresarCliente() {
         cout << "\t\tERROR: No se pudo crear el cliente (Tipo inválido)." << endl;
     }
 }
+void Utilidades::ingresarColaborador() {
+    string cedula, nombre, correo, telefono, fNacimiento, fInscripcion, fechaIngreso, puesto;
+    char sexo;
+    int tipoColaborador = -1;
+    Colaborador* nuevoColaborador = NULL;
+    limpiarConsola();
+    cout << "\n\t\t--- INGRESO DE NUEVO Colaborador ---" << endl;
+
+        cout << "\t\t<< INGRESO DE CLIENTE FÍSICO >>" << endl;
+
+        // Pedir datos comunes (Asegurándonos de usar getline para strings con espacios)
+        cout << "\t\tIngrese la cédula: ";
+        getline(cin, cedula);
+
+        cout << "\t\tIngrese el nombre completo: ";
+        getline(cin, nombre);
+
+        cout << "\t\tIngrese el correo electrónico: ";
+        getline(cin, correo);
+
+        cout << "\t\tIngrese el número de teléfono: ";
+        getline(cin, telefono);
+
+        cout << "\t\tIngrese la fecha de nacimiento (dd/mm/aaaa): ";
+        getline(cin, fNacimiento);
+
+        cout << "\t\tIngrese la fecha de inscripción (dd/mm/aaaa): ";
+        getline(cin, fInscripcion);
+
+        // Pedir dato específico
+        cout << "\t\tIngrese el sexo (M/F): ";
+        cin >> sexo;
+
+        cout << "Ingrese la fecha de ingreso (dd/mm/aaaa): ";
+        getline(cin, fechaIngreso);
+
+        cout << "Ingrese el Puesto del Colaborador:";
+        getline(cin, puesto);
+
+        cin.ignore(10000, '\n'); // Limpiar buffer después de cin >> char
+
+        // Crear el objeto dinámico
+        nuevoColaborador = new Colaborador(cedula, nombre, correo, telefono, sexo, fNacimiento, fInscripcion);
+
+   
+    // 3. Agregar a la lista
+    if (nuevoColaborador != NULL) {
+        listaColaboradores->agregarColaborador(nuevoColaborador);
+        cout << "\n\t\tColaborador registrado con éxito." << endl;
+        cout << "\t\tDatos del nuevo Colaborador:\n" << nuevoColaborador->toString() << endl;
+    }
+    else {
+        cout << "\t\tERROR: No se pudo crear el Colaborador." << endl;
+    }
+}
 
 // ====================================================
 // IMPLEMENTACIÓN DE GESTIÓN DE SUCURSALES
@@ -152,7 +207,7 @@ void Utilidades::ingresarSucursal() {
 
     // Opcional: Verificar si ya existe una sucursal con ese código
     if (listaSucursales->buscar(codigo) != nullptr) {
-        cout << "\t\t❌ ERROR: Ya existe una sucursal con el código " << codigo << endl;
+        cout << "\t\tERROR: Ya existe una sucursal con el código " << codigo << endl;
         return;
     }
 
@@ -170,7 +225,7 @@ void Utilidades::ingresarSucursal() {
 
     listaSucursales->agregarSucursal(nuevaSucursal); // Asume método agregarSucursal en ListaSucursal
 
-    cout << "\n\t\t✅ Sucursal '" << nombre << "' registrada con éxito." << endl;
+    cout << "\n\t\tSucursal '" << nombre << "' registrada con éxito." << endl;
 }
 
 void Utilidades::mostrarSucursales() {

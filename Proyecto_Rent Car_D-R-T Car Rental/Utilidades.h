@@ -24,6 +24,8 @@ private:
     int op = -1;
     ListaCliente* listaClientes;
     ListaSucursal* listaSucursales;
+    ListaColaborador* listaColaboradores;
+
 public:
 
     Utilidades();
@@ -31,6 +33,7 @@ public:
 
     // Método que gestiona el ingreso de un nuevo cliente
     void ingresarCliente();
+    void ingresarColaborador();
 
     // ====================================================
     // 1. GESTIÓN DIRECTA DE SUCURSALES
