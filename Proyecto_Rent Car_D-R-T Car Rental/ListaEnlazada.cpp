@@ -34,6 +34,19 @@ void ListaVehiculo::agregarAlInicio(Vehiculo* nuevoDato) {
     tamano++;
 }
 
+Vehiculo* ListaVehiculo::buscar(string cedula) {
+    NodoVehiculo* actual = cabeza;
+    while (actual != NULL) {
+        // Accedemos al Vehiculo* y luego a su método getCedula()
+        if (actual->getElemento()->getPlaca() == cedula) {
+            return actual->getElemento();
+        }
+        actual = actual->getSig();
+    }
+    return NULL; // Retorna NULL si no se encuentra
+}
+
+
 // ----------------------
 // Getters y Utilidades
 // ----------------------
@@ -403,6 +416,10 @@ ListaSucursal::~ListaSucursal() {
     tamano = 0;
 }
 
+NodoSucursal* ListaSucursal::getCab() {
+    return cab;
+}
+
 // ----------------------
 // Agregar Sucursal (Al final de la lista)
 // ----------------------
@@ -624,6 +641,17 @@ int ListaPlantel::getTamano() {
 bool ListaPlantel::estaVacia() {
     return cab == NULL;
 }
+Sucursal* ListaSucursal::getSucursal() {
+    NodoSucursal* actual = cab;
+    while (actual != NULL) {
+        // Accedemos al Sucursal* y luego a su método getId()
+        if (actual->getSiguiente() == NULL) {
+            return actual->getDato();
+        }
+    }
+    return NULL; // Retorna NULL si no se encuentra
+}
+
 
 // ----------------------
 // Función "to string"

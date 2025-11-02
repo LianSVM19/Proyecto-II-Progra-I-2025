@@ -470,6 +470,306 @@ void Utilidades::gestionarColaboradoresPorSucursal(int operacion) {
     }
 }
 
+// Implementación del método auxiliar para buscar un vehículo en todas las sucursales
+Vehiculo* Utilidades::buscarVehiculoGlobal(string placa, string& codigoSucursalEncontrado) {
+
+    // Obtiene el inicio de la lista de sucursales
+    NodoSucursal* actualSucursal = listaSucursales->getCab();
+
+    while (actualSucursal != NULL) {
+
+        Sucursal* suc = actualSucursal->getDato();
+        ListaVehiculo* listaVehiculos = suc->getListaVehiculos();
+
+        // Busca el vehículo en la lista de la sucursal actual
+        Vehiculo* vehiculo = listaVehiculos->buscar(placa);
+
+        if (vehiculo != NULL) {
+            // Asigna el código de la sucursal actual a la referencia
+            codigoSucursalEncontrado = suc->getCodigoSucursal();
+            return vehiculo; // Devuelve el vehículo
+        }
+
+        // Avanza al siguiente nodo
+        actualSucursal = actualSucursal->getSiguiente();
+    }
+    return NULL; // Vehículo no encontrado
+}
+
+
+// ========================================================
+// 2. IMPLEMENTACIÓN DEL MÉTODO DE PRESENTACIÓN
+//    (Este es el que tenía el error de llamada al 'buscar')
+// ========================================================
+void Utilidades::mostrarInformacionVehiculoGlobal(string placa) {
+
+    // Variable para capturar el resultado de la búsqueda
+    string codigoSucursalDelVehiculo = "";
+
+    // LÍNEA CORREGIDA: Usando 'this->' para llamar al método miembro 'buscarVehiculoGlobal'
+    Vehiculo* vehiculoEncontrado = buscarVehiculoGlobal(placa, codigoSucursalDelVehiculo);
+
+    // Imprimimos el resultado
+    if (vehiculoEncontrado != NULL) {
+        cout << "\t\t===================================================" << endl;
+        cout << "\t\t--- RESULTADO DE LA BÚSQUEDA GLOBAL ---" << endl;
+        cout << "\t\t¡Vehículo encontrado!" << endl;
+        cout << "\t\tPlaca: " << vehiculoEncontrado->getPlaca() << endl;
+        // La información del vehículo es limpia, y la ubicación es de la Sucursal
+        cout << "\t\tUbicación (Código Sucursal): " << codigoSucursalDelVehiculo << endl;
+        cout << "\t\t===================================================" << endl;
+    }
+    else {
+        cout << "\t\t===================================================" << endl;
+        cout << "\t\t--- RESULTADO DE LA BÚSQUEDA GLOBAL ---" << endl;
+        cout << "\t\tEl vehículo con placa [" << placa << "] no se encontró en ninguna sucursal." << endl;
+        cout << "\t\t===================================================" << endl;
+    }
+}
+void Utilidades::CrearSolicitud() {
+    string codigoSoli, cedulaCliente, idColaborador, codigoSucursal, placaVehiculo, fIni, fFin;
+    int dias = 0;
+    double precioTotal = 0.0;
+
+    // Punteros a las entidades que necesitamos:
+    Cliente* cliente = NULL;
+    Colaborador* colaborador = NULL;
+    Sucursal* sucursal = NULL;
+    Vehiculo* vehiculo = NULL;
+
+    limpiarConsola();
+    cout << "\n\t\t--- CREACIÓN DE NUEVA SOLICITUD DE ALQUILER ---" << endl;
+
+    // 1. Obtener y buscar el Cliente (Cédula)
+    cout << "\t\tIngrese la cédula del Cliente: ";
+    getline(cin, cedulaCliente);
+    cliente = listaClientes->buscar(cedulaCliente);
+    if (cliente == NULL) {
+        cout << "\t\tERROR: Cliente con cédula " << cedulaCliente << " no encontrado." << endl;
+        pausa();
+        return;
+    }
+
+    // 2. Obtener y buscar el Colaborador (Cédula)
+    cout << "\t\tIngrese la cédula del Colaborador que registra: ";
+    getline(cin, idColaborador);
+    colaborador = listaColaboradores->buscar(idColaborador);
+    if (colaborador == NULL) {
+        cout << "\t\tERROR: Colaborador con cédula " << idColaborador << " no encontrado." << endl;
+        pausa();
+        return;
+    }
+
+    // 3. Obtener y buscar el Vehículo (Placa)
+    cout << "\t\tIngrese la Placa del Vehículo a alquilar: ";
+    getline(cin, placaVehiculo);
+
+    // *** CAMBIO CRUCIAL ***: 
+    // Llamamos a buscarVehiculoGlobal con dos argumentos: la placa y la variable 'codigoSucursal' 
+    // que se llenará con el código de la sucursal que tiene el carro.
+    vehiculo = this->buscarVehiculoGlobal(placaVehiculo, codigoSucursal); // <-- AQUÍ ESTÁ EL CAMBIO
+
+    if (vehiculo == NULL) {
+        cout << "\t\tERROR: Vehículo con placa " << placaVehiculo << " no encontrado en ninguna sucursal." << endl;
+        pausa();
+        return;
+    }
+
+    // 4. Validar estado del vehículo
+    if (vehiculo->getEstado() != "Disponible") {
+        cout << "\t\tERROR: El vehículo " << placaVehiculo << " no está disponible. Estado actual: " << vehiculo->getEstado() << endl;
+        pausa();
+        return;
+    }
+
+    // 5. Obtener y buscar la Sucursal (Código)
+    // El 'codigoSucursal' ya fue llenado por la función buscarVehiculoGlobal.
+    sucursal = listaSucursales->buscar(codigoSucursal);
+
+    // Si la sucursal es NULL, es un error interno grave, ya que el código se obtuvo de una Sucursal existente.
+    if (sucursal == NULL) {
+        cout << "\t\tERROR INTERNO: Sucursal asociada al vehículo no encontrada." << endl;
+        pausa();
+        return;
+    }
+
+
+    // 6. Datos de la Solicitud
+    cout << "\t\tIngrese el código de la nueva Solicitud (ej. S001): ";
+    getline(cin, codigoSoli);
+    cout << "\t\tIngrese la Fecha de Inicio (DD/MM/AAAA): ";
+    getline(cin, fIni);
+    cout << "\t\tIngrese la Fecha de Entrega Estimada (DD/MM/AAAA): ";
+    getline(cin, fFin);
+    cout << "\t\tIngrese la cantidad de días de alquiler: ";
+
+    // Lógica para leer 'dias' (entero)
+    cin >> dias;
+    // Agregamos una verificación simple para la lectura
+    if (cin.fail()) {
+        cin.clear();
+        cout << "\t\tEntrada inválida. Días de alquiler deben ser un número." << endl;
+        pausa();
+        cin.ignore(10000, '\n');
+        return;
+    }
+    cin.ignore(10000, '\n'); // Limpiar buffer
+
+    // 7. Cálculo del Precio Total
+    if (dias <= 0) {
+        cout << "\t\tERROR: Los días de alquiler deben ser un número positivo." << endl;
+        pausa();
+        return;
+    }
+
+    precioTotal = vehiculo->getPrecioDiario() * dias;
+
+    // 8. Creación de la Solicitud
+    // Asumo que SolicitudAlquiler requiere un puntero a Sucursal
+    SolicitudAlquiler* nuevaSoli = new SolicitudAlquiler(
+        codigoSoli, cliente, colaborador, sucursal, vehiculo, fIni, fFin,
+        precioTotal, "Pendiente" // Estado inicial
+    );
+    nuevaSoli->setCanDiasAlqui(dias);
+
+    listaSolicitudes->agregarSolicitud(nuevaSoli);
+
+    cout << "\n\t\t--- SOLICITUD CREADA CON ÉXITO ---" << endl;
+    cout << nuevaSoli->toString() << endl;
+    pausa();
+}
+
+
+void Utilidades::VerSolicitudesContratos() {
+    limpiarConsola();
+    cout << "\n\t\t===================================================" << endl;
+    cout << "\t\t--- VISUALIZACIÓN DE SOLICITUDES Y CONTRATOS ---" << endl;
+    cout << "\t\t===================================================" << endl;
+
+    // 1. Mostrar todas las Solicitudes
+    cout << "\n\t\t--- 1. LISTA DE SOLICITUDES DE ALQUILER ---" << endl;
+    if (listaSolicitudes->estaVacia()) {
+        cout << "\t\t[INFO] No hay solicitudes registradas actualmente." << endl;
+    }
+    else {
+        // Asumo que ListaSolicitud tiene un método 'toString()' o 'mostrar()'
+        // que imprime todas las solicitudes. Usaremos toString() si está implementado
+        // en la lista, si no, se puede iterar, pero asumimos el método de la lista.
+        cout << listaSolicitudes->toString();
+    }
+    cout << "\t\t---------------------------------------------------" << endl;
+
+
+    // 2. Mostrar todos los Contratos
+    cout << "\n\t\t--- 2. LISTA DE CONTRATOS DE ALQUILER ---" << endl;
+    if (listaContratos->estaVacia()) {
+        cout << "\t\t[INFO] No hay contratos registrados actualmente." << endl;
+    }
+    else {
+        // Asumo que ListaContrato tiene un método 'toString()' o 'mostrar()'
+        cout << listaContratos->toString();
+    }
+    cout << "\t\t---------------------------------------------------" << endl;
+
+    pausa();
+}
+
+
+
+
+//jaja
+void Utilidades::AprobarRechazarSolicitud() {
+    string codigoSoli;
+    char opcion;
+    limpiarConsola();
+    cout << "\n\t\t--- APROBACIÓN / RECHAZO DE SOLICITUD (1 pto) ---" << endl;
+
+    cout << "\t\tIngrese el código de la Solicitud a procesar: ";
+    getline(cin, codigoSoli);
+
+    SolicitudAlquiler* solicitud = listaSolicitudes->buscar(codigoSoli);
+
+    if (solicitud == NULL || solicitud->getEstado() != "Pendiente") {
+        cout << "\t\tERROR: Solicitud no encontrada o ya procesada." << endl;
+    }
+    else {
+        cout << "\n\t\t--- DETALLE DE LA SOLICITUD ---" << endl;
+        cout << solicitud->toString() << endl;
+        cout << "\t\t[A]probar o [R]echazar la solicitud? (A/R): ";
+        cin >> opcion;
+        cin.ignore(10000, '\n');
+
+        if (opcion == 'A' || opcion == 'a') {
+            solicitud->setEstado("Aprobada");
+
+            // 1. Cambiar estado del vehículo
+            Vehiculo* vehiculo = solicitud->getVehiculo();
+            vehiculo->setEstado("Alquilado");
+
+            // 2. Crear Contrato
+            string codigoContrato = "CONT-" + codigoSoli;
+            ContratoAlquiler* nuevoContrato = new ContratoAlquiler(
+                codigoContrato, solicitud->getPrecioTotal(), "Activo", solicitud
+            );
+
+            listaContratos->agregarContrato(nuevoContrato);
+
+            cout << "\n\t\t¡APROBACIÓN EXITOSA! Contrato " << codigoContrato << " creado." << endl;
+
+        }
+        else if (opcion == 'R' || opcion == 'r') {
+            solicitud->setEstado("Rechazada");
+            cout << "\n\t\t¡RECHAZO EXITOSO! Solicitud " << codigoSoli << " rechazada." << endl;
+        }
+        else {
+            cout << "\t\tOpción inválida. No se realizó ninguna acción." << endl;
+        }
+    }
+    pausa();
+}
+
+
+
+
+void Utilidades::RecepcionVehiculo() {
+    string codigoContrato;
+    limpiarConsola();
+    cout << "\n\t\t--- RECEPCIÓN DE VEHÍCULO Y FINALIZACIÓN DE CONTRATO (3 pts) ---" << endl;
+
+    cout << "\t\tIngrese el código del Contrato a finalizar: ";
+    getline(cin, codigoContrato);
+
+    ContratoAlquiler* contrato = listaContratos->buscar(codigoContrato);
+
+    if (contrato == NULL) {
+        cout << "\t\tERROR: Contrato con código " << codigoContrato << " no encontrado." << endl;
+    }
+    else if (contrato->getEstado() == "Finalizado") {
+        cout << "\t\tERROR: El contrato ya se encuentra 'Finalizado'." << endl;
+    }
+    else if (contrato->getEstado() == "Activo") {
+
+        // 1. Finalizar el Contrato
+        contrato->setEstado("Finalizado");
+
+        // 2. Obtener Vehículo y cambiar su estado
+        Vehiculo* vehiculo = contrato->getSolicitud()->getVehiculo();
+
+        // Transición: Alquilado -> Devuelto (según su lógica interna)
+        vehiculo->setEstado("Devuelto");
+
+        cout << "\n\t\t¡RECEPCIÓN EXITOSA!" << endl;
+        cout << "\t\tEl contrato " << codigoContrato << " ha sido marcado como 'Finalizado'." << endl;
+        cout << "\t\tEl vehículo " << vehiculo->getPlaca() << " ha sido marcado como 'Devuelto'." << endl;
+        cout << "\t\tNOTA: El vehículo en estado 'Devuelto' debe pasar a 'Revisión' o 'Lavado'." << endl;
+
+    }
+    else {
+        cout << "\t\tERROR: El contrato no está en estado 'Activo'." << endl;
+    }
+    pausa();
+}
+
 
 // ----------------------------------------------------
 // Implementación de Control de Interfaz y Consola
@@ -773,18 +1073,19 @@ void Utilidades::mostrarSubmenuSolicitudesContratos() {
         cout << "\t\t(4) Aprobación/rechazo de solicitud" << endl;
         cout << "\t\t(5) Recepción de vehículo en prestado" << endl;
         cout << "\t\t(6) Reporte de contratos para vehículos especifico" << endl;
+        cout << "\t\t(7) Visualizar TODAS las Solicitudes/Contratos (Auxiliar)" << endl;
         cout << "\t\t(0) Regresar al Menú Principal" << endl;
         cout << "\t\t------------------------------------------------------" << endl;
 
-        // 2. Leer la opción (Rango de 0 a 6)
+        // 2. Leer la opción (Rango de 0 a 7)
         // Llamada a la función de la misma clase.
-        opcionSubmenu = leerOpcion(0, 6);
+        opcionSubmenu = leerOpcion(0, 7);
 
         // 3. Ejecutar la lógica con switch
         switch (opcionSubmenu) {
         case 1:
             cout << "\n\t\t>> Ejecutando: Creación  de solicitud..." << endl;
-            // llamar a funcion CrearSolicitud();
+            this->CrearSolicitud();
             break;
         case 2:
             cout << "\n\t\t>> Ejecutando: Visualización de solicitudes/contratos por sucursal..." << endl;
@@ -796,15 +1097,20 @@ void Utilidades::mostrarSubmenuSolicitudesContratos() {
             break;
         case 4:
             cout << "\n\t\t>> Ejecutando: Aprobación/rechazo de solicitud..." << endl;
-            // llamar a funcion ManejoSolicitud();
+            this->AprobarRechazarSolicitud();
             break;
         case 5:
             cout << "\n\t\t>> Ejecutando: Recepción de vehículo en prestado ..." << endl;
             // llamar a funcion RecibirVehiPrestado();
+            this->RecepcionVehiculo();
             break;
         case 6:
             cout << "\n\t\t>> Ejecutando: Reporte de contratos para vehículos especifico..." << endl;
             // llamar a funcion ReporteContratosVehiEspecifico();
+            break;
+        case 7:
+            cout << "\n\t\t>> Ejecutando: Visualizacion de todas las solicitudes / contratos..." << endl;
+            this->VerSolicitudesContratos();
             break;
         case 0:
             // El bucle terminará automáticamente después de esta iteración.

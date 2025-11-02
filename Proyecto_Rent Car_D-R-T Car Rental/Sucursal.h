@@ -10,6 +10,7 @@
 class ListaCliente; 
 class ListaColaborador;
 class ListaPlantel;
+class ListaVehiculo;
 using namespace std;
 
 class Sucursal {
@@ -23,6 +24,7 @@ private:
     ListaCliente* clientes; 
     ListaColaborador* colaboradores;
     ListaPlantel* plantel;
+    ListaVehiculo* inventarioVehiculos;
 
 public:
     // Constructor
@@ -39,6 +41,7 @@ public:
     ListaCliente* getClientes();  
     ListaColaborador* getColaboradores();
     ListaPlantel* getListaPlantel();
+    ListaVehiculo* getListaVehiculos();
 
     // Setters
     void setNombre(string);

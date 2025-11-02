@@ -24,6 +24,7 @@ public:
 
     // Métodos de gestión de la colección
     void agregarAlInicio(Vehiculo*);
+    Vehiculo* buscar(string);
 
     // Getters y utilidades
     int getTamano();
@@ -114,6 +115,8 @@ public:
     // Getters y utilidades
     int getTamano();
     bool estaVacia();
+    Sucursal* getSucursal();
+    NodoSucursal* getCab() { return cab; }
 
     // Función "to string" para mostrar todas las sucursales
     string toString();

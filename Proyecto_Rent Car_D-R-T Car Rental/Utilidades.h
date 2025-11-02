@@ -15,6 +15,7 @@ class Cliente;
 class ClienteFisico;
 class ClienteJuridico;
 class Colaborador;
+class Vehiculo;
 
 using namespace std;
 
@@ -25,15 +26,23 @@ private:
     ListaCliente* listaClientes;
     ListaSucursal* listaSucursales;
     ListaColaborador* listaColaboradores;
+    ListaSolicitud* listaSolicitudes;
+    ListaContrato* listaContratos;
+
 
 public:
 
     Utilidades();
     ~Utilidades();
-
+    Vehiculo* buscarVehiculoGlobal(string, string&);
     void crearPlantelSucursal();
     void visualizarPlantel();
-
+    void CrearSolicitud();
+    void mostrarInformacionVehiculoGlobal(string placa);
+    void VerSolicitudesContratos(); 
+    void AprobarRechazarSolicitud();
+    void RecepcionVehiculo();
+    
 
     // Método que gestiona el ingreso de un nuevo cliente
     void ingresarCliente();

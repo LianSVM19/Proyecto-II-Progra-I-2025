@@ -19,6 +19,7 @@ Sucursal::Sucursal(string cod, string nom, string dir, string tel) {
     clientes = new ListaCliente();   
     colaboradores = new ListaColaborador();
     plantel = new ListaPlantel();
+    inventarioVehiculos = new ListaVehiculo();
 }
 
 // ----------------------
@@ -42,6 +43,8 @@ Sucursal::~Sucursal() {
     }
 }
 
+
+
 // ----------------------
 // Getters
 // ----------------------
@@ -52,6 +55,7 @@ string Sucursal::getTelefono() { return telefono; }
 ListaPlantel* Sucursal::getListaPlantel() { return plantel; }
 ListaCliente* Sucursal::getClientes() { return clientes; }        // <-- GETTER DE CLIENTES
 ListaColaborador* Sucursal::getColaboradores() { return colaboradores; } // <-- GETTER DE COLABORADORES
+ListaVehiculo* Sucursal::getListaVehiculos() { return inventarioVehiculos; }
 
 // ----------------------
 // Setters
