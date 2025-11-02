@@ -92,7 +92,7 @@ public:
 };
 
 // =====================================
-// DEFINICIÓN DE LISTASUCURSAL (NUEVO)
+// DEFINICIÓN DE LISTASUCURSAL
 // =====================================
 class ListaSucursal {
 private:
@@ -145,7 +145,70 @@ public:
     int getTamano();
     bool estaVacia();
 
-    // Función "to string" para mostrar todas las sucursales
+    // Función "to string" para mostrar todas los planteles
     string toString();
 };
+
+// =====================================
+// DEFINICIÓN DE LISTASOLICITUD
+// =====================================
+class ListaSolicitud {
+private:
+    NodoSolicitud* cab;
+    int tamano;
+
+public:
+    // Constructor (inicia la lista vacía)
+    ListaSolicitud();
+
+    // Destructor (libera todos los nodos y sus planteles)
+    ~ListaSolicitud();
+
+    // Métodos de gestión de la colección
+    void agregarSolicitud(SolicitudAlquiler*);
+    SolicitudAlquiler* buscar(string); // Busca una Solicitud por su código
+    bool eliminar(string); // Elimina una Solicitud por su código
+
+    // Getters y utilidades
+    int getTamano();
+    bool estaVacia();
+
+    // Función "to string" para mostrar todas las solicitudes
+    string toString();
+};
+
+// =====================================
+// DEFINICIÓN DE LISTACONTRATO
+// =====================================
+class ListaContrato {
+private:
+    NodoContrato* cab;
+    int tamano;
+
+public:
+    // Constructor (inicia la lista vacía)
+    ListaContrato();
+
+    // Destructor (libera todos los nodos y sus planteles)
+    ~ListaContrato();
+
+    // Métodos de gestión de la colección
+    void agregarContrato(ContratoAlquiler*);
+    ContratoAlquiler* buscar(string); // Busca un Contrato por su código
+    bool eliminar(string); // Elimina un Contrato por su código
+
+    // Getters y utilidades
+    int getTamano();
+    bool estaVacia();
+
+    // Función "to string" para mostrar todas los Contratos
+    string toString();
+};
+
+
+
+
+
+
+
 #endif
