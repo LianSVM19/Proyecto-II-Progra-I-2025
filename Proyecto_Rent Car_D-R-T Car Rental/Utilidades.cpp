@@ -296,8 +296,8 @@ void Utilidades::ingresarSucursal() {
     cout << "\t\tIngrese el codigo de la sucursal: ";
     getline(cin, codigo);
 
-    // Opcional: Verificar si ya existe una sucursal con ese codigo
-    if (listaSucursales->buscar(codigo) != nullptr) {
+    
+    if (listaSucursales->buscar(codigo) != NULL) {
         cout << "\t\tERROR: Ya existe una sucursal con el codigo " << codigo << endl;
         return;
     }
