@@ -657,7 +657,6 @@ void Utilidades::gestionarColaboradoresPorSucursal(int operacion) {
     ListaColaborador* listaColaboradoresSucursal = sucursal->getColaboradores(); // Acceder a la lista interna
 
     if (operacion == 1) { // Ingreso
-        ingresarColaborador();
         cout << "\n\t\t>> INGRESANDO COLABORADOR en Sucursal: " << sucursal->getNombre() << endl;
         Colaborador* c = leerDatosColaborador(); // Llama a la funcion que pide los datos y lo crea
 
