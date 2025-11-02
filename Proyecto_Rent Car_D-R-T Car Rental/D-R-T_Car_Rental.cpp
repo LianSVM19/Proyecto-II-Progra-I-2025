@@ -1,6 +1,5 @@
 //D-R-T_Car_Rental.cpp
 #include <iostream>
-#include "Vehiculo.h";//vehiculo.h anadido para pruebas.
 #include "Utilidades.h"
 using namespace std;
 int main() {
