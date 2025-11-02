@@ -705,7 +705,7 @@ void Utilidades::mostrarSubmenuCarrosPlanteles() {
             break;
         case 2:
             cout << "\n\t\t>> Ejecutando: Visualizacion Grafica de Plantel..." << endl;
-            // llamar a funcion VisualizacionPlantel();
+            Utilidades::visualizarPlantel();
             break;
         case 3:
             cout << "\n\t\t>> Ejecutando: Ingreso de Vehiculo..." << endl;
