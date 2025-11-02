@@ -24,15 +24,22 @@ private:
 	int canDiasAlqui;
 	string fechIni;
 	string fechFin;
+	string estado; // Pendiente, Aprobada, Rechazada
+	double precioTotal;
 public:
-	SolicitudAlquiler(string, Cliente*, Colaborador*, Sucursal*, Vehiculo*, string, string);
+	SolicitudAlquiler(string, Cliente*, Colaborador*, Sucursal*, Vehiculo*, string, string, double, string);
 	~SolicitudAlquiler();
+
+	//me no wanna wanna
+	
 
 	//setters
 	void setfechIni(string);
 	void setfechFin(string);
 	void setCodigoSoli(string);
 	void setCanDiasAlqui(int);
+	void setEstado(string);
+	void setPrecioTotal(double);
 
 	//setters para punteros
 	void setCliente(Cliente*);
@@ -45,6 +52,8 @@ public:
 	string getFechFin();
 	string getCodigoSoli();
 	int getCanDiasAlqui();
+	string getEstado();
+	double getPrecioTotal();
 
 	//getters para punteros
 	Cliente* getCliente();

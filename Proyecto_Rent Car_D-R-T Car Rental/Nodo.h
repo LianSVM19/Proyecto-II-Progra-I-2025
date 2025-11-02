@@ -7,6 +7,8 @@
 #include "Colaborador.h"
 #include "Sucursal.h"
 #include "Plantel.h"
+#include "SolicitudAlquiler.h"
+#include "ContratoAlquiler.h"
 
 using namespace std;
 
@@ -136,5 +138,55 @@ public:
     string toStringNodo();
 };
 
+// =====================================
+// DEFINICIÓN DE NODOSOLICITUD
+// =====================================
 
+class NodoSolicitud {
+private:
+    SolicitudAlquiler* dato;
+    NodoSolicitud* siguiente;
+public:
+    // Constructor
+    NodoSolicitud(SolicitudAlquiler* s, NodoSolicitud* sig = NULL);
+
+    // Destructor (debe liberar la memoria de la Solicitud almacenada)
+    ~NodoSolicitud();
+
+    // Getters
+    SolicitudAlquiler* getDato();
+    NodoSolicitud* getSiguiente();
+
+    // Setters
+    void setSiguiente(NodoSolicitud*);
+    void setDato(SolicitudAlquiler*);
+
+    // Función "to string"
+    string toStringNodo();
+};
+// =====================================
+// DEFINICIÓN DE NODOCONTRATO
+// =====================================
+class NodoContrato {
+private:
+    ContratoAlquiler* dato;
+    NodoContrato* siguiente;
+public:
+    // Constructor
+    NodoContrato(ContratoAlquiler* s, NodoContrato* sig = NULL);
+
+    // Destructor (debe liberar la memoria de la Contrato almacenada)
+    ~NodoContrato();
+
+    // Getters
+    ContratoAlquiler* getDato();
+    NodoContrato* getSiguiente();
+
+    // Setters
+    void setSiguiente(NodoContrato*);
+    void setDato(ContratoAlquiler*);
+
+    // Función "to string"
+    string toStringNodo();
+};
 #endif

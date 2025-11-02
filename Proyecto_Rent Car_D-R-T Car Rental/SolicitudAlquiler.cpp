@@ -1,6 +1,6 @@
 #include "SolicitudAlquiler.h"
 SolicitudAlquiler::SolicitudAlquiler(string cod, Cliente* cli, Colaborador* col,
-    Sucursal* suc, Vehiculo* veh, string feI, string feF) {
+    Sucursal* suc, Vehiculo* veh, string feI, string feF, double pre, string esta) {
     codigoSolicitud = cod;
     Clien = cli;
     Colabora = col;
@@ -9,6 +9,8 @@ SolicitudAlquiler::SolicitudAlquiler(string cod, Cliente* cli, Colaborador* col,
     fechIni = feI;
     fechFin = feF;
     canDiasAlqui = 0;
+    precioTotal = pre;
+    estado = esta;
 }
 
 SolicitudAlquiler::~SolicitudAlquiler() {
@@ -25,6 +27,8 @@ void SolicitudAlquiler::setfechIni(string x) { fechIni = x; }
 void SolicitudAlquiler::setfechFin(string x) { fechFin = x; }
 void SolicitudAlquiler::setCodigoSoli(string x) { codigoSolicitud = x; }
 void SolicitudAlquiler::setCanDiasAlqui(int x) { canDiasAlqui = x; }
+void SolicitudAlquiler::setEstado(string x) { estado = x; }
+void SolicitudAlquiler::setPrecioTotal(double x) { precioTotal = x; }
 
 // ----------------------
 // Setters de Punteros
@@ -41,6 +45,8 @@ string SolicitudAlquiler::getFechIni() { return fechIni; }
 string SolicitudAlquiler::getFechFin() { return fechFin; }
 string SolicitudAlquiler::getCodigoSoli() { return codigoSolicitud; }
 int SolicitudAlquiler::getCanDiasAlqui() { return canDiasAlqui; }
+string SolicitudAlquiler::getEstado() { return estado; }
+double SolicitudAlquiler::getPrecioTotal() { return precioTotal; }
 
 // ----------------------
 // Getters de Punteros 
@@ -55,53 +61,27 @@ Vehiculo* SolicitudAlquiler::getVehiculo() { return Vehi; }
 // ----------------------
 string SolicitudAlquiler::toString() {
     stringstream s;
-
     s << "\t\t*************************************************" << endl;
     s << "\t\t--- DOCUMENTO DE SOLICITUD DE ALQUILER ---" << endl;
-    s << "\t\tCódigo de Solicitud: " << codigoSolicitud << endl;
-    s << "\t\tDuración del Alquiler: " << canDiasAlqui << " días" << endl;
-    s << "\t\tPeríodo Solicitado: " << fechIni << " al " << fechFin << endl;
+    s << "\t\tCódigo Solicitud: " << codigoSolicitud << endl;
+    s << "\t\tESTADO DE SOLICITUD: " << estado << endl; // (Estado)
+    s << "\t\tDías de Alquiler: " << canDiasAlqui << endl; // (Días)
+    s << "\t\tFecha de Inicio: " << fechIni << endl;
+    s << "\t\tFecha de Entrega Estimada: " << fechFin << endl;
+    s << "\t\tPrecio Diario: $" << (Vehi ? Vehi->getPrecioDiario() : 0.0) << endl; // (Precio Diario)
+    s << "\t\tCosto Total Estimado: $" << precioTotal << endl; // (Precio Total)
     s << "\t\t-------------------------------------------------" << endl;
 
-    // --- INFORMACIÓN DEL CLIENTE ---
-    if (Clien != NULL) {
-        s << "\t\tCLIENTE SOLICITANTE (ID: " << Clien->getCedula() << "):" << endl;
-        s << Clien->toString();
-    }
-    else {
-        s << "\t\tCLIENTE: [ERROR: Objeto NULL o no asignado]" << endl;
-    }
-
-    // --- INFORMACIÓN DEL COLABORADOR ---
-    if (Colabora != NULL) {
-        s << "\t\tCOLABORADOR REGISTRA (ID: " << Colabora->getCedula() << "):" << endl;
-        s << Colabora->toString();
-    }
-    else {
-        s << "\t\tCOLABORADOR: [ERROR: Objeto NULL o no asignado]" << endl;
-    }
-
-    // --- INFORMACIÓN DEL VEHÍCULO ---
-    // Asumo que Vehiculo tiene getPlaca()
-    if (Vehi != NULL) {
-        s << "\t\tVEHÍCULO SOLICITADO (Placa: " << Vehi->getPlaca() << "):" << endl;
-        s << Vehi->toString();
-    }
-    else {
-        s << "\t\tVEHÍCULO: [ERROR: Objeto NULL o no asignado]" << endl;
-    }
-
-    // --- INFORMACIÓN DE LA SUCURSAL ---
-    // Asumo que Sucursal tiene getCodigoSucursal()
-    if (Sucu != NULL) {
-        s << "\t\tSUCURSAL RECEPTORA (Código: " << Sucu->getCodigoSucursal() << "):" << endl;
-        s << Sucu->toString();
-    }
-    else {
-        s << "\t\tSUCURSAL: [ERROR: Objeto NULL o no asignado]" << endl;
-    }
+    // Inclusión de la información completa de entidades (Sucursal, Cliente, Vehículo, Colaborador)
+    s << "\t\tCLIENTE (Cédula: " << (Clien ? Clien->getCedula() : "N/A") << "):" << endl;
+    if (Clien) s << Clien->toString();
+    s << "\t\tCOLABORADOR (ID: " << (Colabora ? Colabora->getCedula() : "N/A") << "):" << endl;
+    if (Colabora) s << Colabora->toString();
+    s << "\t\tVEHÍCULO (Placa: " << (Vehi ? Vehi->getPlaca() : "N/A") << "):" << endl;
+    if (Vehi) s << Vehi->toString();
+    s << "\t\tSUCURSAL (Código: " << (Sucu ? Sucu->getCodigoSucursal() : "N/A") << "):" << endl;
+    if (Sucu) s << Sucu->toString();
 
     s << "\t\t*************************************************" << endl;
-
     return s.str();
 }

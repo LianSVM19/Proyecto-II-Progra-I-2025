@@ -194,7 +194,7 @@ string NodoColaborador::toStringNodo() {
 }
 
 // =====================================
-// IMPLEMENTACIÓN DE NODOSUCURSAL (NUEVO)
+// IMPLEMENTACIÓN DE NODOSUCURSAL
 // =====================================
 
 NodoSucursal::NodoSucursal(Sucursal* s, NodoSucursal* sig) {
@@ -309,3 +309,117 @@ string NodoPlantel::toStringNodo() {
     return s.str();
 }
 
+// =====================================
+// IMPLEMENTACIÓN DE NODOSOLICITUD
+// =====================================
+
+NodoSolicitud::NodoSolicitud(SolicitudAlquiler* s, NodoSolicitud* sig) {
+    dato = s;
+    siguiente = sig;
+}
+
+NodoSolicitud::~NodoSolicitud() {
+    // CRÍTICO: El nodo es dueño de la memoria de la Solicitud, debe liberarla.
+    if (dato != NULL) {
+        delete dato;
+        dato = NULL;
+    }
+}
+
+SolicitudAlquiler* NodoSolicitud::getDato() {
+    return dato;
+}
+
+NodoSolicitud* NodoSolicitud::getSiguiente() {
+    return siguiente;
+}
+
+void NodoSolicitud::setDato(SolicitudAlquiler* nuevoDato) {
+    // Si ya existe un elemento, liberamos la memoria antes de reasignar
+    if (dato != NULL) {
+        delete dato;
+    }
+    dato = nuevoDato;
+}
+
+void NodoSolicitud::setSiguiente(NodoSolicitud* sig) {
+    siguiente = sig;
+}
+
+string NodoSolicitud::toStringNodo() {
+    stringstream s;
+    s << "\t\t***********************************" << endl;
+    if (dato != NULL) {
+        // Llama al toString() del objeto Solicitud
+        s << dato->toString();
+    }
+    else {
+        s << "\t\tEl elemento (Solicitud) del Nodo es NULL." << endl;
+    }
+    s << "\t\tPuntero Siguiente (siguiente): ";
+    if (siguiente != NULL) {
+        s << "ENLAZADO A OTRO NODO." << endl;
+    }
+    else {
+        s << "NULL (Fin de la Lista)." << endl;
+    }
+    s << "\t\t***********************************" << endl;
+    return s.str();
+}
+// =====================================
+// IMPLEMENTACIÓN DE NODOCONTRATO
+// =====================================
+
+NodoContrato::NodoContrato(ContratoAlquiler* s, NodoContrato* sig) {
+    dato = s;
+    siguiente = sig;
+}
+
+NodoContrato::~NodoContrato() {
+    // CRÍTICO: El nodo es dueño de la memoria de la Contrato, debe liberarla.
+    if (dato != NULL) {
+        delete dato;
+        dato = NULL;
+    }
+}
+
+ContratoAlquiler* NodoContrato::getDato() {
+    return dato;
+}
+
+NodoContrato* NodoContrato::getSiguiente() {
+    return siguiente;
+}
+
+void NodoContrato::setDato(ContratoAlquiler* nuevoDato) {
+    // Si ya existe un elemento, liberamos la memoria antes de reasignar
+    if (dato != NULL) {
+        delete dato;
+    }
+    dato = nuevoDato;
+}
+
+void NodoContrato::setSiguiente(NodoContrato* sig) {
+    siguiente = sig;
+}
+
+string NodoContrato::toStringNodo() {
+    stringstream s;
+    s << "\t\t***********************************" << endl;
+    if (dato != NULL) {
+        // Llama al toString() del objeto Contrato
+        s << dato->toString();
+    }
+    else {
+        s << "\t\tEl elemento (Contrato) del Nodo es NULL." << endl;
+    }
+    s << "\t\tPuntero Siguiente (siguiente): ";
+    if (siguiente != NULL) {
+        s << "ENLAZADO A OTRO NODO." << endl;
+    }
+    else {
+        s << "NULL (Fin de la Lista)." << endl;
+    }
+    s << "\t\t***********************************" << endl;
+    return s.str();
+}
