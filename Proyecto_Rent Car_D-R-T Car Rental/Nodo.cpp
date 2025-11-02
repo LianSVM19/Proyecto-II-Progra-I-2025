@@ -307,5 +307,5 @@ string NodoPlantel::toStringNodo() {
     }
     s << "\t\t***********************************" << endl;
     return s.str();
-
+}
 
