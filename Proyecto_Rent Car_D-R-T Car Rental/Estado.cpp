@@ -27,6 +27,6 @@ void Estado::setUbicacion(string u) { ubicacion = u; }
 // ----------------------
 string Estado::toString() {
     stringstream s;
-    s << "\t\t\t[ " << fecha << " ] - " << descripcion << " (Ubicación: " << ubicacion << ")" << endl;
+    s << "\t\t\t[ " << fecha << " ] - " << descripcion << " (Ubicacion: " << ubicacion << ")" << endl;
     return s.str();
 }

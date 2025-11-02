@@ -63,7 +63,7 @@ string SolicitudAlquiler::toString() {
     stringstream s;
     s << "\t\t*************************************************" << endl;
     s << "\t\t--- DOCUMENTO DE SOLICITUD DE ALQUILER ---" << endl;
-    s << "\t\tCódigo Solicitud: " << codigoSolicitud << endl;
+    s << "\t\tCodigo Solicitud: " << codigoSolicitud << endl;
     s << "\t\tESTADO DE SOLICITUD: " << estado << endl; // (Estado)
     s << "\t\tDías de Alquiler: " << canDiasAlqui << endl; // (Días)
     s << "\t\tFecha de Inicio: " << fechIni << endl;
@@ -73,13 +73,13 @@ string SolicitudAlquiler::toString() {
     s << "\t\t-------------------------------------------------" << endl;
 
     // Inclusión de la información completa de entidades (Sucursal, Cliente, Vehículo, Colaborador)
-    s << "\t\tCLIENTE (Cédula: " << (Clien ? Clien->getCedula() : "N/A") << "):" << endl;
+    s << "\t\tCLIENTE (Cedula: " << (Clien ? Clien->getCedula() : "N/A") << "):" << endl;
     if (Clien) s << Clien->toString();
     s << "\t\tCOLABORADOR (ID: " << (Colabora ? Colabora->getCedula() : "N/A") << "):" << endl;
     if (Colabora) s << Colabora->toString();
     s << "\t\tVEHÍCULO (Placa: " << (Vehi ? Vehi->getPlaca() : "N/A") << "):" << endl;
     if (Vehi) s << Vehi->toString();
-    s << "\t\tSUCURSAL (Código: " << (Sucu ? Sucu->getCodigoSucursal() : "N/A") << "):" << endl;
+    s << "\t\tSUCURSAL (Codigo: " << (Sucu ? Sucu->getCodigoSucursal() : "N/A") << "):" << endl;
     if (Sucu) s << Sucu->toString();
 
     s << "\t\t*************************************************" << endl;

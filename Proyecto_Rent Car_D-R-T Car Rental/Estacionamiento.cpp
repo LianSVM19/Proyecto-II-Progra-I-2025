@@ -27,7 +27,7 @@ void Estacionamiento::desocupar() { ocupado = false; }
 
 string Estacionamiento::toString() {
     stringstream s;
-    s << "\t\t\tEspacio Código: " << codigo << endl;
+    s << "\t\t\tEspacio Codigo: " << codigo << endl;
     s << "\t\t\tEstado: ";
 
     if (ocupado == true) {

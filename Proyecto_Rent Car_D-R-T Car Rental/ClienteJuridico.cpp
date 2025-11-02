@@ -41,13 +41,13 @@ string ClienteJuridico::toString() {
     stringstream s;
 
     s << "\t\t************************************************" << endl;
-    s << "\t\t--- CLIENTE JURÍDICO (EMPRESA) ---" << endl;
+    s << "\t\t--- CLIENTE JURIDICO (EMPRESA) ---" << endl;
 
     // 1. Llama a la función toString de la clase base Cliente (Persona + fechas)
     s << Cliente::toString();
 
     // 2. Agrega los atributos específicos del Cliente Jurídico
-    s << "\t\tActividad Económica: " << actividadEconomica << endl;
+    s << "\t\tActividad Economica: " << actividadEconomica << endl;
     s << "\t\tPorcentaje de Descuento: " << porcentajeDescuento << "%" << endl;
 
     s << "\t\t************************************************" << endl;

@@ -36,35 +36,35 @@ void Utilidades::crearPlantelSucursal() {
     int filas, columnas;
 
     limpiarConsola();
-    cout << "\n\t\t--- CREACIÓN DE PLANTEL PARA SUCURSAL ---" << endl;
+    cout << "\n\t\t--- CREACION DE PLANTEL PARA SUCURSAL ---" << endl;
 
-    cout << "\t\tIngrese el código de la sucursal: ";
+    cout << "\t\tIngrese el codigo de la sucursal: ";
     getline(cin, codigoSucursal);
 
     Sucursal* sucursal = listaSucursales->buscar(codigoSucursal);
     if (sucursal == nullptr) {
-        cout << "\t\tERROR: No se encontró ninguna sucursal con ese código." << endl;
+        cout << "\t\tERROR: No se encontro ninguna sucursal con ese codigo." << endl;
         return;
     }
 
-    cout << "\t\tIngrese el código del plantel: "<< "\nConsejo: Usar un layout de <letra><numero>, donde las letras marcan la \"serie de Plantel\".";
+    cout << "\t\tIngrese el codigo del plantel: "<< "\nConsejo: Usar un layout de <letra><numero>, donde las letras marcan la \"serie de Plantel\".";
     getline(cin, codigoPlantel);
 
-    cout << "\t\tIngrese el tipo de plantel (Ej: Estándar, Premium, SUV): ";
+    cout << "\t\tIngrese el tipo de plantel (Ej: Estandar, Premium, SUV): ";
     getline(cin, tipoPlantel);
 
-    cout << "\t\tIngrese el número de filas: ";
+    cout << "\t\tIngrese el numero de filas: ";
     while (!(cin >> filas) || filas <= 0) {
         cin.clear();
         cin.ignore(10000, '\n');
-        cout << "\t\tValor inválido. Intente de nuevo: ";
+        cout << "\t\tValor invalido. Intente de nuevo: ";
     }
 
-    cout << "\t\tIngrese el número de columnas: ";
+    cout << "\t\tIngrese el numero de columnas: ";
     while (!(cin >> columnas) || columnas <= 0) {
         cin.clear();
         cin.ignore(10000, '\n');
-        cout << "\t\tValor inválido. Intente de nuevo: ";
+        cout << "\t\tValor invalido. Intente de nuevo: ";
     }
 
     cin.ignore(10000, '\n'); // limpiar buffer
@@ -82,20 +82,20 @@ void Utilidades::visualizarPlantel() {
     string codigoSucursal, codigoPlantel;
     int fil, col;
     limpiarConsola();
-    cout << "\t\tIngrese el código de la sucursal: ";
+    cout << "\t\tIngrese el codigo de la sucursal: ";
     getline(cin, codigoSucursal);
 
     Sucursal* sucursal = listaSucursales->buscar(codigoSucursal);
     if (sucursal == nullptr) {
-        cout << "\t\tERROR: No se encontró ninguna sucursal con ese código." << endl;
+        cout << "\t\tERROR: No se encontro ninguna sucursal con ese codigo." << endl;
         return;
     }
     else {
-        cout << "\t\tIngrese el código del plantel: ";
+        cout << "\t\tIngrese el codigo del plantel: ";
         getline(cin, codigoPlantel);
         Plantel* plantel = sucursal->getListaPlantel()->buscar(codigoPlantel);
         if (plantel == nullptr) {
-            cout << "\t\tERROR: No se encontró ningun plantel con ese código." << endl;
+            cout << "\t\tERROR: No se encontro ningun plantel con ese codigo." << endl;
             return;
         }
         fil = plantel->getCapacidadFilas();
@@ -127,70 +127,70 @@ Cliente* Utilidades::leerDatosCliente() {
     cout << "\n\t\t--- LECTURA DE DATOS DEL CLIENTE ---" << endl;
 
     // 1. Determinar el tipo de cliente
-    cout << "\t\t1. Cliente Físico" << endl;
-    cout << "\t\t2. Cliente Jurídico" << endl;
+    cout << "\t\t1. Cliente Fisico" << endl;
+    cout << "\t\t2. Cliente Juridico" << endl;
     cout << "\t\tSeleccione el tipo de cliente (1 o 2): ";
-    tipoCliente = leerOpcion(1, 2); // Esta función ya limpia el buffer
+    tipoCliente = leerOpcion(1, 2); // Esta funcion ya limpia el buffer
 
     cout << "\n";
 
     // ===========================================
-    // FLUJO PARA CLIENTE FÍSICO
+    // FLUJO PARA CLIENTE FiSICO
     // ===========================================
     if (tipoCliente == 1) {
-        cout << "\t\t<< DATOS DE CLIENTE FÍSICO >>" << endl;
+        cout << "\t\t<< DATOS DE CLIENTE FISICO >>" << endl;
 
-        // El buffer está limpio por leerOpcion()
-        cout << "\t\tIngrese la cédula: ";
+        // El buffer esta limpio por leerOpcion()
+        cout << "\t\tIngrese la cedula: ";
         getline(cin, cedula);
 
         cout << "\t\tIngrese el nombre completo: ";
         getline(cin, nombre);
 
-        cout << "\t\tIngrese el correo electrónico: ";
+        cout << "\t\tIngrese el correo electronico: ";
         getline(cin, correo);
 
-        cout << "\t\tIngrese el número de teléfono: ";
+        cout << "\t\tIngrese el numero de telefono: ";
         getline(cin, telefono);
 
         cout << "\t\tIngrese la fecha de nacimiento (dd/mm/aaaa): ";
         getline(cin, fNacimiento);
 
-        cout << "\t\tIngrese la fecha de inscripción (dd/mm/aaaa): ";
+        cout << "\t\tIngrese la fecha de inscripcion (dd/mm/aaaa): ";
         getline(cin, fInscripcion);
 
         cout << "\t\tIngrese el sexo (M/F): ";
         cin >> sexo;
-        cin.ignore(10000, '\n'); // Limpiar buffer después de cin >> char
+        cin.ignore(10000, '\n'); // Limpiar buffer despues de cin >> char
 
         nuevoCliente = new ClienteFisico(cedula, nombre, correo, telefono, sexo, fNacimiento, fInscripcion);
 
     }
     // ===========================================
-    // FLUJO PARA CLIENTE JURÍDICO (Con corrección de bug)
+    // FLUJO PARA CLIENTE JURiDICO (Con correccion de bug)
     // ===========================================
     else if (tipoCliente == 2) {
         double descuento;
         string actividad;
 
-        cout << "\t\t<< DATOS DE CLIENTE JURÍDICO >>" << endl;
+        cout << "\t\t<< DATOS DE CLIENTE JURiDICO >>" << endl;
 
-        cout << "\t\tIngrese la cédula jurídica: ";
+        cout << "\t\tIngrese la cedula juridica: ";
         getline(cin, cedula);
 
         cout << "\t\tIngrese el nombre completo: ";
         getline(cin, nombre);
 
-        cout << "\t\tIngrese el correo electrónico: ";
+        cout << "\t\tIngrese el correo electronico: ";
         getline(cin, correo);
 
-        cout << "\t\tIngrese el número de teléfono: ";
+        cout << "\t\tIngrese el numero de telefono: ";
         getline(cin, telefono);
 
         cout << "\t\tIngrese la fecha de nacimiento (dd/mm/aaaa): ";
         getline(cin, fNacimiento);
 
-        cout << "\t\tIngrese la fecha de inscripción (dd/mm/aaaa): ";
+        cout << "\t\tIngrese la fecha de inscripcion (dd/mm/aaaa): ";
         getline(cin, fInscripcion);
 
         cout << "\t\tIngrese el sexo (M/F): ";
@@ -201,12 +201,12 @@ Cliente* Utilidades::leerDatosCliente() {
         while (!(cin >> descuento)) {
             cin.clear();
             cin.ignore(10000, '\n');
-            cout << "\t\tValor inválido. Ingrese un número para el descuento: ";
+            cout << "\t\tValor invalido. Ingrese un numero para el descuento: ";
         }
 
         cin.ignore(10000, '\n'); // 
 
-        cout << "\t\tIngrese la actividad económica: ";
+        cout << "\t\tIngrese la actividad economica: ";
         getline(cin, actividad);
 
         nuevoCliente = new ClienteJuridico(cedula, nombre, correo, telefono, sexo, fNacimiento, fInscripcion, descuento, actividad);
@@ -216,11 +216,11 @@ Cliente* Utilidades::leerDatosCliente() {
     return nuevoCliente;
 }
 void Utilidades::ingresarCliente() {
-    Cliente* nuevoCliente = leerDatosCliente(); // Usa la nueva función
+    Cliente* nuevoCliente = leerDatosCliente(); // Usa la nueva funcion
     
     if (nuevoCliente != NULL) {
         listaClientes->agregarCliente(nuevoCliente);
-        cout << "\n\t\tCliente registrado con éxito en la LISTA GLOBAL." << endl;
+        cout << "\n\t\tCliente registrado con exito en la LISTA GLOBAL." << endl;
         cout << "\t\tDatos del nuevo cliente:\n" << nuevoCliente->toString() << endl;
     }
     else {
@@ -237,17 +237,17 @@ Colaborador* Utilidades::leerDatosColaborador() {
 
         cout << "\t\t<< INGRESO DE COLABORADOR >>" << endl;
 
-        // Pedir datos comunes (Asegurándonos de usar getline para strings con espacios)
-        cout << "\t\tIngrese la cédula: ";
+        // Pedir datos comunes (Asegurandonos de usar getline para strings con espacios)
+        cout << "\t\tIngrese la cedula: ";
         getline(cin, cedula);
 
         cout << "\t\tIngrese el nombre completo: ";
         getline(cin, nombre);
 
-        cout << "\t\tIngrese el correo electrónico: ";
+        cout << "\t\tIngrese el correo electronico: ";
         getline(cin, correo);
 
-        cout << "\t\tIngrese el número de teléfono: ";
+        cout << "\t\tIngrese el numero de telefono: ";
         getline(cin, telefono);
 
         cout << "\t\tIngrese la fecha de nacimiento (dd/mm/aaaa): ";
@@ -257,7 +257,7 @@ Colaborador* Utilidades::leerDatosColaborador() {
         getline(cin, fInscripcion);
         fechaIngreso = fInscripcion;
 
-        // Pedir dato específico
+        // Pedir dato especifico
         cout << "\t\tIngrese el sexo (M/F): ";
         cin >> sexo;
         cin.ignore(10000, '\n');
@@ -265,7 +265,7 @@ Colaborador* Utilidades::leerDatosColaborador() {
         cout << "\t\tIngrese el Puesto del Colaborador:";
         getline(cin, puesto);
 
-        // Crear el objeto dinámico
+        // Crear el objeto dinamico
         nuevoColaborador = new Colaborador(cedula, nombre, correo, telefono, sexo, fNacimiento, fInscripcion);
         return nuevoColaborador;
 }
@@ -275,7 +275,7 @@ void Utilidades::ingresarColaborador() {
     
     if (nuevoColaborador != NULL) {
         listaColaboradores->agregarColaborador(nuevoColaborador);
-        cout << "\n\t\tColaborador registrado con éxito." << endl;
+        cout << "\n\t\tColaborador registrado con exito." << endl;
         cout << "\t\tDatos del nuevo Colaborador:\n" << nuevoColaborador->toString() << endl;
     }
     else {
@@ -284,7 +284,7 @@ void Utilidades::ingresarColaborador() {
 }
 
 // ====================================================
-// IMPLEMENTACIÓN DE GESTIÓN DE SUCURSALES
+// IMPLEMENTACION DE GESTION DE SUCURSALES
 // ====================================================
 
 void Utilidades::ingresarSucursal() {
@@ -293,40 +293,40 @@ void Utilidades::ingresarSucursal() {
     limpiarConsola();
     cout << "\n\t\t--- INGRESO DE NUEVA SUCURSAL ---" << endl;
 
-    cout << "\t\tIngrese el código de la sucursal: ";
+    cout << "\t\tIngrese el codigo de la sucursal: ";
     getline(cin, codigo);
 
-    // Opcional: Verificar si ya existe una sucursal con ese código
+    // Opcional: Verificar si ya existe una sucursal con ese codigo
     if (listaSucursales->buscar(codigo) != nullptr) {
-        cout << "\t\tERROR: Ya existe una sucursal con el código " << codigo << endl;
+        cout << "\t\tERROR: Ya existe una sucursal con el codigo " << codigo << endl;
         return;
     }
 
     cout << "\t\tIngrese el nombre de la sucursal: ";
     getline(cin, nombre);
 
-    cout << "\t\tIngrese la dirección: ";
+    cout << "\t\tIngrese la direccion: ";
     getline(cin, direccion);
 
-    cout << "\t\tIngrese el teléfono: ";
+    cout << "\t\tIngrese el telefono: ";
     getline(cin, telefono);
 
     // Asumiendo el constructor: Sucursal(codigo, nombre, direccion, telefono)
     Sucursal* nuevaSucursal = new Sucursal(codigo, nombre, direccion, telefono);
 
-    listaSucursales->agregarSucursal(nuevaSucursal); // Asume método agregarSucursal en ListaSucursal
+    listaSucursales->agregarSucursal(nuevaSucursal); // Asume metodo agregarSucursal en ListaSucursal
 
-    cout << "\n\t\tSucursal '" << nombre << "' registrada con éxito." << endl;
+    cout << "\n\t\tSucursal '" << nombre << "' registrada con exito." << endl;
 }
 
 void Utilidades::mostrarSucursales() {
     limpiarConsola();
-    cout << "\n\t\t--- VISUALIZACIÓN DE TODAS LAS SUCURSALES ---" << endl;
+    cout << "\n\t\t--- VISUALIZACIoN DE TODAS LAS SUCURSALES ---" << endl;
     if (listaSucursales->estaVacia()) {
-        cout << "\t\tLa lista de sucursales está vacía." << endl;
+        cout << "\t\tLa lista de sucursales esta vacia." << endl;
         return;
     }
-    cout << listaSucursales->toString() << endl; // Asume método toString en ListaSucursal
+    cout << listaSucursales->toString() << endl; // Asume metodo toString en ListaSucursal
 }
 
 
@@ -334,43 +334,43 @@ void Utilidades::eliminarSucursal() {
     string codigoEliminar;
 
     limpiarConsola();
-    cout << "\n\t\t--- ELIMINAR SUCURSAL POR CÓDIGO ---" << endl;
+    cout << "\n\t\t--- ELIMINAR SUCURSAL POR CODIGO ---" << endl;
 
     if (listaSucursales->estaVacia()) {
-        cout << "\t\tLa lista de sucursales está vacía." << endl;
+        cout << "\t\tLa lista de sucursales esta vacia." << endl;
         return;
     }
 
-    cout << "\t\tIngrese el código de la sucursal a eliminar: ";
+    cout << "\t\tIngrese el codigo de la sucursal a eliminar: ";
     getline(cin, codigoEliminar);
 
     // Asumiendo que ListaSucursal::eliminar(codigo) retorna bool
     if (listaSucursales->eliminar(codigoEliminar)) {
-        cout << "\n\t\tLa sucursal con código " << codigoEliminar << " ha sido eliminada." << endl;
+        cout << "\n\t\tLa sucursal con codigo " << codigoEliminar << " ha sido eliminada." << endl;
     }
     else {
-        cout << "\n\t\tERROR: No se encontró ninguna sucursal con el código " << codigoEliminar << endl;
+        cout << "\n\t\tERROR: No se encontro ninguna sucursal con el codigo " << codigoEliminar << endl;
     }
 }
 
 // ====================================================
-// IMPLEMENTACIÓN DE GESTIÓN POR SUCURSAL
+// IMPLEMENTACIoN DE GESTION POR SUCURSAL
 // ====================================================
 
-// Funció auxiliar para encontrar la sucursal y operar en su lista interna de Clientes
+// Funcio auxiliar para encontrar la sucursal y operar en su lista interna de Clientes
 void Utilidades::gestionarClientesPorSucursal(int operacion) {
     string codigoSucursal, cedulaCliente;
     limpiarConsola();
 
-    cout << "\n\t\t--- GESTIÓN DE CLIENTES POR SUCURSAL ---" << endl;
-    cout << "\t\tIngrese el código de la sucursal: ";
+    cout << "\n\t\t--- GESTIoN DE CLIENTES POR SUCURSAL ---" << endl;
+    cout << "\t\tIngrese el codigo de la sucursal: ";
     
     getline(cin, codigoSucursal);
 
     Sucursal* sucursal = listaSucursales->buscar(codigoSucursal); 
 
     if (sucursal == NULL) {
-        cout << "\t\tERROR: Sucursal con código " << codigoSucursal << " no encontrada." << endl;
+        cout << "\t\tERROR: Sucursal con codigo " << codigoSucursal << " no encontrada." << endl;
         return;
     }
 
@@ -380,33 +380,33 @@ void Utilidades::gestionarClientesPorSucursal(int operacion) {
         cout << "\n\t\t>> INGRESANDO CLIENTE en Sucursal: " << sucursal->getNombre() << endl;
 
        
-        Cliente* c = leerDatosCliente(); // Llama a la función que pide los datos y lo crea
+        Cliente* c = leerDatosCliente(); // Llama a la funcion que pide los datos y lo crea
 
         if (c != NULL) {
-            // Decides a dónde añadirlo:
+            // Decides a donde añadirlo:
             listaClientesSucursal->agregarCliente(c); // Añadir a la lista de la sucursal
-            // Opcional: listaClientes->agregarCliente(c); // Si también lo quieres en la lista global
+            // Opcional: listaClientes->agregarCliente(c); // Si tambien lo quieres en la lista global
 
-            cout << "\n\t\t Cliente registrado con éxito en la sucursal." << endl;
+            cout << "\n\t\t Cliente registrado con exito en la sucursal." << endl;
             cout << "\t\tDatos del nuevo cliente:\n" << c->toString() << endl;
         }
         else {
             cout << "\t\t ERROR: No se pudo completar el registro del cliente." << endl;
         }
     }
-    else if (operacion == 2) { // Visualización
+    else if (operacion == 2) { // Visualizacion
         cout << "\n\t\t>> VISUALIZANDO Clientes de Sucursal: " << sucursal->getNombre() << endl;
         cout << listaClientesSucursal->toString() << endl;
 
     }
-    else if (operacion == 3) { // Eliminación
+    else if (operacion == 3) { // Eliminacion
         cout << "\n\t\t>> ELIMINANDO Cliente de Sucursal: " << sucursal->getNombre() << endl;
-        cout << "\t\tIngrese la cédula del cliente a eliminar: ";
+        cout << "\t\tIngrese la cedula del cliente a eliminar: ";
         getline(cin, cedulaCliente);
 
         // Asume ListaCliente::eliminar(cedula) en la lista de la Sucursal
         if (listaClientesSucursal->eliminar(cedulaCliente)) {
-            cout << "\t\tCliente con cédula " << cedulaCliente << " eliminado de la sucursal." << endl;
+            cout << "\t\tCliente con cedula " << cedulaCliente << " eliminado de la sucursal." << endl;
         }
         else {
             cout << "\t\tERROR: Cliente no encontrado en esta sucursal." << endl;
@@ -415,19 +415,19 @@ void Utilidades::gestionarClientesPorSucursal(int operacion) {
 }
 
 
-// Funció auxiliar para encontrar la sucursal y operar en su lista interna de Colaboradores
+// Funcio auxiliar para encontrar la sucursal y operar en su lista interna de Colaboradores
 void Utilidades::gestionarColaboradoresPorSucursal(int operacion) {
     string codigoSucursal, idColaborador;
     limpiarConsola();
 
-    cout << "\n\t\t--- GESTIÓN DE COLABORADORES POR SUCURSAL ---" << endl;
-    cout << "\t\tIngrese el código de la sucursal: ";
+    cout << "\n\t\t--- GESTION DE COLABORADORES POR SUCURSAL ---" << endl;
+    cout << "\t\tIngrese el codigo de la sucursal: ";
     getline(cin, codigoSucursal);
 
     Sucursal* sucursal = listaSucursales->buscar(codigoSucursal);
 
     if (sucursal == NULL) {
-        cout << "\t\tERROR: Sucursal con código " << codigoSucursal << " no encontrada." << endl;
+        cout << "\t\tERROR: Sucursal con codigo " << codigoSucursal << " no encontrada." << endl;
         return;
     }
 
@@ -436,13 +436,13 @@ void Utilidades::gestionarColaboradoresPorSucursal(int operacion) {
     if (operacion == 1) { // Ingreso
         ingresarColaborador();
         cout << "\n\t\t>> INGRESANDO COLABORADOR en Sucursal: " << sucursal->getNombre() << endl;
-        Colaborador* c = leerDatosColaborador(); // Llama a la función que pide los datos y lo crea
+        Colaborador* c = leerDatosColaborador(); // Llama a la funcion que pide los datos y lo crea
 
         if (c != NULL) {
-            // Decides a dónde añadirlo:
+            // Decides a donde añadirlo:
             listaColaboradoresSucursal->agregarColaborador(c); // Añadir a la lista de la sucursal
 
-            cout << "\n\t\t Cliente registrado con éxito en la sucursal." << endl;
+            cout << "\n\t\t Cliente registrado con exito en la sucursal." << endl;
             cout << "\t\tDatos del nuevo cliente:\n" << c->toString() << endl;
         }
         else {
@@ -450,12 +450,12 @@ void Utilidades::gestionarColaboradoresPorSucursal(int operacion) {
         }
 
     }
-    else if (operacion == 2) { // Visualización
+    else if (operacion == 2) { // Visualizacion
         cout << "\n\t\t>> VISUALIZANDO Colaboradores de Sucursal: " << sucursal->getNombre() << endl;
         cout << listaColaboradoresSucursal->toString() << endl; // Asume ListaColaborador::toString
 
     }
-    else if (operacion == 3) { // Eliminación
+    else if (operacion == 3) { // Eliminacion
         cout << "\n\t\t>> ELIMINANDO Colaborador de Sucursal: " << sucursal->getNombre() << endl;
         cout << "\t\tIngrese el ID del colaborador a eliminar: ";
         getline(cin, idColaborador);
@@ -470,7 +470,7 @@ void Utilidades::gestionarColaboradoresPorSucursal(int operacion) {
     }
 }
 
-// Implementación del método auxiliar para buscar un vehículo en todas las sucursales
+// Implementacion del metodo auxiliar para buscar un vehiculo en todas las sucursales
 Vehiculo* Utilidades::buscarVehiculoGlobal(string placa, string& codigoSucursalEncontrado) {
 
     // Obtiene el inicio de la lista de sucursales
@@ -481,48 +481,48 @@ Vehiculo* Utilidades::buscarVehiculoGlobal(string placa, string& codigoSucursalE
         Sucursal* suc = actualSucursal->getDato();
         ListaVehiculo* listaVehiculos = suc->getListaVehiculos();
 
-        // Busca el vehículo en la lista de la sucursal actual
+        // Busca el vehiculo en la lista de la sucursal actual
         Vehiculo* vehiculo = listaVehiculos->buscar(placa);
 
         if (vehiculo != NULL) {
-            // Asigna el código de la sucursal actual a la referencia
+            // Asigna el codigo de la sucursal actual a la referencia
             codigoSucursalEncontrado = suc->getCodigoSucursal();
-            return vehiculo; // Devuelve el vehículo
+            return vehiculo; // Devuelve el vehiculo
         }
 
         // Avanza al siguiente nodo
         actualSucursal = actualSucursal->getSiguiente();
     }
-    return NULL; // Vehículo no encontrado
+    return NULL; // Vehiculo no encontrado
 }
 
 
 // ========================================================
-// 2. IMPLEMENTACIÓN DEL MÉTODO DE PRESENTACIÓN
-//    (Este es el que tenía el error de llamada al 'buscar')
+// 2. IMPLEMENTACIoN DEL MeTODO DE PRESENTACIoN
+//    (Este es el que tenia el error de llamada al 'buscar')
 // ========================================================
 void Utilidades::mostrarInformacionVehiculoGlobal(string placa) {
 
-    // Variable para capturar el resultado de la búsqueda
+    // Variable para capturar el resultado de la busqueda
     string codigoSucursalDelVehiculo = "";
 
-    // LÍNEA CORREGIDA: Usando 'this->' para llamar al método miembro 'buscarVehiculoGlobal'
+    // LiNEA CORREGIDA: Usando 'this->' para llamar al metodo miembro 'buscarVehiculoGlobal'
     Vehiculo* vehiculoEncontrado = buscarVehiculoGlobal(placa, codigoSucursalDelVehiculo);
 
     // Imprimimos el resultado
     if (vehiculoEncontrado != NULL) {
         cout << "\t\t===================================================" << endl;
-        cout << "\t\t--- RESULTADO DE LA BÚSQUEDA GLOBAL ---" << endl;
-        cout << "\t\t¡Vehículo encontrado!" << endl;
+        cout << "\t\t--- RESULTADO DE LA BuSQUEDA GLOBAL ---" << endl;
+        cout << "\t\t¡Vehiculo encontrado!" << endl;
         cout << "\t\tPlaca: " << vehiculoEncontrado->getPlaca() << endl;
-        // La información del vehículo es limpia, y la ubicación es de la Sucursal
-        cout << "\t\tUbicación (Código Sucursal): " << codigoSucursalDelVehiculo << endl;
+        // La informacion del vehiculo es limpia, y la ubicacion es de la Sucursal
+        cout << "\t\tUbicacion (Codigo Sucursal): " << codigoSucursalDelVehiculo << endl;
         cout << "\t\t===================================================" << endl;
     }
     else {
         cout << "\t\t===================================================" << endl;
-        cout << "\t\t--- RESULTADO DE LA BÚSQUEDA GLOBAL ---" << endl;
-        cout << "\t\tEl vehículo con placa [" << placa << "] no se encontró en ninguna sucursal." << endl;
+        cout << "\t\t--- RESULTADO DE LA BuSQUEDA GLOBAL ---" << endl;
+        cout << "\t\tEl vehiculo con placa [" << placa << "] no se encontro en ninguna sucursal." << endl;
         cout << "\t\t===================================================" << endl;
     }
 }
@@ -538,93 +538,93 @@ void Utilidades::CrearSolicitud() {
     Vehiculo* vehiculo = NULL;
 
     limpiarConsola();
-    cout << "\n\t\t--- CREACIÓN DE NUEVA SOLICITUD DE ALQUILER ---" << endl;
+    cout << "\n\t\t--- CREACIoN DE NUEVA SOLICITUD DE ALQUILER ---" << endl;
 
-    // 1. Obtener y buscar el Cliente (Cédula)
-    cout << "\t\tIngrese la cédula del Cliente: ";
+    // 1. Obtener y buscar el Cliente (Cedula)
+    cout << "\t\tIngrese la cedula del Cliente: ";
     getline(cin, cedulaCliente);
     cliente = listaClientes->buscar(cedulaCliente);
     if (cliente == NULL) {
-        cout << "\t\tERROR: Cliente con cédula " << cedulaCliente << " no encontrado." << endl;
+        cout << "\t\tERROR: Cliente con cedula " << cedulaCliente << " no encontrado." << endl;
         pausa();
         return;
     }
 
-    // 2. Obtener y buscar el Colaborador (Cédula)
-    cout << "\t\tIngrese la cédula del Colaborador que registra: ";
+    // 2. Obtener y buscar el Colaborador (Cedula)
+    cout << "\t\tIngrese la cedula del Colaborador que registra: ";
     getline(cin, idColaborador);
     colaborador = listaColaboradores->buscar(idColaborador);
     if (colaborador == NULL) {
-        cout << "\t\tERROR: Colaborador con cédula " << idColaborador << " no encontrado." << endl;
+        cout << "\t\tERROR: Colaborador con cedula " << idColaborador << " no encontrado." << endl;
         pausa();
         return;
     }
 
-    // 3. Obtener y buscar el Vehículo (Placa)
-    cout << "\t\tIngrese la Placa del Vehículo a alquilar: ";
+    // 3. Obtener y buscar el Vehiculo (Placa)
+    cout << "\t\tIngrese la Placa del Vehiculo a alquilar: ";
     getline(cin, placaVehiculo);
 
     // *** CAMBIO CRUCIAL ***: 
     // Llamamos a buscarVehiculoGlobal con dos argumentos: la placa y la variable 'codigoSucursal' 
-    // que se llenará con el código de la sucursal que tiene el carro.
-    vehiculo = this->buscarVehiculoGlobal(placaVehiculo, codigoSucursal); // <-- AQUÍ ESTÁ EL CAMBIO
+    // que se llenara con el codigo de la sucursal que tiene el carro.
+    vehiculo = this->buscarVehiculoGlobal(placaVehiculo, codigoSucursal); // <-- AQUi ESTa EL CAMBIO
 
     if (vehiculo == NULL) {
-        cout << "\t\tERROR: Vehículo con placa " << placaVehiculo << " no encontrado en ninguna sucursal." << endl;
+        cout << "\t\tERROR: Vehiculo con placa " << placaVehiculo << " no encontrado en ninguna sucursal." << endl;
         pausa();
         return;
     }
 
-    // 4. Validar estado del vehículo
+    // 4. Validar estado del vehiculo
     if (vehiculo->getEstado() != "Disponible") {
-        cout << "\t\tERROR: El vehículo " << placaVehiculo << " no está disponible. Estado actual: " << vehiculo->getEstado() << endl;
+        cout << "\t\tERROR: El vehiculo " << placaVehiculo << " no esta disponible. Estado actual: " << vehiculo->getEstado() << endl;
         pausa();
         return;
     }
 
-    // 5. Obtener y buscar la Sucursal (Código)
-    // El 'codigoSucursal' ya fue llenado por la función buscarVehiculoGlobal.
+    // 5. Obtener y buscar la Sucursal (Codigo)
+    // El 'codigoSucursal' ya fue llenado por la funcion buscarVehiculoGlobal.
     sucursal = listaSucursales->buscar(codigoSucursal);
 
-    // Si la sucursal es NULL, es un error interno grave, ya que el código se obtuvo de una Sucursal existente.
+    // Si la sucursal es NULL, es un error interno grave, ya que el codigo se obtuvo de una Sucursal existente.
     if (sucursal == NULL) {
-        cout << "\t\tERROR INTERNO: Sucursal asociada al vehículo no encontrada." << endl;
+        cout << "\t\tERROR INTERNO: Sucursal asociada al vehiculo no encontrada." << endl;
         pausa();
         return;
     }
 
 
     // 6. Datos de la Solicitud
-    cout << "\t\tIngrese el código de la nueva Solicitud (ej. S001): ";
+    cout << "\t\tIngrese el codigo de la nueva Solicitud (ej. S001): ";
     getline(cin, codigoSoli);
     cout << "\t\tIngrese la Fecha de Inicio (DD/MM/AAAA): ";
     getline(cin, fIni);
     cout << "\t\tIngrese la Fecha de Entrega Estimada (DD/MM/AAAA): ";
     getline(cin, fFin);
-    cout << "\t\tIngrese la cantidad de días de alquiler: ";
+    cout << "\t\tIngrese la cantidad de dias de alquiler: ";
 
-    // Lógica para leer 'dias' (entero)
+    // Logica para leer 'dias' (entero)
     cin >> dias;
-    // Agregamos una verificación simple para la lectura
+    // Agregamos una verificacion simple para la lectura
     if (cin.fail()) {
         cin.clear();
-        cout << "\t\tEntrada inválida. Días de alquiler deben ser un número." << endl;
+        cout << "\t\tEntrada invalida. Dias de alquiler deben ser un numero." << endl;
         pausa();
         cin.ignore(10000, '\n');
         return;
     }
     cin.ignore(10000, '\n'); // Limpiar buffer
 
-    // 7. Cálculo del Precio Total
+    // 7. Calculo del Precio Total
     if (dias <= 0) {
-        cout << "\t\tERROR: Los días de alquiler deben ser un número positivo." << endl;
+        cout << "\t\tERROR: Los dias de alquiler deben ser un numero positivo." << endl;
         pausa();
         return;
     }
 
     precioTotal = vehiculo->getPrecioDiario() * dias;
 
-    // 8. Creación de la Solicitud
+    // 8. Creacion de la Solicitud
     // Asumo que SolicitudAlquiler requiere un puntero a Sucursal
     SolicitudAlquiler* nuevaSoli = new SolicitudAlquiler(
         codigoSoli, cliente, colaborador, sucursal, vehiculo, fIni, fFin,
@@ -634,7 +634,7 @@ void Utilidades::CrearSolicitud() {
 
     listaSolicitudes->agregarSolicitud(nuevaSoli);
 
-    cout << "\n\t\t--- SOLICITUD CREADA CON ÉXITO ---" << endl;
+    cout << "\n\t\t--- SOLICITUD CREADA CON eXITO ---" << endl;
     cout << nuevaSoli->toString() << endl;
     pausa();
 }
@@ -643,7 +643,7 @@ void Utilidades::CrearSolicitud() {
 void Utilidades::VerSolicitudesContratos() {
     limpiarConsola();
     cout << "\n\t\t===================================================" << endl;
-    cout << "\t\t--- VISUALIZACIÓN DE SOLICITUDES Y CONTRATOS ---" << endl;
+    cout << "\t\t--- VISUALIZACIoN DE SOLICITUDES Y CONTRATOS ---" << endl;
     cout << "\t\t===================================================" << endl;
 
     // 1. Mostrar todas las Solicitudes
@@ -652,9 +652,9 @@ void Utilidades::VerSolicitudesContratos() {
         cout << "\t\t[INFO] No hay solicitudes registradas actualmente." << endl;
     }
     else {
-        // Asumo que ListaSolicitud tiene un método 'toString()' o 'mostrar()'
-        // que imprime todas las solicitudes. Usaremos toString() si está implementado
-        // en la lista, si no, se puede iterar, pero asumimos el método de la lista.
+        // Asumo que ListaSolicitud tiene un metodo 'toString()' o 'mostrar()'
+        // que imprime todas las solicitudes. Usaremos toString() si esta implementado
+        // en la lista, si no, se puede iterar, pero asumimos el metodo de la lista.
         cout << listaSolicitudes->toString();
     }
     cout << "\t\t---------------------------------------------------" << endl;
@@ -666,7 +666,7 @@ void Utilidades::VerSolicitudesContratos() {
         cout << "\t\t[INFO] No hay contratos registrados actualmente." << endl;
     }
     else {
-        // Asumo que ListaContrato tiene un método 'toString()' o 'mostrar()'
+        // Asumo que ListaContrato tiene un metodo 'toString()' o 'mostrar()'
         cout << listaContratos->toString();
     }
     cout << "\t\t---------------------------------------------------" << endl;
@@ -682,9 +682,9 @@ void Utilidades::AprobarRechazarSolicitud() {
     string codigoSoli;
     char opcion;
     limpiarConsola();
-    cout << "\n\t\t--- APROBACIÓN / RECHAZO DE SOLICITUD (1 pto) ---" << endl;
+    cout << "\n\t\t--- APROBACIoN / RECHAZO DE SOLICITUD (1 pto) ---" << endl;
 
-    cout << "\t\tIngrese el código de la Solicitud a procesar: ";
+    cout << "\t\tIngrese el codigo de la Solicitud a procesar: ";
     getline(cin, codigoSoli);
 
     SolicitudAlquiler* solicitud = listaSolicitudes->buscar(codigoSoli);
@@ -702,7 +702,7 @@ void Utilidades::AprobarRechazarSolicitud() {
         if (opcion == 'A' || opcion == 'a') {
             solicitud->setEstado("Aprobada");
 
-            // 1. Cambiar estado del vehículo
+            // 1. Cambiar estado del vehiculo
             Vehiculo* vehiculo = solicitud->getVehiculo();
             vehiculo->setEstado("Alquilado");
 
@@ -714,7 +714,7 @@ void Utilidades::AprobarRechazarSolicitud() {
 
             listaContratos->agregarContrato(nuevoContrato);
 
-            cout << "\n\t\t¡APROBACIÓN EXITOSA! Contrato " << codigoContrato << " creado." << endl;
+            cout << "\n\t\t¡APROBACIoN EXITOSA! Contrato " << codigoContrato << " creado." << endl;
 
         }
         else if (opcion == 'R' || opcion == 'r') {
@@ -722,7 +722,7 @@ void Utilidades::AprobarRechazarSolicitud() {
             cout << "\n\t\t¡RECHAZO EXITOSO! Solicitud " << codigoSoli << " rechazada." << endl;
         }
         else {
-            cout << "\t\tOpción inválida. No se realizó ninguna acción." << endl;
+            cout << "\t\tOpcion invalida. No se realizo ninguna accion." << endl;
         }
     }
     pausa();
@@ -734,15 +734,15 @@ void Utilidades::AprobarRechazarSolicitud() {
 void Utilidades::RecepcionVehiculo() {
     string codigoContrato;
     limpiarConsola();
-    cout << "\n\t\t--- RECEPCIÓN DE VEHÍCULO Y FINALIZACIÓN DE CONTRATO (3 pts) ---" << endl;
+    cout << "\n\t\t--- RECEPCIoN DE VEHiCULO Y FINALIZACIoN DE CONTRATO (3 pts) ---" << endl;
 
-    cout << "\t\tIngrese el código del Contrato a finalizar: ";
+    cout << "\t\tIngrese el codigo del Contrato a finalizar: ";
     getline(cin, codigoContrato);
 
     ContratoAlquiler* contrato = listaContratos->buscar(codigoContrato);
 
     if (contrato == NULL) {
-        cout << "\t\tERROR: Contrato con código " << codigoContrato << " no encontrado." << endl;
+        cout << "\t\tERROR: Contrato con codigo " << codigoContrato << " no encontrado." << endl;
     }
     else if (contrato->getEstado() == "Finalizado") {
         cout << "\t\tERROR: El contrato ya se encuentra 'Finalizado'." << endl;
@@ -752,27 +752,27 @@ void Utilidades::RecepcionVehiculo() {
         // 1. Finalizar el Contrato
         contrato->setEstado("Finalizado");
 
-        // 2. Obtener Vehículo y cambiar su estado
+        // 2. Obtener Vehiculo y cambiar su estado
         Vehiculo* vehiculo = contrato->getSolicitud()->getVehiculo();
 
-        // Transición: Alquilado -> Devuelto (según su lógica interna)
+        // Transicion: Alquilado -> Devuelto (segun su logica interna)
         vehiculo->setEstado("Devuelto");
 
-        cout << "\n\t\t¡RECEPCIÓN EXITOSA!" << endl;
+        cout << "\n\t\t¡RECEPCIoN EXITOSA!" << endl;
         cout << "\t\tEl contrato " << codigoContrato << " ha sido marcado como 'Finalizado'." << endl;
-        cout << "\t\tEl vehículo " << vehiculo->getPlaca() << " ha sido marcado como 'Devuelto'." << endl;
-        cout << "\t\tNOTA: El vehículo en estado 'Devuelto' debe pasar a 'Revisión' o 'Lavado'." << endl;
+        cout << "\t\tEl vehiculo " << vehiculo->getPlaca() << " ha sido marcado como 'Devuelto'." << endl;
+        cout << "\t\tNOTA: El vehiculo en estado 'Devuelto' debe pasar a 'Revision' o 'Lavado'." << endl;
 
     }
     else {
-        cout << "\t\tERROR: El contrato no está en estado 'Activo'." << endl;
+        cout << "\t\tERROR: El contrato no esta en estado 'Activo'." << endl;
     }
     pausa();
 }
 
 
 // ----------------------------------------------------
-// Implementación de Control de Interfaz y Consola
+// Implementacion de Control de Interfaz y Consola
 // ----------------------------------------------------
 
 void Utilidades::limpiarConsola() {
@@ -786,13 +786,13 @@ void Utilidades::pausa() {
 
 int Utilidades::leerOpcion(int min, int max) {
     int opcion;
-    cout << "\t\tDigite la opción deseada: ";
+    cout << "\t\tDigite la opcion deseada: ";
 
-    // 🚨 USO EXPLÍCITO DE cin >>
+    // 🚨 USO EXPLiCITO DE cin >>
     while (!(cin >> opcion) || opcion < min || opcion > max) {
         cin.clear();
         cin.ignore(10000, '\n'); // Limpieza del buffer
-        cout << "\t\tOpción inválida. Ingrese un número entre [" << min << "] y [" << max << "]: ";
+        cout << "\t\tOpcion invalida. Ingrese un numero entre [" << min << "] y [" << max << "]: ";
     }
     cin.ignore(10000, '\n'); // Limpieza del buffer
     return opcion;
@@ -801,7 +801,7 @@ int Utilidades::leerOpcion(int min, int max) {
 
 
 // ----------------------------------------------------
-// Implementación de Funciones de Menú
+// Implementacion de Funciones de Menu
 // ----------------------------------------------------
 
 
@@ -815,31 +815,31 @@ void Utilidades::ejecutarSistema() {
         switch (opcion) {
             // ... (casos 0 a 5) ...
         case 1:
-            // Llama al submenú de Sucursales
+            // Llama al submenu de Sucursales
             mostrarSubmenuSucursales();
             break;
         case 2:
-            // Llama al submenú de Colaboradores
+            // Llama al submenu de Colaboradores
             mostrarSubmenuColaboradores();
             break;
         case 3:
-            // Llama al submenú de Carros y Planteles
+            // Llama al submenu de Carros y Planteles
             mostrarSubmenuCarrosPlanteles();
             break;
         case 4:
-            // Llama al submenú de Solicitudes y Contratos
+            // Llama al submenu de Solicitudes y Contratos
             mostrarSubmenuSolicitudesContratos();
             break;
         case 5:
-            // Llama al submenú de Clientes
+            // Llama al submenu de Clientes
             mostrarSubmenuClientes();
             break;
         case 0:
-            cout << "\n\t\tGracias por usar el sistema. ¡Adiós!" << endl;
+            cout << "\n\t\tGracias por usar el sistema. ¡Adios!" << endl;
             break;
         }
 
-        // Resetea 'op' para volver a mostrar el Menú Principal
+        // Resetea 'op' para volver a mostrar el Menu Principal
         this->op = -1;
     }
 }
@@ -849,11 +849,11 @@ void Utilidades::mostrarMenuPrincipal() {
         cout << "\t\t       C A D E N A   D E   R E N T A   A   C A R      " << endl;
         cout << "\t\t             \"D - R - T   C a r   R e n t a l\"      " << endl;
         cout << "\t\t======================================================" << endl;
-        cout << "\t\t(1) Submenú de Sucursales" << endl;
-        cout << "\t\t(2) Submenú de Colaboradores" << endl;
-        cout << "\t\t(3) Submenú de Carros y Planteles" << endl;
-        cout << "\t\t(4) Submenú de Solicitudes y Contratos" << endl;
-        cout << "\t\t(5) Submenú de Clientes" << endl;
+        cout << "\t\t(1) Submenu de Sucursales" << endl;
+        cout << "\t\t(2) Submenu de Colaboradores" << endl;
+        cout << "\t\t(3) Submenu de Carros y Planteles" << endl;
+        cout << "\t\t(4) Submenu de Solicitudes y Contratos" << endl;
+        cout << "\t\t(5) Submenu de Clientes" << endl;
         cout << "\t\t(0) SALIR DEL SISTEMA" << endl;
         cout << "\t\t------------------------------------------------------" << endl;
         op = leerOpcion(0, 5);
@@ -864,25 +864,25 @@ void Utilidades::mostrarMenuPrincipal() {
 void Utilidades::mostrarSubmenuSucursales() {
     int opcionSubmenu = -1; // Inicializamos a un valor != 0 para entrar al bucle.
 
-    // El bucle se ejecuta mientras la opción NO sea 0 (Regresar al Menú Principal).
+    // El bucle se ejecuta mientras la opcion NO sea 0 (Regresar al Menu Principal).
     while (opcionSubmenu != 0) {
 
-        // 1. Mostrar el menú
+        // 1. Mostrar el menu
         limpiarConsola();
         cout << "\n\t\t======================================================" << endl;
-        cout << "\t\t                SUBMENÚ DE SUCURSALES                 " << endl;
+        cout << "\t\t                SUBMENu DE SUCURSALES                 " << endl;
         cout << "\t\t======================================================" << endl;
         cout << "\t\t(1) Ingresar Sucursal" << endl;
         cout << "\t\t(2) Mostrar Sucursales" << endl;
         cout << "\t\t(3) Eliminar Sucursal" << endl;
-        cout << "\t\t(0) Regresar al Menú Principal" << endl;
+        cout << "\t\t(0) Regresar al Menu Principal" << endl;
         cout << "\t\t------------------------------------------------------" << endl;
 
-        // 2. Leer la opción (Rango de 0 a 3)
-        // Llamada a la función de la misma clase.
+        // 2. Leer la opcion (Rango de 0 a 3)
+        // Llamada a la funcion de la misma clase.
         opcionSubmenu = leerOpcion(0, 3);
 
-        // 3. Ejecutar la lógica con switch
+        // 3. Ejecutar la logica con switch
         switch (opcionSubmenu) {
         case 1:
             cout << "\n\t\t>> Ejecutando: Ingresar Sucursal..." << endl;
@@ -897,15 +897,15 @@ void Utilidades::mostrarSubmenuSucursales() {
             this->eliminarSucursal();
             break;
         case 0:
-            // El bucle terminará automáticamente después de esta iteración.
-            cout << "\n\t\tRegresando al Menú Principal..." << endl;
+            // El bucle terminara automaticamente despues de esta iteracion.
+            cout << "\n\t\tRegresando al Menu Principal..." << endl;
             break;
         }
 
-        // Si la opción NO es 0, hacemos una pausa para que el usuario vea el resultado de la acción.
+        // Si la opcion NO es 0, hacemos una pausa para que el usuario vea el resultado de la accion.
         if (opcionSubmenu != 0) {
-            cout << "\t\tPresione ENTER para volver al submenú...";
-            // usamos cin.get() aquí para esperar una pulsación.
+            cout << "\t\tPresione ENTER para volver al submenu...";
+            // usamos cin.get() aqui para esperar una pulsacion.
             cin.get();
         }
 
@@ -914,26 +914,26 @@ void Utilidades::mostrarSubmenuSucursales() {
 void Utilidades::mostrarSubmenuColaboradores() {
     int opcionSubmenu = -1; // Inicializamos a un valor != 0 para entrar al bucle.
 
-    // El bucle se ejecuta mientras la opción NO sea 0 (Regresar al Menú Principal).
+    // El bucle se ejecuta mientras la opcion NO sea 0 (Regresar al Menu Principal).
     while (opcionSubmenu != 0) {
 
-        // 1. Mostrar el menú
+        // 1. Mostrar el menu
         limpiarConsola();
         cout << "\n\t\t======================================================" << endl;
-        cout << "\t\t               SUBMENÚ DE COLABORADORES               " << endl;
+        cout << "\t\t               SUBMENu DE COLABORADORES               " << endl;
         cout << "\t\t======================================================" << endl;
         cout << "\t\t(1) Incluir Colaborador en Sucursal" << endl;
         cout << "\t\t(2) Mostrar Colaborador" << endl;
         cout << "\t\t(3) Eliminar Colaborador" << endl;
         cout << "\t\t(4) Reporte de alquileres por colaborador" << endl;
-        cout << "\t\t(0) Regresar al Menú Principal" << endl;
+        cout << "\t\t(0) Regresar al Menu Principal" << endl;
         cout << "\t\t------------------------------------------------------" << endl;
 
-        // 2. Leer la opción (Rango de 0 a 4)
-        // Llamada a la función de la misma clase.
+        // 2. Leer la opcion (Rango de 0 a 4)
+        // Llamada a la funcion de la misma clase.
         opcionSubmenu = leerOpcion(0, 4);
 
-        // 3. Ejecutar la lógica con switch
+        // 3. Ejecutar la logica con switch
         switch (opcionSubmenu) {
         case 1:
             cout << "\n\t\t>> Ejecutando: Incluir Colaborador en Sucursal..." << endl;
@@ -952,15 +952,15 @@ void Utilidades::mostrarSubmenuColaboradores() {
             // llamar a funcion ReporteAlquileres();
             break;
         case 0:
-            // El bucle terminará automáticamente después de esta iteración.
-            cout << "\n\t\tRegresando al Menú Principal..." << endl;
+            // El bucle terminara automaticamente despues de esta iteracion.
+            cout << "\n\t\tRegresando al Menu Principal..." << endl;
             break;
         }
 
-        // Si la opción NO es 0, hacemos una pausa para que el usuario vea el resultado de la acción.
+        // Si la opcion NO es 0, hacemos una pausa para que el usuario vea el resultado de la accion.
         if (opcionSubmenu != 0) {
-            cout << "\t\tPresione ENTER para volver al submenú...";
-            // usamos cin.get() aquí para esperar una pulsación.
+            cout << "\t\tPresione ENTER para volver al submenu...";
+            // usamos cin.get() aqui para esperar una pulsacion.
             cin.get();
         }
 
@@ -972,13 +972,13 @@ void Utilidades::mostrarSubmenuColaboradores() {
 void Utilidades::mostrarSubmenuCarrosPlanteles() {
     int opcionSubmenu = -1; // Inicializamos a un valor != 0 para entrar al bucle.
 
-    // El bucle se ejecuta mientras la opción NO sea 0 (Regresar al Menú Principal).
+    // El bucle se ejecuta mientras la opcion NO sea 0 (Regresar al Menu Principal).
     while (opcionSubmenu != 0) {
 
-        // 1. Mostrar el menú
+        // 1. Mostrar el menu
         limpiarConsola();
         cout << "\n\t\t======================================================" << endl;
-        cout << "\t\t            SUBMENÚ DE CARROS Y PLANTELES             " << endl;
+        cout << "\t\t            SUBMENu DE CARROS Y PLANTELES             " << endl;
         cout << "\t\t======================================================" << endl;
         cout << "\t\t(1) Crear Plantel" << endl;
         cout << "\t\t(2) Visualizacion Grafica de Plantel" << endl;
@@ -990,14 +990,14 @@ void Utilidades::mostrarSubmenuCarrosPlanteles() {
         cout << "\t\t(8) Estados de un Vehiculo especifico" << endl;
         cout << "\t\t(9) Reportaje de porcentaje de ocupacion de los planteles" << endl;
         cout << "\t\t(10) Traslado de Vehiculos a Plantel (OPTATIVO)" << endl;
-        cout << "\t\t(0) Regresar al Menú Principal" << endl;
+        cout << "\t\t(0) Regresar al Menu Principal" << endl;
         cout << "\t\t------------------------------------------------------" << endl;
 
-        // 2. Leer la opción (Rango de 0 a 10)
-        // Llamada a la función de la misma clase.
+        // 2. Leer la opcion (Rango de 0 a 10)
+        // Llamada a la funcion de la misma clase.
         opcionSubmenu = leerOpcion(0, 10);
 
-        // 3. Ejecutar la lógica con switch
+        // 3. Ejecutar la logica con switch
         switch (opcionSubmenu) {
         case 1:
             cout << "\n\t\t>> Ejecutando: Crear Plantel..." << endl;
@@ -1041,15 +1041,15 @@ void Utilidades::mostrarSubmenuCarrosPlanteles() {
             // llamar a funcion TrasladoVehiculosPlantel();
             break;
         case 0:
-            // El bucle terminará automáticamente después de esta iteración.
-            cout << "\n\t\tRegresando al Menú Principal..." << endl;
+            // El bucle terminara automaticamente despues de esta iteracion.
+            cout << "\n\t\tRegresando al Menu Principal..." << endl;
             break;
         }
 
-        // Si la opción NO es 0, hacemos una pausa para que el usuario vea el resultado de la acción.
+        // Si la opcion NO es 0, hacemos una pausa para que el usuario vea el resultado de la accion.
         if (opcionSubmenu != 0) {
-            cout << "\t\tPresione ENTER para volver al submenú...";
-            // usamos cin.get() aquí para esperar una pulsación.
+            cout << "\t\tPresione ENTER para volver al submenu...";
+            // usamos cin.get() aqui para esperar una pulsacion.
             cin.get();
         }
 
@@ -1059,53 +1059,53 @@ void Utilidades::mostrarSubmenuCarrosPlanteles() {
 void Utilidades::mostrarSubmenuSolicitudesContratos() {
     int opcionSubmenu = -1; // Inicializamos a un valor != 0 para entrar al bucle.
 
-    // El bucle se ejecuta mientras la opción NO sea 0 (Regresar al Menú Principal).
+    // El bucle se ejecuta mientras la opcion NO sea 0 (Regresar al Menu Principal).
     while (opcionSubmenu != 0) {
 
-        // 1. Mostrar el menú
+        // 1. Mostrar el menu
         limpiarConsola();
         cout << "\n\t\t======================================================" << endl;
-        cout << "\t\t          SUBMENÚ DE SOLICITUDES Y CONTRATOS          " << endl;
+        cout << "\t\t          SUBMENu DE SOLICITUDES Y CONTRATOS          " << endl;
         cout << "\t\t======================================================" << endl;
         cout << "\t\t(1) Creacion de Solicitud" << endl;
-        cout << "\t\t(2) Visualización de solicitudes/contratos por sucursal" << endl;
-        cout << "\t\t(3) Visualización de solicitud/contratos especifica" << endl;
-        cout << "\t\t(4) Aprobación/rechazo de solicitud" << endl;
-        cout << "\t\t(5) Recepción de vehículo en prestado" << endl;
-        cout << "\t\t(6) Reporte de contratos para vehículos especifico" << endl;
+        cout << "\t\t(2) Visualizacion de solicitudes/contratos por sucursal" << endl;
+        cout << "\t\t(3) Visualizacion de solicitud/contratos especifica" << endl;
+        cout << "\t\t(4) Aprobacion/rechazo de solicitud" << endl;
+        cout << "\t\t(5) Recepcion de vehiculo en prestado" << endl;
+        cout << "\t\t(6) Reporte de contratos para vehiculos especifico" << endl;
         cout << "\t\t(7) Visualizar TODAS las Solicitudes/Contratos (Auxiliar)" << endl;
-        cout << "\t\t(0) Regresar al Menú Principal" << endl;
+        cout << "\t\t(0) Regresar al Menu Principal" << endl;
         cout << "\t\t------------------------------------------------------" << endl;
 
-        // 2. Leer la opción (Rango de 0 a 7)
-        // Llamada a la función de la misma clase.
+        // 2. Leer la opcion (Rango de 0 a 7)
+        // Llamada a la funcion de la misma clase.
         opcionSubmenu = leerOpcion(0, 7);
 
-        // 3. Ejecutar la lógica con switch
+        // 3. Ejecutar la logica con switch
         switch (opcionSubmenu) {
         case 1:
-            cout << "\n\t\t>> Ejecutando: Creación  de solicitud..." << endl;
+            cout << "\n\t\t>> Ejecutando: Creacion  de solicitud..." << endl;
             this->CrearSolicitud();
             break;
         case 2:
-            cout << "\n\t\t>> Ejecutando: Visualización de solicitudes/contratos por sucursal..." << endl;
+            cout << "\n\t\t>> Ejecutando: Visualizacion de solicitudes/contratos por sucursal..." << endl;
             // llamar a funcion VerSoliCont_Sucursal();
             break;
         case 3:
-            cout << "\n\t\t>> Ejecutando: Visualización de solicitud/contratos especifica..." << endl;
+            cout << "\n\t\t>> Ejecutando: Visualizacion de solicitud/contratos especifica..." << endl;
             // llamar a funcion VerSoliCont_Especifico();
             break;
         case 4:
-            cout << "\n\t\t>> Ejecutando: Aprobación/rechazo de solicitud..." << endl;
+            cout << "\n\t\t>> Ejecutando: Aprobacion/rechazo de solicitud..." << endl;
             this->AprobarRechazarSolicitud();
             break;
         case 5:
-            cout << "\n\t\t>> Ejecutando: Recepción de vehículo en prestado ..." << endl;
+            cout << "\n\t\t>> Ejecutando: Recepcion de vehiculo en prestado ..." << endl;
             // llamar a funcion RecibirVehiPrestado();
             this->RecepcionVehiculo();
             break;
         case 6:
-            cout << "\n\t\t>> Ejecutando: Reporte de contratos para vehículos especifico..." << endl;
+            cout << "\n\t\t>> Ejecutando: Reporte de contratos para vehiculos especifico..." << endl;
             // llamar a funcion ReporteContratosVehiEspecifico();
             break;
         case 7:
@@ -1113,15 +1113,15 @@ void Utilidades::mostrarSubmenuSolicitudesContratos() {
             this->VerSolicitudesContratos();
             break;
         case 0:
-            // El bucle terminará automáticamente después de esta iteración.
-            cout << "\n\t\tRegresando al Menú Principal..." << endl;
+            // El bucle terminara automaticamente despues de esta iteracion.
+            cout << "\n\t\tRegresando al Menu Principal..." << endl;
             break;
         }
 
-        // Si la opción NO es 0, hacemos una pausa para que el usuario vea el resultado de la acción.
+        // Si la opcion NO es 0, hacemos una pausa para que el usuario vea el resultado de la accion.
         if (opcionSubmenu != 0) {
-            cout << "\t\tPresione ENTER para volver al submenú...";
-            // usamos cin.get() aquí para esperar una pulsación.
+            cout << "\t\tPresione ENTER para volver al submenu...";
+            // usamos cin.get() aqui para esperar una pulsacion.
             cin.get();
         }
 
@@ -1132,27 +1132,27 @@ void Utilidades::mostrarSubmenuSolicitudesContratos() {
 void Utilidades::mostrarSubmenuClientes() {
     int opcionSubmenu = -1; // Inicializamos a un valor != 0 para entrar al bucle.
 
-    // El bucle se ejecuta mientras la opción NO sea 0 (Regresar al Menú Principal).
+    // El bucle se ejecuta mientras la opcion NO sea 0 (Regresar al Menu Principal).
     while (opcionSubmenu != 0) {
 
-        // 1. Mostrar el menú
+        // 1. Mostrar el menu
         limpiarConsola();
         cout << "\n\t\t======================================================" << endl;
-        cout << "\t\t            SUBMENÚ DE CLIENTES                       " << endl;
+        cout << "\t\t            SUBMENu DE CLIENTES                       " << endl;
         cout << "\t\t======================================================" << endl;
         cout << "\t\t(1) Ingresar Cliente" << endl;
         cout << "\t\t(2) Mostrar Cliente" << endl;
         cout << "\t\t(3) Eliminar Cliente" << endl;
         cout << "\t\t(4) Historial del Cliente" << endl;
         cout << "\t\t(5) Reporte de clientes por cantidad de contratos" << endl;
-        cout << "\t\t(0) Regresar al Menú Principal" << endl;
+        cout << "\t\t(0) Regresar al Menu Principal" << endl;
         cout << "\t\t------------------------------------------------------" << endl;
 
-        // 2. Leer la opción (Rango de 0 a 5)
-        // Llamada a la función de la misma clase.
+        // 2. Leer la opcion (Rango de 0 a 5)
+        // Llamada a la funcion de la misma clase.
         opcionSubmenu = leerOpcion(0, 5);
 
-        // 3. Ejecutar la lógica con switch
+        // 3. Ejecutar la logica con switch
         switch (opcionSubmenu) {
         case 1:
             cout << "\n\t\t>> Ejecutando: Ingresar Cliente..." << endl;
@@ -1175,15 +1175,15 @@ void Utilidades::mostrarSubmenuClientes() {
             // llamarAFuncionReporteClientes();
             break;
         case 0:
-            // El bucle terminará automáticamente después de esta iteración.
-            cout << "\n\t\tRegresando al Menú Principal..." << endl;
+            // El bucle terminara automaticamente despues de esta iteracion.
+            cout << "\n\t\tRegresando al Menu Principal..." << endl;
             break;
         }
 
-        // Si la opción NO es 0, hacemos una pausa para que el usuario vea el resultado de la acción.
+        // Si la opcion NO es 0, hacemos una pausa para que el usuario vea el resultado de la accion.
         if (opcionSubmenu != 0) {
-            cout << "\t\tPresione ENTER para volver al submenú...";
-            // usamos cin.get() aquí para esperar una pulsación.
+            cout << "\t\tPresione ENTER para volver al submenu...";
+            // usamos cin.get() aqui para esperar una pulsacion.
             cin.get();
         }
 

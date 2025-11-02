@@ -64,19 +64,19 @@ bool ListaVehiculo::estaVacia() {
 string ListaVehiculo::toString() {
     stringstream s;
     s << "\t\t=====================================" << endl;
-    s << "\t\tLISTA ENLAZADA: INVENTARIO DE VEHÍCULOS" << endl;
-    s << "\t\tTamaño actual de la lista: " << tamano << endl;
+    s << "\t\tLISTA ENLAZADA: INVENTARIO DE VEHICULOS" << endl;
+    s << "\t\tTama"<<char(164)<<"o actual de la lista : " << tamano << endl;
     s << "\t\t=====================================" << endl;
 
     if (cabeza == NULL) {
-        s << "\t\tLa lista está vacía." << endl;
+        s << "\t\tLa lista esta vacia." << endl;
         return s.str();
     }
 
     NodoVehiculo* actual = cabeza;
     int contador = 1;
     while (actual != NULL) {
-        s << "\t\t[POSICIÓN #" << contador << "]:" << endl;
+        s << "\t\t[POSICION #" << contador << "]:" << endl;
         // Llama al toStringNodo del Nodo para mostrar su contenido
         s << actual->toStringNodo();
         actual = actual->getSig();
@@ -215,11 +215,11 @@ string ListaCliente::toString() {
     stringstream s;
     s << "\t\t=====================================" << endl;
     s << "\t\tLISTA ENLAZADA: REGISTRO DE CLIENTES" << endl;
-    s << "\t\tTamaño actual de la lista: " << tamano << endl;
+ s << "\t\tTama"<<char(164)<<"o actual de la lista : " << tamano << endl;
     s << "\t\t=====================================" << endl;
 
     if (cab == NULL) {
-        s << "\t\tLa lista de clientes está vacía." << endl;
+        s << "\t\tLa lista de clientes esta vacia." << endl;
         return s.str();
     }
 
@@ -369,11 +369,11 @@ string ListaColaborador::toString() {
     stringstream s;
     s << "\t\t=====================================" << endl;
     s << "\t\tLISTA ENLAZADA: REGISTRO DE COLABORADORES" << endl;
-    s << "\t\tTamaño actual de la lista: " << tamano << endl;
+    s << "\t\tTama" << char(164) << "o actual de la lista : " << tamano << endl;
     s << "\t\t=====================================" << endl;
 
     if (cab == NULL) {
-        s << "\t\tLa lista de colaboradores está vacía." << endl;
+        s << "\t\tLa lista de colaboradores esta vacia." << endl;
         return s.str();
     }
 
@@ -510,11 +510,11 @@ string ListaSucursal::toString() {
     stringstream s;
     s << "\t\t=====================================" << endl;
     s << "\t\tLISTA ENLAZADA: REGISTRO DE SUCURSALES" << endl;
-    s << "\t\tTamaño actual de la lista: " << tamano << endl;
+    s << "\t\tTama" << char(164) << "o actual de la lista : " << tamano << endl;
     s << "\t\t=====================================" << endl;
 
     if (cab == NULL) {
-        s << "\t\tLa lista de sucursales está vacía." << endl;
+        s << "\t\tLa lista de sucursales esta vacia." << endl;
         return s.str();
     }
 
@@ -660,11 +660,11 @@ string ListaPlantel::toString() {
     stringstream s;
     s << "\t\t=====================================" << endl;
     s << "\t\tLISTA ENLAZADA: REGISTRO DE PLANTELES" << endl;
-    s << "\t\tTamaño actual de la lista: " << tamano << endl;
+    s << "\t\tTama" << char(164) << "o actual de la lista : " << tamano << endl;
     s << "\t\t=====================================" << endl;
 
     if (cab == NULL) {
-        s << "\t\tLa lista de planteles está vacía." << endl;
+        s << "\t\tLa lista de planteles esta vacia." << endl;
         return s.str();
     }
 
@@ -798,11 +798,11 @@ string ListaSolicitud::toString() {
     stringstream s;
     s << "\t\t=====================================" << endl;
     s << "\t\tLISTA ENLAZADA: REGISTRO DE SOLICITUDES" << endl;
-    s << "\t\tTamaño actual de la lista: " << tamano << endl;
+    s << "\t\tTama" << char(164) << "o actual de la lista : " << tamano << endl;
     s << "\t\t=====================================" << endl;
 
     if (cab == NULL) {
-        s << "\t\tLa lista de solicitudes está vacía." << endl;
+        s << "\t\tLa lista de solicitudes esta vacia." << endl;
         return s.str();
     }
 
@@ -937,11 +937,11 @@ string ListaContrato::toString() {
     stringstream s;
     s << "\t\t=====================================" << endl;
     s << "\t\tLISTA ENLAZADA: REGISTRO DE CONTRATOS" << endl;
-    s << "\t\tTamaño actual de la lista: " << tamano << endl;
+    s << "\t\tTama" << char(164) << "o actual de la lista : " << tamano << endl;
     s << "\t\t=====================================" << endl;
 
     if (cab == NULL) {
-        s << "\t\tLa lista de Contratos está vacía." << endl;
+        s << "\t\tLa lista de Contratos esta vacia." << endl;
         return s.str();
     }
 

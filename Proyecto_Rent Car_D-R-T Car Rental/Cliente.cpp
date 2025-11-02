@@ -40,7 +40,7 @@ string Cliente::toString() {
     stringstream s;
 
     s << "\t\t************************************************" << endl;
-    s << "\t\t--- INFORMACIÓN COMPLETA DEL CLIENTE (BASE) ---" << endl;
+    s << "\t\t--- INFORMACION COMPLETA DEL CLIENTE (BASE) ---" << endl;
 
     // 1. Llama a la función toString de la clase base para incluir sus datos
     s << Persona::toString();

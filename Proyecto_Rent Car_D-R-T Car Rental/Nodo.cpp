@@ -180,7 +180,7 @@ string NodoColaborador::toStringNodo() {
         s << dato->toString();
     }
     else {
-        s << "\t\tEl elemento (Cliente) del Nodo es NULL." << endl;
+        s << "\t\tEl elemento (Colaborador) del Nodo es NULL." << endl;
     }
     s << "\t\tPuntero Siguiente (siguiente): ";
     if (siguiente != NULL) {

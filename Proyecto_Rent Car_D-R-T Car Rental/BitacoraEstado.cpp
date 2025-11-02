@@ -89,10 +89,10 @@ string BitacoraEstado::toString() {
     NodoEstado* actual = cab;
     int contador = 1;
 
-    s << "\t\t--- BITÁCORA DE ESTADOS (Crecimiento Indefinido) ---" << endl;
+    s << "\t\t--- BITACORA DE ESTADOS (Crecimiento Indefinido) ---" << endl;
 
     if (actual == NULL) {
-        s << "\t\tLa Bitácora está vacía." << endl;
+        s << "\t\tLa Bitácora esta vacia." << endl;
     }
     else {
         while (actual != NULL) {

@@ -25,14 +25,14 @@ string ClienteFisico::toString() {
     stringstream s;
 
     s << "\t\t************************************************" << endl;
-    s << "\t\t--- CLIENTE FÍSICO (PERSONA INDIVIDUAL) ---" << endl;
+    s << "\t\t--- CLIENTE FISICO (PERSONA INDIVIDUAL) ---" << endl;
 
     // 1. Llama a la función toString de la clase base Cliente
     // Esto incluirá la info de Persona y los datos de fechas del Cliente
     s << Cliente::toString();
 
     s << "\t\t------------------------------------------------" << endl;
-    s << "\t\tEstado del Cliente: Persona Física Estándar." << endl;
+    s << "\t\tEstado del Cliente: Persona Fisica Estandar." << endl;
     s << "\t\t************************************************" << endl;
 
     return s.str();

@@ -44,7 +44,7 @@ string ContratoAlquiler::toString() {
 
     s << "\t\t*************************************************" << endl;
     s << "\t\t--- DOCUMENTO DE CONTRATO DE ALQUILER ---" << endl;
-    s << "\t\tCódigo de Contrato: " << codigoContrato << endl;
+    s << "\t\tCodigo de Contrato: " << codigoContrato << endl;
     s << "\t\tCosto Total Acordado: $" << costoTotal << endl;
     s << "\t\tEstado del Contrato: " << estado << endl;
     s << "\t\t-------------------------------------------------" << endl;

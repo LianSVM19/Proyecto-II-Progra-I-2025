@@ -60,7 +60,7 @@ void Vehiculo::setEstado(string e) {
 
     // Caso 1: Disponible (Estado Actual)
     if (estado == "Disponible") {
-        if (e == "Alquilado" || e == "Revisión" || e == "Lavado") {
+        if (e == "Alquilado" || e == "Revision" || e == "Lavado") {
             estado = e;
             cout << "Transicion valida: Nuevo estado del carro: " << e << endl;
             return; // Salir de la función si se actualizó el estado
@@ -77,7 +77,7 @@ void Vehiculo::setEstado(string e) {
     }
     // Caso 3: Devuelto (Estado Actual)
     else if (estado == "Devuelto") {
-        if (e == "Revisión" || e == "Lavado") {
+        if (e == "Revision" || e == "Lavado") {
             estado = e;
             cout << "Transicion valida: Nuevo estado del carro: " << e << endl;
             return;
@@ -93,7 +93,7 @@ void Vehiculo::setEstado(string e) {
     }
     // Caso 5: Lavado (Estado Actual)
     else if (estado == "Lavado") {
-        if (e == "Disponible" || e == "Revisión") {
+        if (e == "Disponible" || e == "Revision") {
             estado = e;
             cout << "Transicion valida: Nuevo estado del carro: " << e << endl;
             return;
@@ -136,7 +136,7 @@ string Vehiculo::getEstado() {
 string Vehiculo::toString() const {
     stringstream s;
     s << "\t\t*********************************" << endl;
-    s << "\t\t--- Datos del Vehículo ---" << endl;
+    s << "\t\t--- Datos del Vehiculo ---" << endl;
     s << "\t\tPlaca: " << placa << endl;
     s << "\t\tMarca: " << marca << endl;
     s << "\t\tModelo: " << modelo << endl;

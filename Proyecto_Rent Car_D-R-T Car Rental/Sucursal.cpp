@@ -72,7 +72,7 @@ string Sucursal::toString() {
 
     s << "\t\t================================================" << endl;
     s << "\t\t--- INFORMACIÓN DE LA SUCURSAL ---" << endl;
-    s << "\t\tCódigo: " << codigoSucursal << endl;
+    s << "\t\tCodigo: " << codigoSucursal << endl;
     s << "\t\tNombre Comercial: " << nombre << endl;
     s << "\t\tDirección: " << direccion << endl;
     s << "\t\tTeléfono: " << telefono << endl;
@@ -93,7 +93,7 @@ string Sucursal::toString() {
         s << clientes->toString();
     }
     else {
-        s << "\t\tERROR: La colección de clientes no fue inicializada." << endl;
+        s << "\t\tERROR: La coleccion de clientes no fue inicializada." << endl;
     }
     s << "\t\t------------------------------------------------" << endl;
 
@@ -102,7 +102,7 @@ string Sucursal::toString() {
         s << colaboradores->toString();
     }
     else {
-        s << "\t\tERROR: La colección de colaboradores no fue inicializada." << endl;
+        s << "\t\tERROR: La coleccion de colaboradores no fue inicializada." << endl;
     }
     s << "\t\t================================================" << endl;
 

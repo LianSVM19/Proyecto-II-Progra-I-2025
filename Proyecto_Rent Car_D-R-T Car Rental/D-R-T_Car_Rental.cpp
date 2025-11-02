@@ -5,7 +5,7 @@ using namespace std;
 int main() {
     cout << "EEEEEE" << endl;
     cout << "madre mia willy" << endl;
-    cout << "peroquehacesaquicompañero" << endl;
+    cout << "peroquehacesaquicompa"<<char(164)<<"ero" << endl;
     // 1. Crear una instancia de la clase Utilidades
     // Esto es el único punto de conexión con la clase.
     

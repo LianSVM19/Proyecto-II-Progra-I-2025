@@ -38,8 +38,8 @@ void Plantel::setCapacidadColumnas(int columnas) { if (columnas > 0) capacidadCo
 string Plantel::toString() {
     stringstream s;
     s << "\t\t************************************************" << endl;
-    s << "\t\t--- INFORMACIÓN DEL PLANTEL DE ESTACIONAMIENTO ---" << endl;
-    s << "\t\tCódigo de Plantel: " << codigoPlantel << endl;
+    s << "\t\t--- INFORMACION DEL PLANTEL DE ESTACIONAMIENTO ---" << endl;
+    s << "\t\tCodigo de Plantel: " << codigoPlantel << endl;
     s << "\t\tTipo de Plantel: " << tipoPlantel << endl;
     s << "\t\tCapacidad Total: " << (capacidadFilas * capacidadColumnas) << " espacios" << endl;
     s << "\t\tDimensiones (Filas x Columnas): " << capacidadFilas << "x" << capacidadColumnas << endl;
