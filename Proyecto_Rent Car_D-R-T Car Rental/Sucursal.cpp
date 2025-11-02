@@ -18,13 +18,17 @@ Sucursal::Sucursal(string cod, string nom, string dir, string tel) {
     planteles = new ListaVehiculo();
     clientes = new ListaCliente();   
     colaboradores = new ListaColaborador();
+
+
+    plantel = nullptr;
 }
 
 // ----------------------
 // Destructor (Liberación de Memoria)
 // ----------------------
 Sucursal::~Sucursal() {
-    // Es CRÍTICO liberar la memoria de la lista de planteles.
+
+
     if (planteles != NULL) {
         delete planteles;
         planteles = NULL;
@@ -37,6 +41,10 @@ Sucursal::~Sucursal() {
     if (colaboradores != NULL) { // <-- LIBERACIÓN DE COLABORADORES
         delete colaboradores;
         colaboradores = NULL;
+    }
+    if (plantel != NULL) {  // LIBERACION DE 
+        delete plantel;
+        plantel = NULL;
     }
 }
 

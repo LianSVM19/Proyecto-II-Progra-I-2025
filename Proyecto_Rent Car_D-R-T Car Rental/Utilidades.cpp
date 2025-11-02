@@ -5,6 +5,7 @@
 #include "ClienteFisico.h"
 #include "ClienteJuridico.h"
 #include "Colaborador.h"
+#include "Plantel.h"
 #include <iostream>
 
 using namespace std;
@@ -29,9 +30,57 @@ Utilidades::~Utilidades() {
     }
 }
 
-//Implementacion de cositas jajaj
+
+void Utilidades::crearPlantelSucursal() {
+    string codigoSucursal, tipoPlantel, codigoPlantel;
+    int filas, columnas;
+
+    limpiarConsola();
+    cout << "\n\t\t--- CREACIÓN DE PLANTEL PARA SUCURSAL ---" << endl;
+
+    cout << "\t\tIngrese el código de la sucursal: ";
+    getline(cin, codigoSucursal);
+
+    Sucursal* sucursal = listaSucursales->buscar(codigoSucursal);
+    if (sucursal == nullptr) {
+        cout << "\t\tERROR: No se encontró ninguna sucursal con ese código." << endl;
+        return;
+    }
+
+    cout << "\t\tIngrese el código del plantel: ";
+    getline(cin, codigoPlantel);
+
+    cout << "\t\tIngrese el tipo de plantel (Ej: Estándar, Premium, SUV): ";
+    getline(cin, tipoPlantel);
+
+    cout << "\t\tIngrese el número de filas: ";
+    while (!(cin >> filas) || filas <= 0) {
+        cin.clear();
+        cin.ignore(10000, '\n');
+        cout << "\t\tValor inválido. Intente de nuevo: ";
+    }
+
+    cout << "\t\tIngrese el número de columnas: ";
+    while (!(cin >> columnas) || columnas <= 0) {
+        cin.clear();
+        cin.ignore(10000, '\n');
+        cout << "\t\tValor inválido. Intente de nuevo: ";
+    }
+
+    cin.ignore(10000, '\n'); // limpiar buffer
+
+    Plantel* nuevoPlantel = new Plantel(codigoPlantel, tipoPlantel, filas, columnas);
+    sucursal->setPlantel(nuevoPlantel);
+
+    cout << "\n\t\tPlantel creado exitosamente para la sucursal '"
+        << sucursal->getNombre() << "'." << endl;
+
+    cout << nuevoPlantel->toString() << endl;
+}
 
 
+
+//Cositas
 Cliente* Utilidades::leerDatosCliente() {
     string cedula, nombre, correo, telefono, fNacimiento, fInscripcion;
     char sexo;
@@ -616,7 +665,7 @@ void Utilidades::mostrarSubmenuCarrosPlanteles() {
         switch (opcionSubmenu) {
         case 1:
             cout << "\n\t\t>> Ejecutando: Crear Plantel..." << endl;
-            // llamar a funcion CrearPlantel();
+            Utilidades::crearPlantelSucursal();
             break;
         case 2:
             cout << "\n\t\t>> Ejecutando: Visualizacion Grafica de Plantel..." << endl;

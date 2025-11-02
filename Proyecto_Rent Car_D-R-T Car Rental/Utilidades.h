@@ -31,6 +31,9 @@ public:
     Utilidades();
     ~Utilidades();
 
+    void crearPlantelSucursal();
+
+
     // Método que gestiona el ingreso de un nuevo cliente
     void ingresarCliente();
     void ingresarColaborador();

@@ -79,6 +79,17 @@ void MatrizEstacionamientos::setColumnas(int c) {
     if (c > 0) columnas = c;
 }
 
+
+bool MatrizEstacionamientos::estaOcupado(int fila, int columna) {
+    if (fila >= 0 && fila < filas && columna >= 0 && columna < columnas) {
+        Estacionamiento* e = matriz[fila][columna];
+        return e != NULL && e->getOcupado();
+    }
+    return false;
+}
+
+
+
 // ----------------------
 // Función "to string"
 // ----------------------
@@ -102,6 +113,8 @@ string MatrizEstacionamientos::toString() {
         }
         s << endl;
     }
+
+    
 
     s << "\t\t*************************************" << endl;
     return s.str();

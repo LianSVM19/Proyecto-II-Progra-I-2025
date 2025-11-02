@@ -23,6 +23,7 @@ private:
     ListaVehiculo* planteles;
     ListaCliente* clientes; 
     ListaColaborador* colaboradores;
+    Plantel* plantel;
 
 public:
     // Constructor
@@ -39,11 +40,14 @@ public:
     ListaVehiculo* getPlanteles();
     ListaCliente* getClientes();  
     ListaColaborador* getColaboradores();
-   
+    Plantel* getPlantel();
+
+
     // Setters
     void setNombre(string);
     void setDireccion(string);
     void setTelefono(string);
+    void setPlantel(Plantel*);
 
     // Función "to string"
     string toString();

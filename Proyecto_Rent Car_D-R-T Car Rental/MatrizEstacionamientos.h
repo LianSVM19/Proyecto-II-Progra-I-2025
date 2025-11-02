@@ -32,6 +32,9 @@ public:
 
     // Función "to string" 
     string toString();
+
+    // Utilidad
+    bool estaOcupado(int, int);
 };
 
 #endif
