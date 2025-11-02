@@ -34,18 +34,16 @@ void ListaVehiculo::agregarAlInicio(Vehiculo* nuevoDato) {
     tamano++;
 }
 
-Vehiculo* ListaVehiculo::buscar(string cedula) {
+Vehiculo* ListaVehiculo::buscar(string placa) {
     NodoVehiculo* actual = cabeza;
     while (actual != NULL) {
-        // Accedemos al Vehiculo* y luego a su método getCedula()
-        if (actual->getElemento()->getPlaca() == cedula) {
+        if (actual->getElemento()->getPlaca() == placa) {
             return actual->getElemento();
         }
         actual = actual->getSig();
     }
-    return NULL; // Retorna NULL si no se encuentra
+    return NULL;
 }
-
 
 // ----------------------
 // Getters y Utilidades
@@ -288,18 +286,15 @@ void ListaColaborador::agregarColaborador(Colaborador* c) {
 // ----------------------
 // Buscar Colaborador por ID
 // ----------------------
-Colaborador* ListaColaborador::buscar(string idColaborador) {
+Colaborador* ListaColaborador::getColaborador() {
     NodoColaborador* actual = cab;
-    while (actual != NULL) {
-        // Accedemos al Colaborador* y luego a su método getId()
-        if (actual->getDato()->getCedula() == idColaborador) {
-            return actual->getDato();
-        }
-        actual = actual->getSiguiente();
-    }
-    return NULL; // Retorna NULL si no se encuentra
-}
+    if (actual == NULL) return NULL;
 
+    while (actual->getSiguiente() != NULL) {
+        actual = actual->getSiguiente(); 
+    }
+    return actual->getDato();
+}
 // ----------------------
 // Eliminar Colaborador por ID
 // ----------------------

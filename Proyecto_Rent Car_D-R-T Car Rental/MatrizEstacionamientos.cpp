@@ -83,12 +83,13 @@ void MatrizEstacionamientos::setColumnas(int c) {
 
 
 void MatrizEstacionamientos::setEstacionamiento(int f, int c, Estacionamiento* esta) {
-    if (MatrizEstacionamientos::estaOcupado(f, c) == false && (f >= 0 && f < filas && c >= 0 && c < columnas)) {
+    if ((f >= 0 && f < filas && c >= 0 && c < columnas) && !MatrizEstacionamientos::estaOcupado(f, c)) {
+        if (matriz[f][c] != NULL) {
+            delete matriz[f][c]; 
+        }
         matriz[f][c] = esta;
     }
 }
-
-
 
 bool MatrizEstacionamientos::estaOcupado(int fila, int columna) {
     if (fila >= 0 && fila < filas && columna >= 0 && columna < columnas) {
