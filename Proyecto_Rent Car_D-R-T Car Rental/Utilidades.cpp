@@ -79,7 +79,8 @@ void Utilidades::crearPlantelSucursal() {
 }
 
 void Utilidades::visualizarPlantel() {
-    string codigoSucursal;
+    string codigoSucursal, codigoPlantel;
+    int fil, col;
     limpiarConsola();
     cout << "\t\tIngrese el código de la sucursal: ";
     getline(cin, codigoSucursal);
@@ -89,6 +90,13 @@ void Utilidades::visualizarPlantel() {
         cout << "\t\tERROR: No se encontró ninguna sucursal con ese código." << endl;
         return;
     }
+    else {
+        cout << "\t\tIngrese el código del plantel: ";
+        getline(cin, codigoPlantel);
+        Plantel* cPlantel = sucursal->getPlantel();
+    }
+
+
 
 }
 

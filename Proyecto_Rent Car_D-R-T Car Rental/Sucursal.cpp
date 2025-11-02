@@ -18,9 +18,7 @@ Sucursal::Sucursal(string cod, string nom, string dir, string tel) {
     // **ASIGNACIÓN DINÁMICA DE LA LISTA ENLAZADA**
     clientes = new ListaCliente();   
     colaboradores = new ListaColaborador();
-
-
-    plantel = NULL;
+    plantel = new ListaPlantel();
 }
 
 // ----------------------

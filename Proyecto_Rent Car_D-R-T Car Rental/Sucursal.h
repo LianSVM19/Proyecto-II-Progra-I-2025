@@ -22,7 +22,7 @@ private:
     // El puntero va a la estructura de colección
     ListaCliente* clientes; 
     ListaColaborador* colaboradores;
-    Plantel* plantel;
+    ListaPlantel* plantel;
 
 public:
     // Constructor
