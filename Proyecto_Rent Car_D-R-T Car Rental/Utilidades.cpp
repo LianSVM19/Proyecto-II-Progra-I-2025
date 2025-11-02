@@ -385,7 +385,7 @@ void Utilidades::gestionarClientesPorSucursal(int operacion) {
         if (c != NULL) {
             // Decides a donde añadirlo:
             listaClientesSucursal->agregarCliente(c); // Añadir a la lista de la sucursal
-            // Opcional: listaClientes->agregarCliente(c); // Si tambien lo quieres en la lista global
+            listaClientes->agregarCliente(c); // Si tambien lo quieres en la lista global
 
             cout << "\n\t\t Cliente registrado con exito en la sucursal." << endl;
             cout << "\t\tDatos del nuevo cliente:\n" << c->toString() << endl;
@@ -538,7 +538,7 @@ void Utilidades::CrearSolicitud() {
     double precioTotal = 0.0;
 
     // Punteros a las entidades que necesitamos:
-    Cliente* cliente = NULL;
+    
     Colaborador* colaborador = NULL;
     Sucursal* sucursal = NULL;
     Vehiculo* vehiculo = NULL;
@@ -549,7 +549,7 @@ void Utilidades::CrearSolicitud() {
     // 1. Obtener y buscar el Cliente (Cedula)
     cout << "\t\tIngrese la cedula del Cliente: ";
     getline(cin, cedulaCliente);
-    cliente = listaClientes->buscar(cedulaCliente);
+    Cliente * cliente = listaClientes->buscar(cedulaCliente);
     if (cliente == NULL) {
         cout << "\t\tERROR: Cliente con cedula " << cedulaCliente << " no encontrado." << endl;
         pausa();
