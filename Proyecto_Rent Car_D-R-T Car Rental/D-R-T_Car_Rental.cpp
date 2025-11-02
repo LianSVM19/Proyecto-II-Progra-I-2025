@@ -6,12 +6,13 @@ int main() {
     cout << "EEEEEE" << endl;
     cout << "madre mia willy" << endl;
     cout << "peroquehacesaquicompañero" << endl;
-        // 1. Crear una instancia de la clase Utilidades
-        // Esto es el único punto de conexión con la clase.
-        Utilidades miSistema;
+    // 1. Crear una instancia de la clase Utilidades
+    // Esto es el único punto de conexión con la clase.
+    
+    Utilidades miSistema;
 
-        // 2. Llamar al método principal que inicia la lógica del menú
-        miSistema.ejecutarSistema();
+    // 2. Llamar al método principal que inicia la lógica del menú
+    miSistema.ejecutarSistema();
 
 
     //prueba de clase vehiculo.

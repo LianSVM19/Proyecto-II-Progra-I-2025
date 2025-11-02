@@ -729,7 +729,7 @@ void Utilidades::mostrarSubmenuSolicitudesContratos() {
         // 1. Mostrar el menú
         limpiarConsola();
         cout << "\n\t\t======================================================" << endl;
-        cout << "\t\t            SUBMENÚ DE CARROS Y PLANTELES             " << endl;
+        cout << "\t\t          SUBMENÚ DE SOLICITUDES Y CONTRATOS          " << endl;
         cout << "\t\t======================================================" << endl;
         cout << "\t\t(1) Creacion de Solicitud" << endl;
         cout << "\t\t(2) Visualización de solicitudes/contratos por sucursal" << endl;
