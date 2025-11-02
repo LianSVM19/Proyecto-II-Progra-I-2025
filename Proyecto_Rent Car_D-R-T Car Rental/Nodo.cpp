@@ -250,3 +250,62 @@ string NodoSucursal::toStringNodo() {
     s << "\t\t***********************************" << endl;
     return s.str();
 }
+
+// =====================================
+// IMPLEMENTACIÓN DE NODOPLANTEL
+// =====================================
+
+NodoPlantel::NodoPlantel(Plantel* s, NodoPlantel* sig) {
+    dato = s;
+    siguiente = sig;
+}
+
+NodoPlantel::~NodoPlantel() {
+    // CRÍTICO: El nodo es dueño de la memoria del Plantel, debe liberarla.
+    if (dato != NULL) {
+        delete dato;
+        dato = NULL;
+    }
+}
+
+Plantel* NodoPlantel::getDato() {
+    return dato;
+}
+
+NodoPlantel* NodoPlantel::getSiguiente() {
+    return siguiente;
+}
+
+void NodoPlantel::setDato(Plantel* nuevoDato) {
+    // Si ya existe un elemento, liberamos la memoria antes de reasignar
+    if (dato != NULL) {
+        delete dato;
+    }
+    dato = nuevoDato;
+}
+
+void NodoPlantel::setSiguiente(NodoPlantel* sig) {
+    siguiente = sig;
+}
+
+string NodoPlantel::toStringNodo() {
+    stringstream s;
+    s << "\t\t***********************************" << endl;
+    if (dato != NULL) {
+        // Llama al toString() del objeto Plantel
+        s << dato->toString();
+    }
+    else {
+        s << "\t\tEl elemento (Plantel) del Nodo es NULL." << endl;
+    }
+    s << "\t\tPuntero Siguiente (siguiente): ";
+    if (siguiente != NULL) {
+        s << "ENLAZADO A OTRO NODO." << endl;
+    }
+    else {
+        s << "NULL (Fin de la Lista)." << endl;
+    }
+    s << "\t\t***********************************" << endl;
+    return s.str();
+
+

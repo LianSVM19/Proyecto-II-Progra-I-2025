@@ -6,6 +6,7 @@
 #include "Cliente.h"
 #include "Colaborador.h"
 #include "Sucursal.h"
+#include "Plantel.h"
 
 using namespace std;
 
@@ -102,6 +103,34 @@ public:
     // Setters
     void setSiguiente(NodoSucursal*);
     void setDato(Sucursal*);
+
+    // Función "to string"
+    string toStringNodo();
+};
+
+
+// =====================================
+// DEFINICIÓN DE NODOPLANTEL
+// =====================================
+
+class NodoPlantel {
+private:
+    Plantel* dato;
+    NodoPlantel* siguiente;
+public:
+    // Constructor
+    NodoPlantel(Plantel* s, NodoPlantel* sig = NULL);
+
+    // Destructor (debe liberar la memoria del Plantel almacenado)
+    ~NodoPlantel();
+
+    // Getters
+    Plantel* getDato();
+    NodoPlantel* getSiguiente();
+
+    // Setters
+    void setSiguiente(NodoPlantel*);
+    void setDato(Plantel*);
 
     // Función "to string"
     string toStringNodo();

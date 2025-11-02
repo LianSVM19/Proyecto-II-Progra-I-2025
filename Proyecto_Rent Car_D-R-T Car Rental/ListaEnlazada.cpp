@@ -513,3 +513,142 @@ string ListaSucursal::toString() {
     s << "\t\tFIN DE LA LISTA." << endl;
     return s.str();
 }
+
+
+// =====================================
+// IMPLEMENTACIÓN DE LISTAPLANTEL
+// =====================================
+
+// ----------------------
+// Constructor
+// ----------------------
+ListaPlantel::ListaPlantel() : cab(NULL), tamano(0) {}
+
+// ----------------------
+// Destructor (Liberación de memoria de Nodos yPlanteles)
+// ----------------------
+ListaPlantel::~ListaPlantel() {
+    NodoPlantel* actual = cab;
+    NodoPlantel* siguiente = NULL;
+
+    while (actual != NULL) {
+        siguiente = actual->getSiguiente();
+        // El destructor de NodoSucursal se encarga de liberar el Plantel* y sus listas internas
+        delete actual;
+        actual = siguiente;
+    }
+    cab = NULL;
+    tamano = 0;
+}
+
+// ----------------------
+// Agregar Plantel (Al final de la lista)
+// ----------------------
+void ListaPlantel::agregarPlantel(Plantel* s) {
+    NodoPlantel* nuevoNodo = new NodoPlantel(s);
+
+    if (cab == NULL) {
+        cab = nuevoNodo;
+    }
+    else {
+        NodoPlantel* actual = cab;
+        while (actual->getSiguiente() != NULL) {
+            actual = actual->getSiguiente();
+        }
+        actual->setSiguiente(nuevoNodo);
+    }
+    tamano++;
+}
+
+// ----------------------
+// Buscar Plantel por código
+// ----------------------
+Plantel* ListaPlantel::buscar(string codigo) {
+    NodoPlantel* actual = cab;
+    while (actual != NULL) {
+        if (actual->getDato()->getCodigoPlantel() == codigo) {
+            return actual->getDato();
+        }
+        actual = actual->getSiguiente();
+    }
+    return NULL;
+}
+
+
+// ----------------------
+// Eliminar Plantel por código
+// ----------------------
+bool ListaPlantel::eliminar(string codigo) {
+    if (cab == NULL) {
+        return false;
+    }
+
+    NodoPlantel* actual = cab;
+    NodoPlantel* anterior = NULL;
+
+    // Caso 1: El nodo a eliminar es la cabeza
+    if (actual != NULL && actual->getDato()->getCodigoPlantel() == codigo) {
+        cab = actual->getSiguiente();
+        delete actual; // Se llama al destructor del NodoPlantel, liberando el Plantel*
+        tamano--;
+        return true;
+    }
+
+    // Caso 2: Buscar el nodo en el resto de la lista
+    while (actual != NULL && actual->getDato()->getCodigoPlantel() != codigo) {
+        anterior = actual;
+        actual = actual->getSiguiente();
+    }
+
+    // Si el nodo no se encontró
+    if (actual == NULL) {
+        return false;
+    }
+
+    // Desenlazar el nodo encontrado
+    anterior->setSiguiente(actual->getSiguiente());
+    delete actual; // Se llama al destructor del NodoPlantel, liberando el Plantel*
+    tamano--;
+    return true;
+}
+
+
+// ----------------------
+// Getters y Utilidades
+// ----------------------
+int ListaPlantel::getTamano() {
+    return tamano;
+}
+
+bool ListaPlantel::estaVacia() {
+    return cab == NULL;
+}
+
+// ----------------------
+// Función "to string"
+// ----------------------
+string ListaPlantel::toString() {
+    stringstream s;
+    s << "\t\t=====================================" << endl;
+    s << "\t\tLISTA ENLAZADA: REGISTRO DE PLANTELES" << endl;
+    s << "\t\tTamaño actual de la lista: " << tamano << endl;
+    s << "\t\t=====================================" << endl;
+
+    if (cab == NULL) {
+        s << "\t\tLa lista de planteles está vacía." << endl;
+        return s.str();
+    }
+
+    NodoPlantel* actual = cab;
+    int contador = 1;
+    while (actual != NULL) {
+        s << "\t\t[PLANTEL #" << contador << "]:" << endl;
+        // Llama al toStringNodo del Nodo para mostrar su contenido
+        s << actual->toStringNodo();
+        actual = actual->getSiguiente();
+        contador++;
+    }
+
+    s << "\t\tFIN DE LA LISTA." << endl;
+    return s.str();
+}

@@ -118,4 +118,34 @@ public:
     // Función "to string" para mostrar todas las sucursales
     string toString();
 };
+
+
+
+// =====================================
+// DEFINICIÓN DE LISTAPLANTEL
+// =====================================
+class ListaPlantel {
+private:
+    NodoPlantel* cab;
+    int tamano;
+
+public:
+    // Constructor (inicia la lista vacía)
+    ListaPlantel();
+
+    // Destructor (libera todos los nodos y sus planteles)
+    ~ListaPlantel();
+
+    // Métodos de gestión de la colección
+    void agregarPlantel(Plantel*);
+    Plantel* buscar(string); // Busca un plantel por su código
+    bool eliminar(string); // Elimina un plantel por su código
+
+    // Getters y utilidades
+    int getTamano();
+    bool estaVacia();
+
+    // Función "to string" para mostrar todas las sucursales
+    string toString();
+};
 #endif

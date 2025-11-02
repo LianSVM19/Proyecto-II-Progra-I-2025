@@ -78,6 +78,21 @@ void Utilidades::crearPlantelSucursal() {
     cout << nuevoPlantel->toString() << endl;
 }
 
+void Utilidades::visualizarPlantel() {
+    string codigoSucursal;
+    limpiarConsola();
+    cout << "\t\tIngrese el código de la sucursal: ";
+    getline(cin, codigoSucursal);
+
+    Sucursal* sucursal = listaSucursales->buscar(codigoSucursal);
+    if (sucursal == nullptr) {
+        cout << "\t\tERROR: No se encontró ninguna sucursal con ese código." << endl;
+        return;
+    }
+
+}
+
+
 
 
 //Cositas
