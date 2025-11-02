@@ -1,6 +1,7 @@
 #include "Sucursal.h" 
 
 #include "ListaEnlazada.h"
+#include "Plantel.h"
 
 
 using namespace std;
@@ -15,12 +16,11 @@ Sucursal::Sucursal(string cod, string nom, string dir, string tel) {
     telefono = tel;
 
     // **ASIGNACIÓN DINÁMICA DE LA LISTA ENLAZADA**
-    planteles = new ListaVehiculo();
     clientes = new ListaCliente();   
     colaboradores = new ListaColaborador();
 
 
-    plantel = nullptr;
+    plantel = NULL;
 }
 
 // ----------------------
@@ -29,9 +29,9 @@ Sucursal::Sucursal(string cod, string nom, string dir, string tel) {
 Sucursal::~Sucursal() {
 
 
-    if (planteles != NULL) {
-        delete planteles;
-        planteles = NULL;
+    if (plantel != NULL) {
+        delete plantel;
+        plantel = NULL;
     }
     if (clientes != NULL) { // <-- LIBERACIÓN DE CLIENTES
         delete clientes;
@@ -55,7 +55,7 @@ string Sucursal::getCodigoSucursal() { return codigoSucursal; }
 string Sucursal::getNombre() { return nombre; }
 string Sucursal::getDireccion() { return direccion; }
 string Sucursal::getTelefono() { return telefono; }
-ListaVehiculo* Sucursal::getPlanteles() { return planteles; }
+Plantel* Sucursal::getPlantel() { return plantel; }
 ListaCliente* Sucursal::getClientes() { return clientes; }        // <-- GETTER DE CLIENTES
 ListaColaborador* Sucursal::getColaboradores() { return colaboradores; } // <-- GETTER DE COLABORADORES
 
@@ -65,6 +65,12 @@ ListaColaborador* Sucursal::getColaboradores() { return colaboradores; } // <-- 
 void Sucursal::setNombre(string nom) { nombre = nom; }
 void Sucursal::setDireccion(string dir) { direccion = dir; }
 void Sucursal::setTelefono(string tel) { telefono = tel; }
+void Sucursal::setPlantel(Plantel* p) {
+    if (plantel != NULL) {
+        delete plantel;  // liberamos el anterior si existía
+    }
+    plantel = p;
+}
 
 // ----------------------
 // Función "to string"
@@ -80,14 +86,15 @@ string Sucursal::toString() {
     s << "\t\tTeléfono: " << telefono << endl;
     s << "\t\t================================================" << endl;
 
-    s << "\t\t--- PLANTELES (Vehículos) ---" << endl;
-    if (planteles != NULL) {
-        s << planteles->toString();
+    s << "\t\t--- PLANTEL DE ESTACIONAMIENTOS ---\n";
+    if (plantel != NULL) {
+        s << plantel->toString();
     }
     else {
-        s << "\t\tERROR: La colección de planteles no fue inicializada." << endl;
+        s << "\t\tNo hay plantel asignado a esta sucursal.\n";
     }
-    s << "\t\t------------------------------------------------" << endl;
+
+    s << "\t\t=============================================\n";
 
     s << "\t\t--- CLIENTES ASIGNADOS ---" << endl;
     if (clientes != NULL) {

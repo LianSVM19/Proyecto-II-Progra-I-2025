@@ -7,9 +7,9 @@
 
 // Declaración Anticipada: Solo indica que existe una clase con este nombre, luego se le da el trabajo (include) al cpp por si hay que 
 // incluir el .h en la lista enlazada final 
-class ListaVehiculo;
 class ListaCliente; 
 class ListaColaborador;
+class Plantel;
 using namespace std;
 
 class Sucursal {
@@ -20,7 +20,6 @@ private:
     string telefono;
 
     // El puntero va a la estructura de colección
-    ListaVehiculo* planteles;
     ListaCliente* clientes; 
     ListaColaborador* colaboradores;
     Plantel* plantel;
@@ -37,7 +36,6 @@ public:
     string getNombre();
     string getDireccion();
     string getTelefono();
-    ListaVehiculo* getPlanteles();
     ListaCliente* getClientes();  
     ListaColaborador* getColaboradores();
     Plantel* getPlantel();
