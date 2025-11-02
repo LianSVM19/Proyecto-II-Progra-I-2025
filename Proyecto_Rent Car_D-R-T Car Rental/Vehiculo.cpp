@@ -4,7 +4,7 @@
 using namespace std;
 
 
-string FechaActual() {
+string Vehiculo::FechaActual() {
     string e;
     cout << "digite la Fecha Actual" << endl;
     cin >> e;
@@ -19,6 +19,8 @@ Vehiculo::Vehiculo(string pla, string mar, string mod, string til, char ca, stri
     tipoLicencia = til;
     categoria = ca;
     estado = es;
+    historialEstados = NULL;
+    
 
     switch (categoria) {
     case 'a':
@@ -36,6 +38,11 @@ Vehiculo::Vehiculo(string pla, string mar, string mod, string til, char ca, stri
     case 'd':
     case 'D':
         precioDiario = 64500.0;
+        break;
+    default:
+        // Si la categoría no coincide, el precio queda en 0.0 o un valor predeterminado seguro
+        precioDiario = 0.0;
+        cout << "Categoria de vehiculo no reconocida. Precio diario por defecto a 0.0." << endl;
         break;
     }
 }
@@ -76,28 +83,28 @@ void Vehiculo::setCategoria(char c) {
         cout << "Categoria de vehiculo invalida" << endl;
     }
 }
-void Vehiculo::setEstado(string e, string ubicacion, string colaboradorId, string fecha) {
+void Vehiculo::setEstado(string e, string ubicacion, string colaboradorId) { // Firma de 3 parámetros
     string estadoAnterior = estado;
     bool transicionValida = false;
 
-    // Lógica de matriz de transiciones (Casos de uso)
+    // --- Lógica de la Matriz de Transiciones (La misma que proporcionaste) ---
     if (estado == "Disponible") {
         if (e == "Alquilado" || e == "Revision" || e == "Lavado") {
             transicionValida = true;
         }
     }
     else if (estado == "Alquilado") {
-        if (e == "Devuelto") { // Solo se permite Devuelto
+        if (e == "Devuelto") {
             transicionValida = true;
         }
     }
     else if (estado == "Devuelto") {
-        if (e == "Revision" || e == "Lavado") { // Transiciona a una fase de procesamiento
+        if (e == "Revision" || e == "Lavado") {
             transicionValida = true;
         }
     }
     else if (estado == "Revision") {
-        if (e == "Lavado" || e == "Disponible") { // Asumo que puede ir a Disponible después de Revisión
+        if (e == "Lavado" || e == "Disponible") {
             transicionValida = true;
         }
     }
@@ -106,18 +113,20 @@ void Vehiculo::setEstado(string e, string ubicacion, string colaboradorId, strin
             transicionValida = true;
         }
     }
-    // NOTA: Considerar el estado "En Reparación" o "Mantenimiento" para mayor robustez.
 
     if (transicionValida) {
         estado = e; // Aplicar el nuevo estado
 
-        string fechaActual=FechaActual(); // Usar la fecha proporcionada 
+        // --- LLAMADA INTERNA A LA FUNCIÓN INTERACTIVA ---
+        string fechaActual = FechaActual();
+        cin.ignore(10000, '\n'); // Limpiar buffer después del cin de FechaActual
+        // ----------------------------------------------------
+
         stringstream desc;
         desc << "Cambio de [" << estadoAnterior << "] a [" << e << "]. Ubicacion: " << ubicacion << ". Operado por ID: " << colaboradorId;
 
         Estado* nuevoRegistro = new Estado(fechaActual, desc.str(), ubicacion);
 
-        // Se usa Bitacora* en lugar de BitacoraEstado* como atributo, se corrige la inicialización.
         if (historialEstados == NULL) {
             historialEstados = new BitacoraEstado();
         }
@@ -125,12 +134,10 @@ void Vehiculo::setEstado(string e, string ubicacion, string colaboradorId, strin
         cout << "\t\t[INFO] Transicion valida: Nuevo estado del carro: " << e << endl;
     }
     else {
-        // Si la función llega hasta aquí, la transición no fue válida o el estado es desconocido.
         cout << "\t\t[ERROR] Transicion de estado invalida o no compatible." << endl;
         cout << "\t\tEl carro NO puede pasar de [" << estadoAnterior << "] a [" << e << "]." << endl;
     }
 }
-
 
 // get
 string Vehiculo::getPlaca() {
@@ -177,4 +184,9 @@ string Vehiculo::toString() const {
     return s.str();
 
 }
-Vehiculo::~Vehiculo() {};
+Vehiculo::~Vehiculo() {
+    if (historialEstados != NULL) {
+        delete historialEstados;
+        historialEstados = NULL;
+    }
+};

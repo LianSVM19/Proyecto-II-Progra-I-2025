@@ -28,7 +28,7 @@ public:
     void setModelo(string );
     void setTipoLicencia(string);
     void setCategoria(char );
-    void setEstado(string,string,string, string);
+    void setEstado(string,string,string);
 
 
     string getPlaca();

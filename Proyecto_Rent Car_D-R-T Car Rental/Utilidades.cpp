@@ -139,7 +139,7 @@ Estacionamiento* Utilidades::obtenerRecomendacion(Plantel* plantel) {
 void Utilidades::ingresarVehiculo() {
     limpiarConsola();
 
-    string plac, mar, mod, tipLic, est, codigoSucursal, feAc;
+    string plac, mar, mod, tipLic, est, codigoSucursal, feAc, cID;
     char cat;
 
     cout << "\n\t\t--- INGRESO DE NUEVO VEHÍCULO ---" << endl;
@@ -157,8 +157,9 @@ void Utilidades::ingresarVehiculo() {
     cout << "\t\tIngrese el tipo de licencia (Ej: A1, B1, etc.): ";
     getline(cin, tipLic);
 
-    cout << "\t\tIngrese la fecha Actual: ";
-    getline(cin, feAc);
+    cout << "\t\tIngrese el ID del colaborador: ";
+    getline(cin, cID);
+        
 
 
     cout << "\t\tIngrese la categoría (Ej: 'S' Sedan, 'C' Coupe, 'T' TodoTerreno): ";
@@ -247,10 +248,10 @@ void Utilidades::ingresarVehiculo() {
         // Se requiere este método para almacenar el vehículo.
         sucursal->getListaVehiculos()->agregarAlInicio(nuevoVehiculo);
         string ubicacion = plantelRecomendado->getCodigoPlantel() + "-" + codEspacio;
-        string colaboradorId = "e"; // CAMBIO URGENTE
+        
 
         // C) REGISTRO DE ESTADO EN BITÁCORA (4 pts, asumiendo setEstado fue modificado)
-        nuevoVehiculo->setEstado("Disponible", ubicacion, "Sistema/Usuario-Ingreso");
+        nuevoVehiculo->setEstado("Disponible", ubicacion, cID);
 
         cout << "\n\t\tVehículo PLACA " << plac << " ingresado y estacionado exitosamente." << endl;
         cout << "\t\tUbicado en Sucursal: " << sucursal->getNombre()
@@ -935,9 +936,9 @@ void Utilidades::AprobarRechazarSolicitud() {
 
             // 1. Cambiar estado del vehiculo
             Vehiculo* vehiculo = solicitud->getVehiculo();
-            //string ubicacion = "EN_USO_" + solicitud->getCodigo(); // Ubicación temporal
+            string ubicacion = "EN_USO_" + solicitud->getCodigoSoli();
             //string fechaActual = obtenerFechaActual();
-            vehiculo->setEstado("Alquilado");
+            vehiculo->setEstado("Alquilado", ubicacion, idColaborador);
             //vehiculo->setEstado("Alquilado", ubicacion, idColaborador, fechaActual);
 
             // 2. Crear Contrato
@@ -966,7 +967,7 @@ void Utilidades::AprobarRechazarSolicitud() {
 
 
 void Utilidades::RecepcionVehiculo() {
-    string codigoContrato;
+    string codigoContrato, idColaborador;
     limpiarConsola();
     cout << "\n\t\t--- RECEPCIoN DE VEHiCULO Y FINALIZACIoN DE CONTRATO (3 pts) ---" << endl;
 
@@ -982,15 +983,17 @@ void Utilidades::RecepcionVehiculo() {
         cout << "\t\tERROR: El contrato ya se encuentra 'Finalizado'." << endl;
     }
     else if (contrato->getEstado() == "Activo") {
+        cout << "\t\tIngrese el ID del Colaborador que recibe el vehículo: ";
+        getline(cin, idColaborador);
 
         // 1. Finalizar el Contrato
         contrato->setEstado("Finalizado");
 
         // 2. Obtener Vehiculo y cambiar su estado
         Vehiculo* vehiculo = contrato->getSolicitud()->getVehiculo();
-
+        string ubicacion = "RECEPCION_PENDIENTE_PARKING";
         // Transicion: Alquilado -> Devuelto (segun su logica interna)
-        vehiculo->setEstado("Devuelto");
+        vehiculo->setEstado("Devuelto", ubicacion, idColaborador);
 
         cout << "\n\t\t¡RECEPCIoN EXITOSA!" << endl;
         cout << "\t\tEl contrato " << codigoContrato << " ha sido marcado como 'Finalizado'." << endl;
@@ -1239,11 +1242,11 @@ void Utilidades::mostrarSubmenuCarrosPlanteles() {
             break;
         case 2:
             cout << "\n\t\t>> Ejecutando: Visualizacion Grafica de Plantel..." << endl;
-            //Utilidades::visualizarPlantel();
+            Utilidades::visualizarPlantel();
             break;
         case 3:
             cout << "\n\t\t>> Ejecutando: Ingreso de Vehiculo..." << endl;
-            // llamar a funcion IngresoVehiculo();
+            Utilidades::ingresarVehiculo();
             break;
         case 4:
             cout << "\n\t\t>> Ejecutando: Visualizacion de Vehiculo..." << endl;
