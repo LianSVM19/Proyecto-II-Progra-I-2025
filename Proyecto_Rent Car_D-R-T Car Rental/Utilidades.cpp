@@ -515,7 +515,13 @@ void Utilidades::mostrarInformacionVehiculoGlobal(string placa) {
         cout << "\t\t--- RESULTADO DE LA BuSQUEDA GLOBAL ---" << endl;
         cout << "\t\t¡Vehiculo encontrado!" << endl;
         cout << "\t\tPlaca: " << vehiculoEncontrado->getPlaca() << endl;
-        // La informacion del vehiculo es limpia, y la ubicacion es de la Sucursal
+        cout << "\t\tMarca: " << vehiculoEncontrado->getMarca() << endl;
+        cout << "\t\tModelo: " << vehiculoEncontrado->getModelo() << endl;
+        cout << "\t\tTipp Licencia: " << vehiculoEncontrado->getTipoLicencia() << endl;
+        cout << "\t\tPrecio por dia: " << vehiculoEncontrado->getPrecioDiario() << endl;
+        cout << "\t\tCategoria: " << vehiculoEncontrado->getCategoria() << endl;
+        cout << "\t\tEstado: " << vehiculoEncontrado->getEstado() << endl;
+
         cout << "\t\tUbicacion (Codigo Sucursal): " << codigoSucursalDelVehiculo << endl;
         cout << "\t\t===================================================" << endl;
     }
