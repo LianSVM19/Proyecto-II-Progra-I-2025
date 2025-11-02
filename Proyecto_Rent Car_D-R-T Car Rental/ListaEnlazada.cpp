@@ -641,6 +641,11 @@ int ListaPlantel::getTamano() {
 bool ListaPlantel::estaVacia() {
     return cab == NULL;
 }
+
+    NodoPlantel* ListaPlantel::getCab() {
+        return cab;
+    }
+
 Sucursal* ListaSucursal::getSucursal() {
     NodoSucursal* actual = cab;
     while (actual != NULL) {

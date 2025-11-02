@@ -4,6 +4,13 @@
 using namespace std;
 
 
+string FechaActual() {
+    string e;
+    cout << "digite la Fecha Actual" << endl;
+    cin >> e;
+    return e;
+}
+
 //constructor sin finalizar
 Vehiculo::Vehiculo(string pla, string mar, string mod, string til, char ca, string es) {
     placa = pla;
@@ -46,9 +53,7 @@ void Vehiculo::setModelo(string mo) {
 void Vehiculo::setTipoLicencia(string tl) {
     tipoLicencia = tl;
 };
-void Vehiculo::setPrecioDiario(double pd) {
-    precioDiario = pd;
-};
+
 void Vehiculo::setCategoria(char c) {
     switch (c) {
     case 'A':
@@ -71,56 +76,59 @@ void Vehiculo::setCategoria(char c) {
         cout << "Categoria de vehiculo invalida" << endl;
     }
 }
-void Vehiculo::setEstado(string e) {
+void Vehiculo::setEstado(string e, string ubicacion, string colaboradorId, string fecha) {
+    string estadoAnterior = estado;
+    bool transicionValida = false;
 
-    // El método debe verificar si el NUEVO estado 'e' es una transición permitida
-    // desde el ESTADO ACTUAL 'estado'.
-
-    // Caso 1: Disponible (Estado Actual)
+    // Lógica de matriz de transiciones (Casos de uso)
     if (estado == "Disponible") {
         if (e == "Alquilado" || e == "Revision" || e == "Lavado") {
-            estado = e;
-            cout << "Transicion valida: Nuevo estado del carro: " << e << endl;
-            return; // Salir de la función si se actualizó el estado
+            transicionValida = true;
         }
     }
-    // Caso 2: Alquilado (Estado Actual)
     else if (estado == "Alquilado") {
-        // Según la matriz, solo Devuelto es SI.
-        if (e == "Devuelto") {
-            estado = e;
-            cout << "Transicion valida: Nuevo estado del carro: " << e << endl;
-            return;
+        if (e == "Devuelto") { // Solo se permite Devuelto
+            transicionValida = true;
         }
     }
-    // Caso 3: Devuelto (Estado Actual)
     else if (estado == "Devuelto") {
-        if (e == "Revision" || e == "Lavado") {
-            estado = e;
-            cout << "Transicion valida: Nuevo estado del carro: " << e << endl;
-            return;
+        if (e == "Revision" || e == "Lavado") { // Transiciona a una fase de procesamiento
+            transicionValida = true;
         }
     }
-    // Caso 4: Revisión (Estado Actual)
-    else if (estado == "Revisión") {
-        if (e == "Lavado") {
-            estado = e;
-            cout << "Transicion valida: Nuevo estado del carro: " << e << endl;
-            return;
+    else if (estado == "Revision") {
+        if (e == "Lavado" || e == "Disponible") { // Asumo que puede ir a Disponible después de Revisión
+            transicionValida = true;
         }
     }
-    // Caso 5: Lavado (Estado Actual)
     else if (estado == "Lavado") {
         if (e == "Disponible" || e == "Revision") {
-            estado = e;
-            cout << "Transicion valida: Nuevo estado del carro: " << e << endl;
-            return;
+            transicionValida = true;
         }
     }
+    // NOTA: Considerar el estado "En Reparación" o "Mantenimiento" para mayor robustez.
 
-    // Si la función llega hasta aquí, la transición no fue válida o el estado es desconocido.
-    cout << "ERROR: Transicion de estado invalida o no compatible." << endl;
-    cout << "El carro NO puede pasar de [" << estado << "] a [" << e << "]." << endl;
+    if (transicionValida) {
+        estado = e; // Aplicar el nuevo estado
+
+        string fechaActual=FechaActual(); // Usar la fecha proporcionada 
+        stringstream desc;
+        desc << "Cambio de [" << estadoAnterior << "] a [" << e << "]. Ubicacion: " << ubicacion << ". Operado por ID: " << colaboradorId;
+
+        Estado* nuevoRegistro = new Estado(fechaActual, desc.str(), ubicacion);
+
+        // Se usa Bitacora* en lugar de BitacoraEstado* como atributo, se corrige la inicialización.
+        if (historialEstados == NULL) {
+            historialEstados = new BitacoraEstado();
+        }
+        historialEstados->agregarEstado(nuevoRegistro);
+        cout << "\t\t[INFO] Transicion valida: Nuevo estado del carro: " << e << endl;
+    }
+    else {
+        // Si la función llega hasta aquí, la transición no fue válida o el estado es desconocido.
+        cout << "\t\t[ERROR] Transicion de estado invalida o no compatible." << endl;
+        cout << "\t\tEl carro NO puede pasar de [" << estadoAnterior << "] a [" << e << "]." << endl;
+    }
 }
 
 
@@ -146,7 +154,9 @@ char Vehiculo::getCategoria() {
 string Vehiculo::getEstado() {
     return estado;
 };
-
+BitacoraEstado* Vehiculo::getHistorialEstados() {
+    return historialEstados;
+};
 
 
 

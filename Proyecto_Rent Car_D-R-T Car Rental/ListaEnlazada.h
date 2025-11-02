@@ -147,6 +147,7 @@ public:
     // Getters y utilidades
     int getTamano();
     bool estaVacia();
+    NodoPlantel* getCab();
 
     // Función "to string" para mostrar todas los planteles
     string toString();

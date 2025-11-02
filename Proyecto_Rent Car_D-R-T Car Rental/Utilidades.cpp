@@ -32,19 +32,57 @@ Utilidades::~Utilidades() {
     }
 }
 
+Sucursal* Utilidades::seleccionarSucursal() {
+
+    // 1. Verificar si hay sucursales registradas
+    if (listaSucursales == NULL || listaSucursales->estaVacia()) { // Asumo los métodos
+        cout << "\n\t\tERROR: No hay sucursales registradas en el sistema." << endl;
+        return NULL;
+    }
+
+    string codigoBuscado;
+    Sucursal* suc = NULL;
+
+    do {
+        // 2. Mostrar la lista de sucursales
+        cout << "\n\t\t--- SUCURSALES DISPONIBLES ---" << endl;
+        // Asumo que ListaSucursales tiene un metodo para listar o toString
+        cout << listaSucursales->toString() << endl;
+
+        cout << "\t\tIngrese el CÓDIGO de la sucursal (o '0' para cancelar): ";
+        getline(cin, codigoBuscado);
+
+        if (codigoBuscado == "0") {
+            cout << "\n\t\tSelección de sucursal cancelada." << endl;
+            return NULL;
+        }
+
+        // 3. Buscar la sucursal (Asumo un método 'buscarSucursal' en ListaSucursales)
+        suc = listaSucursales->buscar(codigoBuscado);
+
+        if (suc == NULL) {
+            cout << "\n\t\tERROR: Código de sucursal NO encontrado. Intente de nuevo." << endl;
+        }
+
+    } while (suc == NULL);
+
+    cout << "\n\t\tSucursal seleccionada: " << suc->getNombre() << endl;
+    return suc;
+}
+
 
 void Utilidades::crearPlantelSucursal() {
     string codigoSucursal, tipoPlantel, codigoPlantel;
     int filas, columnas;
 
     limpiarConsola();
-    cout << "\n\t\t--- CREACION DE PLANTEL PARA SUCURSAL ---" << endl;
+    cout << "\n\t\t--- CREACION DE PLANTEL PARA ESTACIONAMIENTO ---" << endl;
 
     cout << "\t\tIngrese el codigo de la sucursal: ";
     getline(cin, codigoSucursal);
 
     Sucursal* sucursal = listaSucursales->buscar(codigoSucursal);
-    if (sucursal == nullptr) {
+    if (sucursal == NULL) {
         cout << "\t\tERROR: No se encontro ninguna sucursal con ese codigo." << endl;
         return;
     }
@@ -80,61 +118,223 @@ void Utilidades::crearPlantelSucursal() {
     cout << nuevoPlantel->toString() << endl;
 }
 
+
+Estacionamiento* Utilidades::obtenerRecomendacion(Plantel* plantel) {
+    // Itera la matriz en busca del primer espacio no ocupado [cite: 2077]
+    MatrizEstacionamientos* matriz = plantel->getMatrizEstacionamientos();
+    for (int i = 0; i < matriz->getFilas(); ++i) {
+        for (int j = 0; j < matriz->getColumnas(); ++j) {
+            Estacionamiento* espacio = matriz->getEstacionamiento(i, j);
+            if (espacio != NULL && !espacio->getOcupado()) { // [cite: 2004]
+                return espacio;
+            }
+        }
+    }
+    return NULL;
+}
+
+
+
+
 void Utilidades::ingresarVehiculo() {
     limpiarConsola();
-    string plac, mar, mod, tipLic, est;
-    double precDi;
+
+    string plac, mar, mod, tipLic, est, codigoSucursal, feAc;
     char cat;
 
+    cout << "\n\t\t--- INGRESO DE NUEVO VEHÍCULO ---" << endl;
 
-    cout << "\t\tIngrese la placa del Vehiculo";
+    // 1. Ingreso de datos del Vehículo
+    cout << "\t\tIngrese la placa del Vehiculo: ";
     getline(cin, plac);
 
-    cout << "\n\t\tIngrese la marca del Vehiculo";
+    cout << "\t\tIngrese la marca del Vehiculo: ";
     getline(cin, mar);
 
-    cout << "\n\t\tIngrese el modelo del Vehiculo";
+    cout << "\t\tIngrese el modelo del Vehiculo: ";
     getline(cin, mod);
 
-    cout << "\n\t\tIngrese la marca del Vehiculo";
-    getline(cin, mar);
-}
-/* //Documentado por que si, luego lo arreglo
-void Utilidades::visualizarPlantel() {
-    string codigoSucursal, codigoPlantel;
-    int fil, col;
-    limpiarConsola();
-    cout << "\t\tIngrese el codigo de la sucursal: ";
+    cout << "\t\tIngrese el tipo de licencia (Ej: A1, B1, etc.): ";
+    getline(cin, tipLic);
+
+    cout << "\t\tIngrese la fecha Actual: ";
+    getline(cin, feAc);
+
+
+    cout << "\t\tIngrese la categoría (Ej: 'S' Sedan, 'C' Coupe, 'T' TodoTerreno): ";
+    while (!(cin >> cat) || (cat != 'S' && cat != 'C' && cat != 'T')) {
+        cin.clear();
+        cin.ignore(10000, '\n');
+        cout << "\t\tValor invalido. Use 'S', 'C' o 'T': ";
+    }
+
+    cin.ignore(10000, '\n'); // limpiar buffer
+
+    est = "Disponible"; // Estado inicial (necesario para la Bitácora)
+    Vehiculo* nuevoVehiculo = new Vehiculo(plac, mar, mod, tipLic, cat, est);
+    
+
+
+    // 2. Asignación a Sucursal
+    cout << "\n\t\t--- ASIGNACIÓN A SUCURSAL Y ESTACIONAMIENTO ---" << endl;
+    cout << "\t\tIngrese el codigo de la sucursal de destino: ";
     getline(cin, codigoSucursal);
 
     Sucursal* sucursal = listaSucursales->buscar(codigoSucursal);
-    if (sucursal == nullptr) {
+    if (sucursal == NULL) {
         cout << "\t\tERROR: No se encontro ninguna sucursal con ese codigo." << endl;
+        delete nuevoVehiculo;
+        pausa();
         return;
     }
-    else {
-        cout << "\t\tIngrese el codigo del plantel: ";
-        getline(cin, codigoPlantel);
-        Plantel* plantel = sucursal->getListaPlantel()->buscar(codigoPlantel);
-        if (plantel == nullptr) {
-            cout << "\t\tERROR: No se encontro ningun plantel con ese codigo." << endl;
-            return;
-        }
-        fil = plantel->getCapacidadFilas();
-        col = plantel->getCapacidadColumnas();
 
-        for (int i = 0; i < fil; i++) {
-            for (int j = 0; j < col; j++) {
-                if (i < 10 && j < 10) { cout << "    [" << codigoPlantel << '0' << i << "/" << '0' << j << "]"; }
-                else if (i > 10 && j < 10) { cout << "    [" << codigoPlantel << i << "/" << '0' << j << "]"; }
-                else if (i < 10 && j > 10) { cout << "    [" << codigoPlantel << '0' << i << "/" << j << "]"; }
-                else { cout << "    [" << codigoPlantel << i << "/" << j << "]"; }
+    // 3. Obtener Recomendación de Espacio (9 pts)
+    Estacionamiento* recomendado = NULL;
+    Plantel* plantelRecomendado = NULL;
+
+    // Iteración usando la estructura NodoPlantel que proporcionaste:
+    NodoPlantel* actual = sucursal->getListaPlantel()->getCab(); // Asumo getCab() existe y retorna el primer NodoPlantel
+
+    while (actual != NULL && recomendado == NULL) {
+        Plantel* plantel = actual->getDato(); // Usamos getDato() de NodoPlantel
+        MatrizEstacionamientos* matriz = plantel->getMatrizEstacionamientos();
+
+        // Buscar el primer espacio disponible en este plantel (RECOMENDACIÓN)
+        for (int i = 0; i < matriz->getFilas(); ++i) {
+            for (int j = 0; j < matriz->getColumnas(); ++j) {
+                Estacionamiento* espacio = matriz->getEstacionamiento(i, j);
+                if (espacio != NULL && !espacio->getOcupado()) {
+                    recomendado = espacio;
+                    plantelRecomendado = plantel;
+                    break; // Salir del bucle de columnas
+                }
             }
-            cout << endl;
+            if (recomendado != NULL) {
+                break; // Salir del bucle de filas
+            }
         }
+
+        // Mover al siguiente nodo (Usamos getSiguiente() de NodoPlantel)
+        actual = actual->getSiguiente();
     }
+
+
+    if (recomendado == NULL) {
+        cout << "\n\t\tERROR: La sucursal " << sucursal->getNombre() << " no tiene espacios de estacionamiento disponibles en ninguno de sus planteles." << endl;
+        delete nuevoVehiculo;
+        pausa();
+        return;
+    }
+
+    // 4. Vincular el Vehículo al Espacio y Almacenar
+    string codEspacio = recomendado->getCodigo();
+
+    cout << "\n\t\t--- RECOMENDACIÓN GENERADA POR EL SISTEMA ---" << endl;
+    cout << "\t\tPlantel recomendado: " << plantelRecomendado->getCodigoPlantel() << endl;
+    cout << "\t\tEspacio de Estacionamiento recomendado: " << codEspacio << endl;
+    cout << "\t\t¿Desea estacionar el vehículo en esta ubicación? (S/N): ";
+
+    char resp;
+    cin >> resp;
+    cin.ignore(10000, '\n');
+
+    if (resp == 'S' || resp == 's') {
+        // A) VINCULACIÓN AL ESPACIO (9 pts)
+        recomendado->setVehiculo(nuevoVehiculo);
+        recomendado->ocupar();
+
+        // B) AGREGAR VEHÍCULO A LA LISTA DE LA SUCURSAL (Asunción necesaria)
+        // Se requiere este método para almacenar el vehículo.
+        sucursal->getListaVehiculos()->agregarAlInicio(nuevoVehiculo);
+        string ubicacion = plantelRecomendado->getCodigoPlantel() + "-" + codEspacio;
+        string colaboradorId = "e"; // CAMBIO URGENTE
+
+        // C) REGISTRO DE ESTADO EN BITÁCORA (4 pts, asumiendo setEstado fue modificado)
+        nuevoVehiculo->setEstado("Disponible", ubicacion, "Sistema/Usuario-Ingreso");
+
+        cout << "\n\t\tVehículo PLACA " << plac << " ingresado y estacionado exitosamente." << endl;
+        cout << "\t\tUbicado en Sucursal: " << sucursal->getNombre()
+            << ", Espacio: " << codEspacio << endl;
+    }
+    else {
+        cout << "\n\t\tOperación cancelada. El vehículo NO fue ingresado ni estacionado." << endl;
+        delete nuevoVehiculo;
+    }
+
+    pausa();
 }
-*/
+void Utilidades::visualizarPlantel() {
+    limpiarConsola();
+    cout << "\n\t\t--- VISUALIZACIÓN DE ESTACIONAMIENTOS POR PLANTEL (5 pts) ---" << endl;
+
+    // 1. Seleccionar Sucursal (Usando el método auxiliar existente)
+    Sucursal* suc = seleccionarSucursal();
+    if (suc == nullptr) {
+        pausa();
+        return;
+    }
+
+    // 2. Mostrar planteles disponibles y solicitar el código
+    string codigoPlantel;
+
+    cout << "\n\t\t--- PLANTEL DISPONIBLE EN SUCURSAL " << suc->getNombre() << " ---" << endl;
+    // Asumo que getListaPlantel()->toString() lista los códigos de planteles.
+    cout << suc->getListaPlantel()->toString() << endl;
+
+    cout << "\t\tIngrese el código del plantel a visualizar: ";
+    getline(cin, codigoPlantel);
+
+    // 3. Buscar el plantel específico (Reemplazando buscarPlantel(suc))
+    Plantel* plantel = nullptr;
+    // INICIO DEL RECORRIDO DE LA LISTA DE PLANTELES
+    NodoPlantel* actual = suc->getListaPlantel()->getCab();
+
+    while (actual != nullptr) {
+        if (actual->getDato()->getCodigoPlantel() == codigoPlantel) {
+            plantel = actual->getDato();
+            break; // Plantel encontrado, salir del bucle
+        }
+        actual = actual->getSiguiente(); // Avanzar al siguiente nodo
+    }
+
+    if (plantel == nullptr) {
+        cout << "\t\tERROR: Plantel con código " << codigoPlantel << " no encontrado en la sucursal." << endl;
+        pausa();
+        return;
+    }
+
+
+    // 4. Visualización de la distribución (muestra estado Ocupado/Disponible)
+    cout << "\n\t\t--- DISTRIBUCIÓN GRÁFICA DEL PLANTEL " << plantel->getCodigoPlantel() << " ---" << endl;
+    // Se asume que Plantel::toString() genera la representación gráfica.
+    cout << plantel->toString() << endl;
+
+
+    // 5. Ingresar y buscar espacio específico
+    string codEspacio;
+    cout << "\n\t\tIngrese el número de espacio de estacionamiento (Ej: A01) para ver la placa: ";
+    getline(cin, codEspacio);
+
+    // Asumo que MatrizEstacionamientos tiene un método de búsqueda por código
+    MatrizEstacionamientos* matriz = plantel->getMatrizEstacionamientos();
+    Estacionamiento* espacio = matriz->buscarEstacionamiento(codEspacio);
+
+    if (espacio == nullptr) {
+        cout << "\t\tERROR: Espacio no encontrado en el plantel (Código inválido)." << endl;
+    }
+    else if (espacio->getOcupado()) {
+        // Mostrar la placa del vehículo estacionado (Requisito 5 pts)
+        cout << "\n\t\t--- DETALLE DEL ESPACIO " << codEspacio << " ---" << endl;
+        cout << "\t\tEstado: Ocupado" << endl;
+        cout << "\t\tPlaca del Vehículo Estacionado: " << espacio->getVehiculo()->getPlaca() << endl;
+    }
+    else {
+        cout << "\t\tEstado: Disponible" << endl;
+        cout << "\t\tNo hay vehículo estacionado en el espacio " << codEspacio << "." << endl;
+    }
+
+    pausa();
+}
 
 
 
@@ -708,6 +908,7 @@ void Utilidades::VerSolicitudesContratos() {
 //jaja
 void Utilidades::AprobarRechazarSolicitud() {
     string codigoSoli;
+    string idColaborador;
     char opcion;
     limpiarConsola();
     cout << "\n\t\t--- APROBACIoN / RECHAZO DE SOLICITUD (1 pto) ---" << endl;
@@ -723,6 +924,8 @@ void Utilidades::AprobarRechazarSolicitud() {
     else {
         cout << "\n\t\t--- DETALLE DE LA SOLICITUD ---" << endl;
         cout << solicitud->toString() << endl;
+        cout << "\t\tIngrese el ID del Colaborador que aprueba/rechaza: "; // Solicitud del ID
+        getline(cin, idColaborador);
         cout << "\t\t[A]probar o [R]echazar la solicitud? (A/R): ";
         cin >> opcion;
         cin.ignore(10000, '\n');
@@ -732,7 +935,10 @@ void Utilidades::AprobarRechazarSolicitud() {
 
             // 1. Cambiar estado del vehiculo
             Vehiculo* vehiculo = solicitud->getVehiculo();
+            //string ubicacion = "EN_USO_" + solicitud->getCodigo(); // Ubicación temporal
+            //string fechaActual = obtenerFechaActual();
             vehiculo->setEstado("Alquilado");
+            //vehiculo->setEstado("Alquilado", ubicacion, idColaborador, fechaActual);
 
             // 2. Crear Contrato
             string codigoContrato = "CONT-" + codigoSoli;

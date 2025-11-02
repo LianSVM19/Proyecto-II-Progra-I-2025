@@ -4,6 +4,7 @@
 
 #include <string>
 #include <sstream>
+#include "BitacoraEstado.h"
 
 using namespace std;
 
@@ -16,6 +17,7 @@ private:
     char categoria;
     string tipoLicencia;
     string estado;
+    BitacoraEstado* historialEstados;
 public:
     // Constructor
     Vehiculo(string /*placa*/, string/*marca*/, string/*modelo*/, 
@@ -26,7 +28,7 @@ public:
     void setModelo(string );
     void setTipoLicencia(string);
     void setCategoria(char );
-    void setEstado(string);
+    void setEstado(string,string,string, string);
 
 
     string getPlaca();
@@ -36,7 +38,8 @@ public:
     double getPrecioDiario();
     char getCategoria();
     string getEstado();
-
+    BitacoraEstado* getHistorialEstados();
+    string FechaActual();
 
     // Función "to string" con el estilo solicitado
     string toString() const;

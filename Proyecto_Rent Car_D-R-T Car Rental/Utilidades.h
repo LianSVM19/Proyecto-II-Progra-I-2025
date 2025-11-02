@@ -39,6 +39,9 @@ public:
     void mostrarInformacionVehiculoGlobal(string placa);
     void VerSolicitudesContratos(); 
     void AprobarRechazarSolicitud();
+    Sucursal* seleccionarSucursal();
+    Estacionamiento* obtenerRecomendacion(Plantel* );
+    
     
 
     // Método que gestiona el ingreso de un nuevo cliente
@@ -65,7 +68,7 @@ public:
     // 3. GESTIÓN DE VEHICULOS, PARQUEOS Y PLANTELES
     // ====================================================
     void crearPlantelSucursal();
-    // void visualizarPlantel();
+    void visualizarPlantel();
     void RecepcionVehiculo();
     void ingresarVehiculo();
 

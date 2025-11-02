@@ -129,3 +129,23 @@ string MatrizEstacionamientos::toString() {
     s << "\t\t*************************************" << endl;
     return s.str();
 }
+
+Estacionamiento* MatrizEstacionamientos::buscarEstacionamiento(string codEspacio) {
+    // Itera sobre las filas
+    for (int i = 0; i < filas; i++) {
+        // Itera sobre las columnas
+        for (int j = 0; j < columnas; j++) {
+
+            Estacionamiento* espacio = matriz[i][j]; // Acceso directo al puntero de Estacionamiento
+
+            // 1. Verifica que el espacio exista (no sea NULL)
+            // 2. Compara el código del espacio con el código buscado.
+            //    Asumo que la clase Estacionamiento tiene un método getCodigo().
+            if (espacio != nullptr && espacio->getCodigo() == codEspacio) {
+                return espacio; // Retorna el puntero al objeto Estacionamiento
+            }
+        }
+    }
+    // Si el bucle termina sin encontrar el código, retorna NULL (o nullptr)
+    return nullptr;
+}
