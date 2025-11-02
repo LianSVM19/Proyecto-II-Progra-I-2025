@@ -116,7 +116,7 @@ public:
     int getTamano();
     bool estaVacia();
     Sucursal* getSucursal();
-    NodoSucursal* getCab() { return cab; }
+    NodoSucursal* getCab();
 
     // Función "to string" para mostrar todas las sucursales
     string toString();
