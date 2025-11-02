@@ -186,6 +186,7 @@ Cliente* ListaCliente::getCliente() { //getCliente devuelve el Ultimo Cliente añ
         if (actual->getSiguiente() == NULL) {
             return actual->getDato();
         }
+        actual = actual->getSiguiente();
     }
     return NULL; // Retorna NULL si no se encuentra
 }

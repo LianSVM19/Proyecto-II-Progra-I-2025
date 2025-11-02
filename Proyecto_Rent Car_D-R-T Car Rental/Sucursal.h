@@ -9,7 +9,7 @@
 // incluir el .h en la lista enlazada final 
 class ListaCliente; 
 class ListaColaborador;
-class Plantel;
+class ListaPlantel;
 using namespace std;
 
 class Sucursal {
@@ -38,15 +38,12 @@ public:
     string getTelefono();
     ListaCliente* getClientes();  
     ListaColaborador* getColaboradores();
-    Plantel* getPlantel();
-
+    ListaPlantel* getListaPlantel();
 
     // Setters
     void setNombre(string);
     void setDireccion(string);
     void setTelefono(string);
-    void setPlantel(Plantel*);
-
     // Función "to string"
     string toString();
 };

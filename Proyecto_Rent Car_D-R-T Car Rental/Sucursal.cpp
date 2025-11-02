@@ -49,7 +49,7 @@ string Sucursal::getCodigoSucursal() { return codigoSucursal; }
 string Sucursal::getNombre() { return nombre; }
 string Sucursal::getDireccion() { return direccion; }
 string Sucursal::getTelefono() { return telefono; }
-Plantel* Sucursal::getPlantel() { return plantel; }
+ListaPlantel* Sucursal::getListaPlantel() { return plantel; }
 ListaCliente* Sucursal::getClientes() { return clientes; }        // <-- GETTER DE CLIENTES
 ListaColaborador* Sucursal::getColaboradores() { return colaboradores; } // <-- GETTER DE COLABORADORES
 
@@ -59,12 +59,6 @@ ListaColaborador* Sucursal::getColaboradores() { return colaboradores; } // <-- 
 void Sucursal::setNombre(string nom) { nombre = nom; }
 void Sucursal::setDireccion(string dir) { direccion = dir; }
 void Sucursal::setTelefono(string tel) { telefono = tel; }
-void Sucursal::setPlantel(Plantel* p) {
-    if (plantel != NULL) {
-        delete plantel;  // liberamos el anterior si existía
-    }
-    plantel = p;
-}
 
 // ----------------------
 // Función "to string"

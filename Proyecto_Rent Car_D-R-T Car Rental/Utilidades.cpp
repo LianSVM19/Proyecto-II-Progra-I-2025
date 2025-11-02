@@ -47,7 +47,7 @@ void Utilidades::crearPlantelSucursal() {
         return;
     }
 
-    cout << "\t\tIngrese el código del plantel: ";
+    cout << "\t\tIngrese el código del plantel: "<< "\nConsejo: Usar un layout de <letra><numero>, donde las letras marcan la \"serie de Plantel\".";
     getline(cin, codigoPlantel);
 
     cout << "\t\tIngrese el tipo de plantel (Ej: Estándar, Premium, SUV): ";
@@ -70,7 +70,7 @@ void Utilidades::crearPlantelSucursal() {
     cin.ignore(10000, '\n'); // limpiar buffer
 
     Plantel* nuevoPlantel = new Plantel(codigoPlantel, tipoPlantel, filas, columnas);
-    sucursal->setPlantel(nuevoPlantel);
+    sucursal->getListaPlantel()->agregarPlantel(nuevoPlantel);
 
     cout << "\n\t\tPlantel creado exitosamente para la sucursal '"
         << sucursal->getNombre() << "'." << endl;
@@ -93,11 +93,24 @@ void Utilidades::visualizarPlantel() {
     else {
         cout << "\t\tIngrese el código del plantel: ";
         getline(cin, codigoPlantel);
-        Plantel* cPlantel = sucursal->getPlantel();
+        Plantel* plantel = sucursal->getListaPlantel()->buscar(codigoPlantel);
+        if (plantel == nullptr) {
+            cout << "\t\tERROR: No se encontró ningun plantel con ese código." << endl;
+            return;
+        }
+        fil = plantel->getCapacidadFilas();
+        col = plantel->getCapacidadColumnas();
+
+        for (int i = 0; i < fil; i++) {
+            for (int j = 0; j < col; j++) {
+                if (i < 10 && j < 10) { cout << "    [" << codigoPlantel << '0' << i << "/" << '0' << j << "]"; }
+                else if (i > 10 && j < 10) { cout << "    [" << codigoPlantel << i << "/" << '0' << j << "]"; }
+                else if (i < 10 && j > 10) { cout << "    [" << codigoPlantel << '0' << i << "/" << j << "]"; }
+                else { cout << "    [" << codigoPlantel << i << "/" << j << "]"; }
+            }
+            cout << endl;
+        }
     }
-
-
-
 }
 
 
