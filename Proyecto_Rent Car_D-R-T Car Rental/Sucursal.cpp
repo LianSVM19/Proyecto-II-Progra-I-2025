@@ -42,10 +42,6 @@ Sucursal::~Sucursal() {
         delete colaboradores;
         colaboradores = NULL;
     }
-    if (plantel != NULL) {  // LIBERACION DE 
-        delete plantel;
-        plantel = NULL;
-    }
 }
 
 // ----------------------
