@@ -14,6 +14,7 @@ private:
     int capacidadFilas;
     int capacidadColumnas;
 
+
     // El plantel contiene la matriz de estacionamientos (Relación de Composición)
     MatrizEstacionamientos* matrizEstacionamientos;
 

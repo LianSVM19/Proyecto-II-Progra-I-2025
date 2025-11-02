@@ -19,14 +19,12 @@ private:
 public:
     // Constructor
     Vehiculo(string /*placa*/, string/*marca*/, string/*modelo*/, 
-    string/*tipo licencia*/, double/*preciodiario*/,
-    char/*categoria*/, string/*estado*/);
+    string/*tipo licencia*/, char/*categoria*/, string/*estado*/);
     ~Vehiculo();
     void setPlaca(string );
     void setMarca(string );
     void setModelo(string );
     void setTipoLicencia(string);
-    void setPrecioDiario(double );
     void setCategoria(char );
     void setEstado(string);
 

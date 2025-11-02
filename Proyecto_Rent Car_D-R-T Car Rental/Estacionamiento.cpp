@@ -2,9 +2,10 @@
 
 using namespace std;
 
-Estacionamiento::Estacionamiento(string cod) {
+Estacionamiento::Estacionamiento(string cod,Vehiculo* vehi) {
     codigo = cod;
     ocupado = false;
+    vehiculo = vehi;
 }
 
 // ----------------------
@@ -12,12 +13,14 @@ Estacionamiento::Estacionamiento(string cod) {
 // ----------------------
 string Estacionamiento::getCodigo() { return codigo; }
 bool Estacionamiento::getOcupado() { return ocupado; }
+Vehiculo* Estacionamiento::getVehiculo() { return vehiculo; }
 
 // ----------------------
 // Setters
 // ----------------------
 void Estacionamiento::setCodigo(string cod) { codigo = cod; }
 void Estacionamiento::setOcupado(bool estado) { ocupado = estado; }
+void Estacionamiento::setVehiculo(Vehiculo* v) { vehiculo = v; }
 
 // ----------------------
 // Métodos especificos

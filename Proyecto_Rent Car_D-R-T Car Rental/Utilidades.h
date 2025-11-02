@@ -35,13 +35,10 @@ public:
     Utilidades();
     ~Utilidades();
     Vehiculo* buscarVehiculoGlobal(string, string&);
-    void crearPlantelSucursal();
-    void visualizarPlantel();
     void CrearSolicitud();
     void mostrarInformacionVehiculoGlobal(string placa);
     void VerSolicitudesContratos(); 
     void AprobarRechazarSolicitud();
-    void RecepcionVehiculo();
     
 
     // Método que gestiona el ingreso de un nuevo cliente
@@ -62,6 +59,16 @@ public:
     // ====================================================
     void gestionarClientesPorSucursal(int);
     void gestionarColaboradoresPorSucursal(int);
+
+
+    // ====================================================
+    // 3. GESTIÓN DE VEHICULOS, PARQUEOS Y PLANTELES
+    // ====================================================
+    void crearPlantelSucursal();
+    // void visualizarPlantel();
+    void RecepcionVehiculo();
+    void ingresarVehiculo();
+
 
     // ----------------------------------------------------
     // Funciones de Control de Interfaz y Consola (Instancia)

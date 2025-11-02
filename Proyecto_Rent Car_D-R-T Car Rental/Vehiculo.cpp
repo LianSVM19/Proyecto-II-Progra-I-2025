@@ -5,14 +5,32 @@ using namespace std;
 
 
 //constructor sin finalizar
-Vehiculo::Vehiculo(string pla, string mar, string mod, string til, double prd, char ca, string es) {
+Vehiculo::Vehiculo(string pla, string mar, string mod, string til, char ca, string es) {
     placa = pla;
     marca = mar;
     modelo = mod;
     tipoLicencia = til;
-    precioDiario = prd;
     categoria = ca;
     estado = es;
+
+    switch (categoria) {
+    case 'a':
+    case 'A':
+        precioDiario = 25500.0;
+        break;
+    case 'b':
+    case 'B':
+        precioDiario = 42500.0;
+        break;
+    case 'c':
+    case 'C':
+        precioDiario = 120000.0;
+        break;
+    case 'd':
+    case 'D':
+        precioDiario = 64500.0;
+        break;
+    }
 }
 
 //set

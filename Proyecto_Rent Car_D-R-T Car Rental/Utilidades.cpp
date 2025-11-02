@@ -15,6 +15,8 @@ Utilidades::Utilidades() {
     listaClientes = new ListaCliente();
     listaSucursales = new ListaSucursal();
     listaColaboradores = new ListaColaborador();
+    listaContratos = new ListaContrato();
+    listaSolicitudes = new ListaSolicitud();
 }
 
 Utilidades::~Utilidades() {
@@ -50,7 +52,7 @@ void Utilidades::crearPlantelSucursal() {
     cout << "\t\tIngrese el codigo del plantel: "<< "\nConsejo: Usar un layout de <letra><numero>, donde las letras marcan la \"serie de Plantel\".";
     getline(cin, codigoPlantel);
 
-    cout << "\t\tIngrese el tipo de plantel (Ej: Estandar, Premium, SUV): ";
+    cout << "\t\tIngrese el tipo de plantel (Ej: Estandar, Premium, SUV, 4x4): ";
     getline(cin, tipoPlantel);
 
     cout << "\t\tIngrese el numero de filas: ";
@@ -78,6 +80,26 @@ void Utilidades::crearPlantelSucursal() {
     cout << nuevoPlantel->toString() << endl;
 }
 
+void Utilidades::ingresarVehiculo() {
+    limpiarConsola();
+    string plac, mar, mod, tipLic, est;
+    double precDi;
+    char cat;
+
+
+    cout << "\t\tIngrese la placa del Vehiculo";
+    getline(cin, plac);
+
+    cout << "\n\t\tIngrese la marca del Vehiculo";
+    getline(cin, mar);
+
+    cout << "\n\t\tIngrese el modelo del Vehiculo";
+    getline(cin, mod);
+
+    cout << "\n\t\tIngrese la marca del Vehiculo";
+    getline(cin, mar);
+}
+/* //Documentado por que si, luego lo arreglo
 void Utilidades::visualizarPlantel() {
     string codigoSucursal, codigoPlantel;
     int fil, col;
@@ -112,7 +134,7 @@ void Utilidades::visualizarPlantel() {
         }
     }
 }
-
+*/
 
 
 
@@ -1011,7 +1033,7 @@ void Utilidades::mostrarSubmenuCarrosPlanteles() {
             break;
         case 2:
             cout << "\n\t\t>> Ejecutando: Visualizacion Grafica de Plantel..." << endl;
-            Utilidades::visualizarPlantel();
+            //Utilidades::visualizarPlantel();
             break;
         case 3:
             cout << "\n\t\t>> Ejecutando: Ingreso de Vehiculo..." << endl;

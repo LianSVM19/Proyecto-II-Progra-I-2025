@@ -29,7 +29,7 @@ public:
     // Setters 
     void setFilas(int);
     void setColumnas(int);
-
+    void setEstacionamiento(int, int, Estacionamiento*);
     // Función "to string" 
     string toString();
 

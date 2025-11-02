@@ -12,6 +12,7 @@ MatrizEstacionamientos::MatrizEstacionamientos(int f, int c) {
     columnas = c;
     matriz = NULL;
 
+
     // 1. Asignar memoria para el arreglo principal
     matriz = new Estacionamiento * *[filas];
 
@@ -26,7 +27,7 @@ MatrizEstacionamientos::MatrizEstacionamientos(int f, int c) {
             codigoSS << (j + 1 < 10 ? "0" : "") << j + 1;
 
             // 3. Asignar memoria para cada objeto Estacionamiento
-            matriz[i][j] = new Estacionamiento(codigoSS.str());
+            matriz[i][j] = new Estacionamiento(codigoSS.str(), NULL);
         }
     }
 }
@@ -61,7 +62,7 @@ int MatrizEstacionamientos::getColumnas() { return columnas; }
 Estacionamiento* MatrizEstacionamientos::getEstacionamiento(int fila, int columna) {
     if (fila >= 0 && fila < filas && columna >= 0 && columna < columnas) {
         return matriz[fila][columna];
-    }
+    }   
     return NULL;
 }
 
@@ -78,6 +79,15 @@ void MatrizEstacionamientos::setFilas(int f) {
 void MatrizEstacionamientos::setColumnas(int c) {
     if (c > 0) columnas = c;
 }
+
+
+
+void MatrizEstacionamientos::setEstacionamiento(int f, int c, Estacionamiento* esta) {
+    if (MatrizEstacionamientos::estaOcupado(f, c) == false && (f >= 0 && f < filas && c >= 0 && c < columnas)) {
+        matriz[f][c] = esta;
+    }
+}
+
 
 
 bool MatrizEstacionamientos::estaOcupado(int fila, int columna) {
