@@ -233,44 +233,54 @@ void Utilidades::ingresarVehiculo() {
 void Utilidades::visualizarPlantel() {
     limpiarConsola();
     cout << "\n\t\t===============================================" << endl;
-    cout << "\t\t   VISUALIZACIÓN DE PLANTEL DE ESTACIONAMIENTO  " << endl;
+    cout << "\t\t     VISUALIZACIÓN DE PLANTEL DE ESTACIONAMIENTO" << endl;
     cout << "\t\t===============================================" << endl;
 
-    // 1️⃣ Seleccionar sucursal
+    // 1️ Seleccionar sucursal
     Sucursal* suc = seleccionarSucursal();
     if (suc == nullptr) {
-        cout << "\t\tNo se seleccionó sucursal.\n";
         pausa();
         return;
     }
 
-    // 2️⃣ Obtener lista de planteles
+    // 2️⃣ Obtener la lista de planteles
     ListaPlantel* listaPlanteles = suc->getListaPlantel();
     if (listaPlanteles == nullptr || listaPlanteles->estaVacia()) {
-        cout << "\t\tLa sucursal no tiene planteles registrados.\n";
+        cout << "\n\t\tLa sucursal no tiene planteles registrados.\n";
         pausa();
         return;
     }
 
     // 3️⃣ Mostrar planteles disponibles
     cout << "\n\t\t--- PLANTELES DISPONIBLES EN LA SUCURSAL ---\n";
-    listaPlanteles->mostrarCodigos(); // método que muestra cada código (si no lo tienes, te lo dejo abajo)
+    NodoPlantel* actual = listaPlanteles->getCab();
+    while (actual != nullptr) {
+        Plantel* p = actual->getDato();
+        if (p != nullptr) {
+            cout << "\t\tCódigo: " << p->getCodigoPlantel()
+                << " | Tipo: " << p->getTipoPlantel()
+                << " | Tamaño: " << p->getCapacidadFilas()
+                << "x" << p->getCapacidadColumnas() << endl;
+        }
+        actual = actual->getSiguiente();
+    }
 
+    // 4️⃣ Elegir el plantel
     string codPlantel;
     cout << "\n\t\tIngrese el código del plantel que desea visualizar: ";
     getline(cin, codPlantel);
 
-    Plantel* plantel = listaPlanteles->buscarPorCodigo(codPlantel);
+    Plantel* plantel = listaPlanteles->buscar(codPlantel);
     if (plantel == nullptr) {
         cout << "\t\tPlantel no encontrado.\n";
         pausa();
         return;
     }
 
-    // 4️⃣ Mostrar matriz de estacionamientos
+    // 5️⃣ Mostrar la matriz de estacionamientos
     MatrizEstacionamientos* matriz = plantel->getMatrizEstacionamientos();
     if (matriz == nullptr) {
-        cout << "\t\tERROR: La matriz del plantel no fue inicializada.\n";
+        cout << "\t\tERROR: El plantel no tiene matriz inicializada.\n";
         pausa();
         return;
     }
@@ -278,35 +288,47 @@ void Utilidades::visualizarPlantel() {
     cout << "\n\t\t--- DISTRIBUCIÓN DEL PLANTEL " << codPlantel << " ---\n";
     cout << "\t\tLeyenda: [D]=Disponible | [O]=Ocupado\n\n";
 
-    for (int f = 0; f < matriz->getFilas(); f++) {
+    for (int i = 0; i < plantel->getCapacidadFilas(); ++i) {
         cout << "\t\t";
-        for (int c = 0; c < matriz->getColumnas(); c++) {
-            Estacionamiento* espacio = matriz->getEstacionamiento(f, c);
-            if (espacio != nullptr) {
-                cout << "[" << (espacio->getOcupado() ? "O" : "D") << "] ";
-            }
+        for (int j = 0; j < plantel->getCapacidadColumnas(); ++j) {
+            Estacionamiento* e = matriz->getEstacionamiento(i, j);
+            if (e != nullptr)
+                cout << "[" << (e->getOcupado() ? "O" : "D") << "] ";
         }
         cout << endl;
     }
 
-    // 5️⃣ Opción: ver vehículo en un espacio específico
-    cout << "\n\t\t¿Desea consultar un espacio específico? (S/N): ";
-    char resp; cin >> resp; cin.ignore(10000, '\n');
-    if (resp == 'S' || resp == 's') {
-        string codigoEspacio;
-        cout << "\t\tIngrese el código del espacio (ej. A01, B03, etc.): ";
-        getline(cin, codigoEspacio);
+    // 6️⃣ Calcular porcentaje de ocupación
+    int total = plantel->getTotalEspacios();
+    int ocupados = plantel->getOcupados();
+    double porcentaje = (total == 0) ? 0.0 : (ocupados * 100.0 / total);
 
-        Estacionamiento* esp = matriz->buscarEstacionamiento(codigoEspacio);
-        if (esp == nullptr) {
+    cout << "\n\t\tTotal de espacios: " << total
+        << " | Ocupados: " << ocupados
+        << " | Porcentaje de ocupación: " << porcentaje << "%" << endl;
+
+    // 7️⃣ Consultar espacio específico
+    char opcion;
+    cout << "\n\t\t¿Desea consultar un espacio específico? (S/N): ";
+    cin >> opcion;
+    cin.ignore(); // este sí es seguro y básico
+
+    if (opcion == 'S' || opcion == 's') {
+        string codEspacio;
+        cout << "\t\tIngrese el código del espacio (ej: A01): ";
+        getline(cin, codEspacio);
+
+        Estacionamiento* espacio = matriz->buscarEstacionamiento(codEspacio);
+        if (espacio == nullptr) {
             cout << "\t\tEl código ingresado no existe.\n";
         }
-        else if (!esp->getOcupado()) {
-            cout << "\t\tEl espacio " << codigoEspacio << " está disponible.\n";
+        else if (!espacio->getOcupado()) {
+            cout << "\t\tEl espacio " << codEspacio << " está disponible.\n";
         }
-        else if (esp->getVehiculo() != nullptr) {
-            cout << "\t\tEl espacio " << codigoEspacio << " está ocupado por el vehículo con placa: "
-                << esp->getVehiculo()->getPlaca() << endl;
+        else if (espacio->getVehiculo() != nullptr) {
+            cout << "\t\tEl espacio " << codEspacio
+                << " está ocupado por el vehículo con placa: "
+                << espacio->getVehiculo()->getPlaca() << endl;
         }
         else {
             cout << "\t\tEl espacio figura como ocupado pero sin vehículo asignado.\n";
@@ -315,7 +337,6 @@ void Utilidades::visualizarPlantel() {
 
     pausa();
 }
-
 
 // -----------------------------
 // ELIMINAR VEHICULO 
