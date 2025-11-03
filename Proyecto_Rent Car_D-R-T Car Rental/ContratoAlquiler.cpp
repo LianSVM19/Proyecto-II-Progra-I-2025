@@ -41,23 +41,10 @@ void ContratoAlquiler::setSolicitud(SolicitudAlquiler* sol) { solicitud = sol; }
 // ----------------------
 string ContratoAlquiler::toString() {
     stringstream s;
-
-    s << "\t\t*************************************************" << endl;
-    s << "\t\t--- DOCUMENTO DE CONTRATO DE ALQUILER ---" << endl;
-    s << "\t\tCodigo de Contrato: " << codigoContrato << endl;
-    s << "\t\tCosto Total Acordado: $" << costoTotal << endl;
-    s << "\t\tEstado del Contrato: " << estado << endl;
-    s << "\t\t-------------------------------------------------" << endl;
-
-    if (solicitud != NULL) {
-        s << "\t\tSOLICITUD DE ORIGEN (Codigo: " << solicitud->getCodigoSoli() << "):" << endl;
-        s << solicitud->toString();
-    }
-    else {
-        s << "\t\tSOLICITUD: [ERROR: Objeto NULL o no asignado]" << endl;
-    }
-
-    s << "\t\t*************************************************" << endl;
-
+    s << "Contrato Codigo: " << codigoContrato
+        << " | Estado: " << estado
+        << " | Costo Total: $" << costoTotal;
+    if (solicitud != NULL)
+        s << " | Solicitud Origen: " << solicitud->getCodigoSoli();
     return s.str();
 }

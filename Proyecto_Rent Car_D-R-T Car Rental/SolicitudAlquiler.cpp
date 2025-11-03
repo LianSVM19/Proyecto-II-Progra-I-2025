@@ -20,6 +20,10 @@ SolicitudAlquiler::~SolicitudAlquiler() {
 	Vehi = NULL;
 }
 
+
+
+
+
 // ----------------------
 // Setters de Atributos
 // ----------------------
@@ -61,27 +65,23 @@ Vehiculo* SolicitudAlquiler::getVehiculo() { return Vehi; }
 // ----------------------
 string SolicitudAlquiler::toString() {
     stringstream s;
-    s << "\t\t*************************************************" << endl;
-    s << "\t\t--- DOCUMENTO DE SOLICITUD DE ALQUILER ---" << endl;
-    s << "\t\tCodigo Solicitud: " << codigoSolicitud << endl;
-    s << "\t\tESTADO DE SOLICITUD: " << estado << endl; // (Estado)
-    s << "\t\tDías de Alquiler: " << canDiasAlqui << endl; // (Días)
-    s << "\t\tFecha de Inicio: " << fechIni << endl;
-    s << "\t\tFecha de Entrega Estimada: " << fechFin << endl;
-    s << "\t\tPrecio Diario: $" << (Vehi ? Vehi->getPrecioDiario() : 0.0) << endl; // (Precio Diario)
-    s << "\t\tCosto Total Estimado: $" << precioTotal << endl; // (Precio Total)
-    s << "\t\t-------------------------------------------------" << endl;
+    s << "Solicitud Codigo: " << codigoSolicitud
+        << " | Estado: " << estado
+        << " | Dias: " << canDiasAlqui;
 
-    // Inclusión de la información completa de entidades (Sucursal, Cliente, Vehículo, Colaborador)
-    s << "\t\tCLIENTE (Cedula: " << (Clien ? Clien->getCedula() : "N/A") << "):" << endl;
-    if (Clien) s << Clien->toString();
-    s << "\t\tCOLABORADOR (ID: " << (Colabora ? Colabora->getCedula() : "N/A") << "):" << endl;
-    if (Colabora) s << Colabora->toString();
-    s << "\t\tVEHÍCULO (Placa: " << (Vehi ? Vehi->getPlaca() : "N/A") << "):" << endl;
-    if (Vehi) s << Vehi->toString();
-    s << "\t\tSUCURSAL (Codigo: " << (Sucu ? Sucu->getCodigoSucursal() : "N/A") << "):" << endl;
-    if (Sucu) s << Sucu->toString();
+    if (Clien != NULL) {
+        s << " | Cliente: " << Clien->getNombre();
+    }
+    else {
+        s << " | Cliente: N/A";
+    }
 
-    s << "\t\t*************************************************" << endl;
+    if (Vehi != NULL) {
+        s << " | Vehiculo: " << Vehi->getPlaca();
+    }
+    else {
+        s << " | Vehiculo: N/A";
+    }
+
     return s.str();
 }

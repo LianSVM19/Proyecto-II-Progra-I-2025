@@ -1494,48 +1494,58 @@ void Utilidades::VerSolicitudesContratos() {
     cout << "\t\t  VISUALIZACIÓN DE SOLICITUDES Y CONTRATOS POR SUCURSAL" << endl;
     cout << "\t\t===============================================\n";
 
-    // 🔹 Selección segura de sucursal
+    // Seleccionar la sucursal
     Sucursal* s = seleccionarSucursal();
     if (s == NULL) {
         pausa();
         return;
     }
 
-    // 🔹 Mostrar solicitudes de la sucursal
+    // ------------------- SOLICITUDES -------------------
     ListaSolicitud* ls = s->getListaSolicitudes();
-    cout << "\n\t\t--- SOLICITUDES DE LA SUCURSAL ---\n";
-    if (ls != NULL && !ls->estaVacia()) {
+    cout << "\n\t\t--- SOLICITUDES REGISTRADAS ---\n";
+
+    if (ls == NULL || ls->estaVacia()) {
+        cout << "\t\tNo hay solicitudes en esta sucursal.\n";
+    }
+    else {
         NodoSolicitud* ns = ls->getCab();
         while (ns != NULL) {
             SolicitudAlquiler* sol = ns->getDato();
             if (sol != NULL) {
-                cout << sol->toString() << endl;
+                cout << "\t\tCodigo: " << sol->getCodigoSoli()
+                    << " | Vehiculo: " << (sol->getVehiculo() ? sol->getVehiculo()->getPlaca() : "N/A")
+                    << " | Cliente: " << (sol->getCliente() ? sol->getCliente()->getNombre() : "N/A")
+                    << " | Estado: " << sol->getEstado() << endl;
             }
             ns = ns->getSiguiente();
         }
     }
-    else {
-        cout << "\t\tNo hay solicitudes registradas en esta sucursal.\n";
-    }
 
-    // 🔹 Mostrar contratos de la sucursal
+    // ------------------- CONTRATOS -------------------
     ListaContrato* lc = s->getListaContratos();
-    cout << "\n\t\t--- CONTRATOS DE LA SUCURSAL ---\n";
-    if (lc != NULL && !lc->estaVacia()) {
+    cout << "\n\t\t--- CONTRATOS REGISTRADOS ---\n";
+
+    if (lc == NULL || lc->estaVacia()) {
+        cout << "\t\tNo hay contratos en esta sucursal.\n";
+    }
+    else {
         NodoContrato* nc = lc->getCab();
         while (nc != NULL) {
             ContratoAlquiler* con = nc->getDato();
-            if (con != NULL) {
-                cout << con->toString() << endl;
+            if (con != NULL && con->getSolicitud() != NULL) {
+                SolicitudAlquiler* sol = con->getSolicitud();
+                cout << "\t\tContrato: " << con->getCodigoContrato()
+                    << " | Solicitud: " << sol->getCodigoSoli()
+                    << " | Placa: " << (sol->getVehiculo() ? sol->getVehiculo()->getPlaca() : "N/A")
+                    << " | Cliente: " << (sol->getCliente() ? sol->getCliente()->getNombre() : "N/A")
+                    << " | Estado: " << con->getEstado() << endl;
             }
             nc = nc->getSiguiente();
         }
     }
-    else {
-        cout << "\t\tNo hay contratos registrados en esta sucursal.\n";
-    }
 
-    cout << "\n\t\t===============================================\n";
+    cout << "\n\t\t===============================================" << endl;
     pausa();
 }
 
@@ -1548,64 +1558,66 @@ void Utilidades::VerSolicitudesContratos() {
 void Utilidades::AprobarRechazarSolicitud() {
     limpiarConsola();
     cout << "\n\t\t===============================================" << endl;
-    cout << "\t\t      APROBAR / RECHAZAR SOLICITUD DE ALQUILER" << endl;
-    cout << "\t\t===============================================\n";
+    cout << "\t\t     APROBAR / RECHAZAR SOLICITUD DE ALQUILER" << endl;
+    cout << "\t\t===============================================" << endl;
 
     string codigoS;
-    cout << "\t\tIngrese el código de la solicitud: ";
+    cout << "\t\tIngrese codigo de la solicitud: ";
     getline(cin, codigoS);
 
-    // 🔹 Validar entrada
-    if (codigoS.size() == 0) {
-        cout << "\t\tEntrada vacía. Operación cancelada.\n";
-        pausa();
-        return;
-    }
-
-    SolicitudAlquiler* s = listaSolicitudes->buscar(codigoS);
-    if (s == NULL) {
+    // Buscar la solicitud globalmente
+    SolicitudAlquiler* soli = listaSolicitudes->buscar(codigoS);
+    if (soli == NULL) {
         cout << "\t\tSolicitud no encontrada.\n";
         pausa();
         return;
     }
 
-    // 🔹 Mostrar solicitud
-    cout << "\n" << s->toString() << endl;
+    cout << "\n\t\t--- INFORMACION DE LA SOLICITUD ---\n";
+    cout << soli->toString() << endl;
 
-    // 🔹 Pedir acción al usuario
-    cout << "\t\tAprobar (A) / Rechazar (R) / Cancelar (C): ";
-    char op;
-    cin >> op;
-    cin.ignore(10000, '\n'); // limpiar buffer correctamente
+    cout << "\n\t\tDesea aprobar (A) o rechazar (R) esta solicitud? (C para cancelar): ";
+    char opcion;
+    cin >> opcion;
+    cin.ignore(10000, '\n');
 
-    // 🔹 Procesar decisión
-    if (op == 'A' || op == 'a') {
-        s->setEstado("Aprobada");
+    if (opcion == 'A' || opcion == 'a') {
+        soli->setEstado("Aprobada");
 
-        string codigoContrato = "C-" + s->getCodigoSoli() + "-" + to_string(rand() % 10000 + 1);
-        double total = s->getPrecioTotal();
+        // Crear contrato
+        string codigoContrato = "C-" + soli->getCodigoSoli() + "-" + to_string(rand() % 10000 + 1);
 
-        ContratoAlquiler* c = new ContratoAlquiler(codigoContrato, total, "Activo", s);
-        listaContratos->agregarContrato(c);
+        double costoTotal = soli->getPrecioTotal();
+        ContratoAlquiler* contrato = new ContratoAlquiler(
+            codigoContrato,
+            costoTotal,
+            "Activo",
+            soli
+        );
 
-        // Asociar también a la sucursal, si existe
-        Sucursal* suc = s->getSucursal();
-        if (suc != NULL && suc->getListaContratos() != NULL)
-            suc->getListaContratos()->agregarContrato(c);
+        // Insertar contrato en listas
+        listaContratos->agregarContrato(contrato);
+        Sucursal* suc = soli->getSucursal();
+        if (suc != NULL) {
+            ListaContrato* lc = suc->getListaContratos();
+            if (lc != NULL) {
+                lc->agregarContrato(contrato);
+            }
+        }
 
-        cout << "\t\tSolicitud aprobada. Contrato creado con código: " << codigoContrato << endl;
+        cout << "\n\t\tSolicitud aprobada correctamente." << endl;
+        cout << "\t\tContrato creado con codigo: " << codigoContrato << endl;
     }
-    else if (op == 'R' || op == 'r') {
-        s->setEstado("Rechazada");
-        cout << "\t\tSolicitud rechazada.\n";
+    else if (opcion == 'R' || opcion == 'r') {
+        soli->setEstado("Rechazada");
+        cout << "\n\t\tSolicitud rechazada correctamente.\n";
     }
     else {
-        cout << "\t\tOperación cancelada.\n";
+        cout << "\n\t\tOperacion cancelada por el usuario.\n";
     }
 
     pausa();
 }
-
 
 
 // -----------------------------
