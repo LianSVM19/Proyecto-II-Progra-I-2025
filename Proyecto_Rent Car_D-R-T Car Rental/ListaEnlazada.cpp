@@ -694,6 +694,27 @@ Sucursal* ListaSucursal::getSucursal() {
     return NULL; // Retorna NULL si no se encuentra
 }
 
+Plantel* ListaPlantel::buscarPorCodigo(string cod) {
+    NodoPlantel* actual = cab;
+    while (actual != nullptr) {
+        if (actual->getDato()->getCodigoPlantel() == cod)
+            return actual->getDato();
+        actual = actual->getSiguiente();
+    }
+    return nullptr;
+}
+
+void ListaPlantel::mostrarCodigos() {
+    NodoPlantel* actual = cab;
+    while (actual != nullptr) {
+        Plantel* p = actual->getDato();
+        cout << "\t\t- " << p->getCodigoPlantel() << " ("
+            << p->getTipoPlantel() << ", "
+            << p->getCapacidadFilas() << "x" << p->getCapacidadColumnas() << ")" << endl;
+        actual = actual->getSiguiente();
+    }
+}
+
 
 // ----------------------
 // Función "to string"

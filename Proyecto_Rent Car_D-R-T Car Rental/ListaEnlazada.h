@@ -155,6 +155,8 @@ public:
     int getTamano();
     bool estaVacia();
     NodoPlantel* getCab();
+    Plantel* buscarPorCodigo(string);
+    void mostrarCodigos();
 
     // Función "to string" para mostrar todas los planteles
     string toString();
