@@ -546,123 +546,119 @@ void Utilidades::cambiarEstadoVehiculo() {
 // -----------------------------
 void Utilidades::trasladarVehiculos() {
     limpiarConsola();
-    cout << "\n\t\t--- TRASLADO DE VEHICULOS ENTRE SUCURSALES (OPCIONAL) ---" << endl;
+    cout << "\n\t\t--- TRASLADO DE VEHICULOS ENTRE SUCURSALES ---" << endl;
+
+    // 1️⃣ Seleccionar sucursal origen
     cout << "\t\tSucursal origen:\n";
     Sucursal* origen = seleccionarSucursal();
     if (origen == NULL) { pausa(); return; }
 
+    // 2️⃣ Seleccionar sucursal destino
     cout << "\t\tSucursal destino:\n";
     Sucursal* destino = seleccionarSucursal();
     if (destino == NULL) { pausa(); return; }
 
-    int n;
-    cout << "\t\tCantidad de vehiculos a trasladar: ";
-    while (!(cin >> n) || n <= 0) {
-        cin.clear(); cin.ignore(10000, '\n');
-        cout << "\t\tEntrada invalida. Ingrese cantidad: ";
-    }
-    cin.ignore(10000, '\n');
-
-    ListaVehiculo* lvOrigen = origen->getListaVehiculos();
-    if (lvOrigen == NULL || lvOrigen->estaVacia()) {
-        cout << "\t\tNo hay vehiculos en la sucursal origen.\n";
-        pausa(); return;
-    }
-
-    int trasladados = 0;
-    NodoVehiculo* actual = lvOrigen->getCabeza();
-    while (actual != NULL && trasladados < n) {
-        Vehiculo* v = actual->getElemento();
-        if (v != NULL && v->getEstado() != "Alquilado" && v->getEstado() != "ALQUILADO") {
-
-            ListaPlantel* lpd = destino->getListaPlantel();
-            if (lpd == NULL || lpd->estaVacia()) { actual = actual->getSig(); continue; }
-
-            NodoPlantel* np = lpd->getCab();
-            bool movido = false;
-
-            while (np != NULL && !movido) {
-                Plantel* pd = np->getDato();
-                Estacionamiento* rec = obtenerRecomendacion(pd);
-
-                if (rec != NULL) {
-                    // Liberar espacio de origen
-                    Estacionamiento* eo = v->getEspacio();
-                    if (eo != NULL) {
-                        eo->desocupar();
-                        eo->setVehiculo(NULL);
-                    }
-
-                    // Asignar en destino
-                    rec->setVehiculo(v);
-                    rec->ocupar();
-                    v->setPlantel(pd);
-                    v->setEspacio(rec);
-
-                    // Agregar a destino
-                    destino->getListaVehiculos()->agregarAlInicio(v);
-
-                    // ⚠️ Remover de origen sin borrar el vehiculo
-                    lvOrigen->removerSinBorrar(v->getPlaca());
-
-                    trasladados++;
-                    movido = true;
-                }
-                np = np->getSiguiente();
-            }
-        }
-        actual = actual->getSig();
-    }
-
-    cout << "\t\tTrasladados: " << trasladados << " vehiculos.\n";
-    pausa();
-}
-
-void Utilidades::reporteOcupacionPlanteles() {
-    limpiarConsola();
-    cout << "\n\t\t--- REPORTE DE PORCENTAJE DE OCUPACION DE PLANTELES ---\n";
-
-    if (listaSucursales == NULL || listaSucursales->estaVacia()) {
-        cout << "\t\tNo hay sucursales registradas.\n";
+    // 3️⃣ Seleccionar PLANTEL ORIGEN dentro de la sucursal origen
+    ListaPlantel* listaOrigen = origen->getListaPlantel();
+    if (listaOrigen == NULL || listaOrigen->estaVacia()) {
+        cout << "\t\tLa sucursal origen no tiene planteles registrados.\n";
         pausa();
         return;
     }
 
-    NodoSucursal* actualSucursal = listaSucursales->getCab();
-    while (actualSucursal != NULL) {
-        Sucursal* suc = actualSucursal->getDato();
-        if (suc == NULL) {
-            actualSucursal = actualSucursal->getSiguiente();
-            continue;
-        }
-
-        cout << "\n\tSucursal: " << suc->getNombre() << endl;
-
-        ListaPlantel* listaPlanteles = suc->getListaPlantel();
-        if (listaPlanteles == NULL || listaPlanteles->estaVacia()) {
-            cout << "\t\tNo hay planteles en esta sucursal.\n";
-            actualSucursal = actualSucursal->getSiguiente();
-            continue;
-        }
-
-        NodoPlantel* actualPlantel = listaPlanteles->getCab();
-        while (actualPlantel != NULL) {
-            Plantel* p = actualPlantel->getDato();
-            if (p != NULL) {
-                int total = p->getTotalEspacios();
-                int ocupados = p->getOcupados();
-                float porcentaje = (total == 0) ? 0 : ((float)ocupados / total) * 100;
-
-                cout << "\t\t- Plantel " << p->getCodigoPlantel()
-                    << " (" << p->getCodigoPlantel() << "): "
-                    << ocupados << "/" << total
-                    << " (" << porcentaje << "% ocupado)" << endl;
-            }
-            actualPlantel = actualPlantel->getSiguiente();
-        }
-
-        actualSucursal = actualSucursal->getSiguiente();
+    cout << "\n\t\t--- PLANTELES EN SUCURSAL ORIGEN ---\n";
+    NodoPlantel* nodoO = listaOrigen->getCab();
+    while (nodoO != NULL) {
+        Plantel* p = nodoO->getDato();
+        cout << "\t\t- " << p->getCodigoPlantel() << " (" << p->getTipoPlantel() << ")\n";
+        nodoO = nodoO->getSiguiente();
     }
+
+    string codPlantelOrigen;
+    cout << "\t\tIngrese el código del plantel ORIGEN: ";
+    getline(cin, codPlantelOrigen);
+
+    Plantel* plantelOrigen = listaOrigen->buscar(codPlantelOrigen);
+    if (plantelOrigen == NULL) {
+        cout << "\t\tPlantel origen no encontrado.\n";
+        pausa();
+        return;
+    }
+
+    // 4️⃣ Seleccionar PLANTEL DESTINO dentro de la sucursal destino
+    ListaPlantel* listaDestino = destino->getListaPlantel();
+    if (listaDestino == NULL || listaDestino->estaVacia()) {
+        cout << "\t\tLa sucursal destino no tiene planteles registrados.\n";
+        pausa();
+        return;
+    }
+
+    cout << "\n\t\t--- PLANTELES EN SUCURSAL DESTINO ---\n";
+    NodoPlantel* nodoD = listaDestino->getCab();
+    while (nodoD != NULL) {
+        Plantel* p = nodoD->getDato();
+        cout << "\t\t- " << p->getCodigoPlantel() << " (" << p->getTipoPlantel() << ")\n";
+        nodoD = nodoD->getSiguiente();
+    }
+
+    string codPlantelDestino;
+    cout << "\t\tIngrese el código del plantel DESTINO: ";
+    getline(cin, codPlantelDestino);
+
+    Plantel* plantelDestino = listaDestino->buscar(codPlantelDestino);
+    if (plantelDestino == NULL) {
+        cout << "\t\tPlantel destino no encontrado.\n";
+        pausa();
+        return;
+    }
+
+    // 5️⃣ Seleccionar vehículo a trasladar
+    ListaVehiculo* lvOrigen = origen->getListaVehiculos();
+    if (lvOrigen == NULL || lvOrigen->estaVacia()) {
+        cout << "\t\tNo hay vehículos en la sucursal origen.\n";
+        pausa();
+        return;
+    }
+
+    string placa;
+    cout << "\n\t\tIngrese la placa del vehículo a trasladar: ";
+    getline(cin, placa);
+
+    Vehiculo* v = lvOrigen->buscar(placa);
+    if (v == NULL) {
+        cout << "\t\tVehículo no encontrado en la sucursal origen.\n";
+        pausa();
+        return;
+    }
+
+    // 6️⃣ Buscar un espacio disponible en el plantel destino
+    Estacionamiento* rec = obtenerRecomendacion(plantelDestino);
+    if (rec == NULL) {
+        cout << "\t\tNo hay espacios disponibles en el plantel destino.\n";
+        pausa();
+        return;
+    }
+
+    // 7️⃣ Realizar traslado
+    Estacionamiento* eo = v->getEspacio();
+    if (eo != NULL) {
+        eo->desocupar();
+        eo->setVehiculo(NULL);
+    }
+
+    rec->setVehiculo(v);
+    rec->ocupar();
+    v->setPlantel(plantelDestino);
+    v->setEspacio(rec);
+
+    // 8️⃣ Mover vehículo entre listas
+    destino->getListaVehiculos()->agregarAlInicio(v);
+    lvOrigen->eliminarVehiculo(v->getPlaca());
+
+    cout << "\n\t\tVehículo trasladado con éxito de " << origen->getNombre()
+        << " (" << plantelOrigen->getCodigoPlantel() << ") a "
+        << destino->getNombre() << " (" << plantelDestino->getCodigoPlantel() << ")\n";
+    cout << "\t\tEspacio asignado: " << rec->getCodigo() << endl;
 
     pausa();
 }
