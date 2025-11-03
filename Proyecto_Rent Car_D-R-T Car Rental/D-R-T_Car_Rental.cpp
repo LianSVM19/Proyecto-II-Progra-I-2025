@@ -3,7 +3,7 @@
 #include "Utilidades.h"
 using namespace std;
 int main() {
-    cout << "EEEEEE" << endl;
+    cout << "EEEEEEaaaaaaa" << endl;
     cout << "madre mia willy" << endl;
     cout << "peroquehacesaquicompa"<<char(164)<<"ero" << endl;
     // 1. Crear una instancia de la clase Utilidades
