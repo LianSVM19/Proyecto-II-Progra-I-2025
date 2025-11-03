@@ -89,6 +89,31 @@ bool ListaVehiculo::eliminarVehiculo(string placa) {
     return false; // No se encontró
 }
 
+bool ListaVehiculo::removerSinBorrar(string placa) {
+    NodoVehiculo* actual = cabeza;
+    NodoVehiculo* anterior = NULL;
+
+    while (actual != NULL) {
+        Vehiculo* v = actual->getElemento();
+        if (v != NULL && v->getPlaca() == placa) {
+            if (anterior == NULL)
+                cabeza = actual->getSig();
+            else
+                anterior->setSig(actual->getSig());
+
+            // ? No hacemos delete v; porque se moverá a otra sucursal
+            delete actual;
+            tamano--;
+            return true;
+        }
+        anterior = actual;
+        actual = actual->getSig();
+    }
+    return false;
+}
+
+
+
 // ----------------------
 // Función "to string" (siguiendo el estilo solicitado)
 // ----------------------

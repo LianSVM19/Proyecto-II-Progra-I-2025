@@ -32,9 +32,11 @@ public:
     NodoVehiculo* getCabeza() { return cabeza; }
     void setCabeza(NodoVehiculo* nuevo) { cabeza = nuevo; }
     bool eliminarVehiculo(string);
+    bool removerSinBorrar(string);
 
     // Función "to string"
     string toString();
+
 
 
 };

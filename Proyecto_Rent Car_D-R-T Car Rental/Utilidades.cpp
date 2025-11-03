@@ -566,31 +566,38 @@ void Utilidades::trasladarVehiculos() {
     NodoVehiculo* actual = lvOrigen->getCabeza();
     while (actual != NULL && trasladados < n) {
         Vehiculo* v = actual->getElemento();
-        // Solo trasladar si no esta alquilado
         if (v != NULL && v->getEstado() != "Alquilado" && v->getEstado() != "ALQUILADO") {
-            // buscar plantel destino con espacio
+
             ListaPlantel* lpd = destino->getListaPlantel();
             if (lpd == NULL || lpd->estaVacia()) { actual = actual->getSig(); continue; }
 
             NodoPlantel* np = lpd->getCab();
             bool movido = false;
+
             while (np != NULL && !movido) {
                 Plantel* pd = np->getDato();
                 Estacionamiento* rec = obtenerRecomendacion(pd);
-                if (rec != NULL) {
-                    // Desocupar de origen
-                    Estacionamiento* eo = v->getEspacio();
-                    if (eo != NULL) { eo->desocupar(); eo->setVehiculo(NULL); }
 
-                    // Ocupar en destino
+                if (rec != NULL) {
+                    // Liberar espacio de origen
+                    Estacionamiento* eo = v->getEspacio();
+                    if (eo != NULL) {
+                        eo->desocupar();
+                        eo->setVehiculo(NULL);
+                    }
+
+                    // Asignar en destino
                     rec->setVehiculo(v);
                     rec->ocupar();
                     v->setPlantel(pd);
                     v->setEspacio(rec);
 
-                    // Mover en listas (agregar a destino y eliminar de origen)
+                    // Agregar a destino
                     destino->getListaVehiculos()->agregarAlInicio(v);
-                    lvOrigen->eliminarVehiculo(v->getPlaca()); // usa el metodo que tenga tu ListaVehiculo
+
+                    // ⚠️ Remover de origen sin borrar el vehículo
+                    lvOrigen->removerSinBorrar(v->getPlaca());
+
                     trasladados++;
                     movido = true;
                 }
@@ -603,7 +610,6 @@ void Utilidades::trasladarVehiculos() {
     cout << "\t\tTrasladados: " << trasladados << " vehiculos.\n";
     pausa();
 }
-
 
 void Utilidades::reporteOcupacionPlanteles() {
     limpiarConsola();
