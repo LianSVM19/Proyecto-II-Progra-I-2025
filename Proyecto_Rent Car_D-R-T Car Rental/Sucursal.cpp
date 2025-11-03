@@ -129,9 +129,9 @@ string Sucursal::toString() {
     return s.str();
 }
 
-ListaContrato* getListaContratos() { return Contratos; }
+ListaContrato* Sucursal::getListaContratos() { return Contratos; }
 
-void setListaContratos(ListaContrato* lc) { Contratos = lc; }
+void Sucursal::setListaContratos(ListaContrato* lc) { Contratos = lc; }
 
 
 ListaSolicitud* Sucursal::getListaSolicitudes() {
