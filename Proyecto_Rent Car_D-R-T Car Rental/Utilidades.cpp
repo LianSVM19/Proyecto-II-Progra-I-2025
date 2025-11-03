@@ -33,23 +33,41 @@ Utilidades::~Utilidades() {
 }
 
 Sucursal* Utilidades::seleccionarSucursal() {
-    if (listaSucursales == NULL || listaSucursales->estaVacia()) {
-        cout << "\n\t\tNo hay sucursales registradas." << endl;
-        return NULL;
+    if (listaSucursales == nullptr || listaSucursales->estaVacia()) {
+        cout << "\t\tNo hay sucursales registradas.\n";
+        return nullptr;
     }
 
-    cout << "\n\t\t--- SELECCIONAR SUCURSAL ---" << endl;
-    cout << listaSucursales->toString() << endl;
+    cout << "\n\t\t--- SELECCIÓN DE SUCURSAL ---\n";
+    NodoSucursal* actual = listaSucursales->getCab();
+    while (actual != nullptr) {
+        Sucursal* s = actual->getDato();
+        if (s != nullptr) {
+            cout << "\t\tCódigo: " << s->getCodigoSucursal()
+                << " | Nombre: " << s->getNombre() << endl;
+        }
+        actual = actual->getSiguiente();
+    }
+    cin.clear();               
+    cin.ignore(10000, '\n');
+
+    cout << "\n\t\tIngrese el código de la sucursal: ";
     string codigo;
-    cout << "\t\tIngrese codigo de sucursal: ";
-    cin >> codigo;
-    Sucursal* s = listaSucursales->buscar(codigo);
-    if (s == NULL) {
-        cout << "\t\tSucursal no encontrada." << endl;
-    }
-    return s;
-}
+    getline(cin, codigo);
 
+    // Buscar sin imprimir nada
+    NodoSucursal* actual = listaSucursales->getCab(); // recorre tu lista de sucursales
+    while (actual != nullptr) {
+        Sucursal* suc = actual->getDato();
+        if (suc != nullptr && suc->getCodigoSucursal() == codigo) {
+            return suc;
+        }
+        actual = actual->getSiguiente();
+    }
+
+    cout << "\t\tSucursal no encontrada.\n";
+    return nullptr;
+}
 
 void Utilidades::crearPlantelSucursal() {
     string codigoSucursal;
