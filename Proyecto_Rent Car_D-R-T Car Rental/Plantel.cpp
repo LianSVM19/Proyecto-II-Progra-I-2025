@@ -60,7 +60,7 @@ void Plantel::mostrarMatriz() {
         << " | Dimension: " << capacidadFilas
         << "x" << capacidadColumnas << endl;
 
-    if (matrizEstacionamientos != nullptr) {
+    if (matrizEstacionamientos != NULL) {
         matrizEstacionamientos->mostrarMatriz();
     }
     else {
@@ -73,17 +73,17 @@ Estacionamiento* Plantel::recomendarEspacio() {
 }
 
 int Plantel::getTotalEspacios(){
-    if (matrizEstacionamientos == nullptr) return 0;
+    if (matrizEstacionamientos == NULL) return 0;
     return matrizEstacionamientos->getFilas() * matrizEstacionamientos->getColumnas();
 }
 
 int Plantel::getOcupados(){
-    if (matrizEstacionamientos == nullptr) return 0;
+    if (matrizEstacionamientos == NULL) return 0;
     int ocupados = 0;
     for (int i = 0; i < matrizEstacionamientos->getFilas(); ++i) {
         for (int j = 0; j < matrizEstacionamientos->getColumnas(); ++j) {
             Estacionamiento* e = matrizEstacionamientos->getEstacionamiento(i, j);
-            if (e != nullptr && e->getOcupado())
+            if (e != NULL && e->getOcupado())
                 ocupados++;
         }
     }

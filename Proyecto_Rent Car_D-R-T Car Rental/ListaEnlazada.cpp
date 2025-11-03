@@ -57,19 +57,19 @@ bool ListaVehiculo::estaVacia() {
 }
 
 bool ListaVehiculo::eliminarVehiculo(string placa) {
-    if (cabeza == nullptr) {
+    if (cabeza == NULL) {
         return false; // Lista vacía
     }
 
     NodoVehiculo* actual = cabeza;
-    NodoVehiculo* anterior = nullptr;
+    NodoVehiculo* anterior = NULL;
 
     // Buscar el vehículo con la placa dada
-    while (actual != nullptr) {
+    while (actual != NULL) {
         Vehiculo* v = actual->getElemento();
-        if (v != nullptr && v->getPlaca() == placa) {
+        if (v != NULL && v->getPlaca() == placa) {
             // Caso 1: el nodo a eliminar es la cabeza
-            if (anterior == nullptr) {
+            if (anterior == NULL) {
                 cabeza = actual->getSig();
             }
             else {

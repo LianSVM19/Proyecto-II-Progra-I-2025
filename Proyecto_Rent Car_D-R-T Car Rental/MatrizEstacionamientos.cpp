@@ -142,13 +142,13 @@ Estacionamiento* MatrizEstacionamientos::buscarEstacionamiento(string codEspacio
             // 1. Verifica que el espacio exista (no sea NULL)
             // 2. Compara el código del espacio con el código buscado.
             //    Asumo que la clase Estacionamiento tiene un método getCodigo().
-            if (espacio != nullptr && espacio->getCodigo() == codEspacio) {
+            if (espacio != NULL && espacio->getCodigo() == codEspacio) {
                 return espacio; // Retorna el puntero al objeto Estacionamiento
             }
         }
     }
-    // Si el bucle termina sin encontrar el código, retorna NULL (o nullptr)
-    return nullptr;
+    // Si el bucle termina sin encontrar el código, retorna NULL (o NULL)
+    return NULL;
 }
 
 void MatrizEstacionamientos::mostrarMatriz() {
@@ -160,7 +160,7 @@ void MatrizEstacionamientos::mostrarMatriz() {
         cout << "\t\t"; // Sangría para formato de tabla
         for (int j = 0; j < columnas; ++j) {
             Estacionamiento* espacio = matriz[i][j];
-            if (espacio == nullptr) {
+            if (espacio == NULL) {
                 cout << "[ ] ";
             }
             else if (espacio->getOcupado()) {
@@ -182,10 +182,10 @@ Estacionamiento* MatrizEstacionamientos::recomendarEspacioLibre() {
     for (int f = 0; f < filas; ++f) {
         for (int c = 0; c < columnas; ++c) {
             Estacionamiento* e = matriz[f][c];
-            if (e != nullptr && !e->getOcupado()) {
+            if (e != NULL && !e->getOcupado()) {
                 return e;
             }
         }
     }
-    return nullptr;
+    return NULL;
 }

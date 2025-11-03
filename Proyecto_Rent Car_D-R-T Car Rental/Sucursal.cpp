@@ -115,75 +115,75 @@ void Sucursal::setListaSolicitudes(ListaSolicitud* ls) {
 void Sucursal::liberarRecursosInternos() {
     //Elimina todos los objetos dentro de las listas antes de destruirlas
 
-    if (plantel != nullptr) {
+    if (plantel != NULL) {
         NodoPlantel* np = plantel->getCab();
-        while (np != nullptr) {
+        while (np != NULL) {
             NodoPlantel* temp = np;
             np = np->getSiguiente();
             delete temp->getDato(); // Plantel*
             delete temp;
         }
         delete plantel;
-        plantel = nullptr;
+        plantel = NULL;
     }
 
-    if (clientes != nullptr) {
+    if (clientes != NULL) {
         NodoCliente* nc = clientes->getCab();
-        while (nc != nullptr) {
+        while (nc != NULL) {
             NodoCliente* temp = nc;
             nc = nc->getSiguiente();
             delete temp->getDato(); // Cliente*
             delete temp;
         }
         delete clientes;
-        clientes = nullptr;
+        clientes = NULL;
     }
 
-    if (colaboradores != nullptr) {
+    if (colaboradores != NULL) {
         NodoColaborador* nco = colaboradores->getCab();
-        while (nco != nullptr) {
+        while (nco != NULL) {
             NodoColaborador* temp = nco;
             nco = nco->getSiguiente();
             delete temp->getDato(); // Colaborador*
             delete temp;
         }
         delete colaboradores;
-        colaboradores = nullptr;
+        colaboradores = NULL;
     }
 
-    if (inventarioVehiculos != nullptr) {
+    if (inventarioVehiculos != NULL) {
         NodoVehiculo* nv = inventarioVehiculos->getCabeza();
-        while (nv != nullptr) {
+        while (nv != NULL) {
             NodoVehiculo* temp = nv;
             nv = nv->getSig();
             delete temp->getElemento(); // Vehiculo*
             delete temp;
         }
         delete inventarioVehiculos;
-        inventarioVehiculos = nullptr;
+        inventarioVehiculos = NULL;
     }
 
-    if (solicitudes != nullptr) {
+    if (solicitudes != NULL) {
         NodoSolicitud* ns = solicitudes->getCab();
-        while (ns != nullptr) {
+        while (ns != NULL) {
             NodoSolicitud* temp = ns;
             ns = ns->getSiguiente();
             delete temp->getDato(); // SolicitudAlquiler*
             delete temp;
         }
         delete solicitudes;
-        solicitudes = nullptr;
+        solicitudes = NULL;
     }
 
-    if (Contratos != nullptr) {
+    if (Contratos != NULL) {
         NodoContrato* nc = Contratos->getCab();
-        while (nc != nullptr) {
+        while (nc != NULL) {
             NodoContrato* temp = nc;
             nc = nc->getSiguiente();
             delete temp->getDato(); // ContratoAlquiler*
             delete temp;
         }
         delete Contratos;
-        Contratos = nullptr;
+        Contratos = NULL;
     }
 }

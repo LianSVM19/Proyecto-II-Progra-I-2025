@@ -15,6 +15,7 @@ int main() {
     miSistema.ejecutarSistema();
 
     miSistema.liberarMemoria();
+    cout << "peroquehacesaquicompa" << char(164) << "ero" << endl;
     //prueba de clase vehiculo.
     
     
