@@ -14,7 +14,7 @@ int main() {
     // 2. Llamar al método principal que inicia la lógica del menú
     miSistema.ejecutarSistema();
 
-
+    miSistema.liberarMemoria();
     //prueba de clase vehiculo.
     
     

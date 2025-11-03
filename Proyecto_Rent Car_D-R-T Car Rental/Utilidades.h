@@ -45,7 +45,11 @@ public:
     void reubicarVehiculoSucursal();
     void cambiarEstadoVehiculo();
     void trasladarVehiculos();
-    
+    void reporteOcupacionPlanteles();
+    void reporteContratosPorVehiculo();
+    void reporteHistorialCliente();
+    void reporteClientesPorContratos();
+    void reporteAlquileresPorColaborador();
 
     // Método que gestiona el ingreso de un nuevo cliente
     void ingresarCliente();
@@ -82,6 +86,7 @@ public:
     void limpiarConsola();
     int leerOpcion(int min, int max);
     void pausa();
+    void liberarMemoria();
 
     // ----------------------------------------------------
     // Funciones de Menú (Instancia)

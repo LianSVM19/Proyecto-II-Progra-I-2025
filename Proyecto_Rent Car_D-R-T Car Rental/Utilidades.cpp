@@ -553,6 +553,347 @@ void Utilidades::trasladarVehiculos() {
 }
 
 
+void Utilidades::reporteOcupacionPlanteles() {
+    limpiarConsola();
+    cout << "\n\t\t--- REPORTE DE PORCENTAJE DE OCUPACION DE PLANTELES ---\n";
+
+    if (listaSucursales == nullptr || listaSucursales->estaVacia()) {
+        cout << "\t\tNo hay sucursales registradas.\n";
+        pausa();
+        return;
+    }
+
+    NodoSucursal* actualSucursal = listaSucursales->getCab();
+    while (actualSucursal != nullptr) {
+        Sucursal* suc = actualSucursal->getDato();
+        if (suc == nullptr) {
+            actualSucursal = actualSucursal->getSiguiente();
+            continue;
+        }
+
+        cout << "\n\tSucursal: " << suc->getNombre() << endl;
+
+        ListaPlantel* listaPlanteles = suc->getListaPlantel();
+        if (listaPlanteles == nullptr || listaPlanteles->estaVacia()) {
+            cout << "\t\tNo hay planteles en esta sucursal.\n";
+            actualSucursal = actualSucursal->getSiguiente();
+            continue;
+        }
+
+        NodoPlantel* actualPlantel = listaPlanteles->getCab();
+        while (actualPlantel != nullptr) {
+            Plantel* p = actualPlantel->getDato();
+            if (p != nullptr) {
+                int total = p->getTotalEspacios();
+                int ocupados = p->getOcupados();
+                float porcentaje = (total == 0) ? 0 : ((float)ocupados / total) * 100;
+
+                cout << "\t\t- Plantel " << p->getCodigoPlantel()
+                    << " (" << p->getCodigoPlantel() << "): "
+                    << ocupados << "/" << total
+                    << " (" << porcentaje << "% ocupado)" << endl;
+            }
+            actualPlantel = actualPlantel->getSiguiente();
+        }
+
+        actualSucursal = actualSucursal->getSiguiente();
+    }
+
+    pausa();
+}
+
+void Utilidades::reporteContratosPorVehiculo() {
+    cout << "\n--- REPORTE DE CONTRATOS DE UN VEHICULO ESPECIFICO ---\n";
+
+    string placa;
+    cout << "Ingrese la placa del vehiculo: ";
+    getline(cin, placa);
+
+    bool encontrado = false;
+
+    NodoContrato* actual = listaContratos->getCab();
+    while (actual != nullptr) {
+        ContratoAlquiler* c = actual->getDato(); 
+        SolicitudAlquiler* s = c->getSolicitud();
+        if (s != nullptr && s->getVehiculo() != nullptr && s->getVehiculo()->getPlaca() == placa) {
+            encontrado = true;
+            cout << "\nContrato ID: " << c->getCodigoContrato() << endl;
+            cout << "Cliente: " << s->getCliente()->getNombre() << endl;
+            cout << "Dias de alquiler: " << s->getCanDiasAlqui() << endl;
+            cout << "Fecha inicio: " << s->getFechIni() << endl;
+            cout << "Fecha fin: " << s->getFechFin() << endl;
+            cout << "Estado: " << c->getEstado() << endl;
+            cout << "Precio total: " << c->getCostoTotal() << endl;
+        }
+        actual = actual->getSiguiente();
+    }
+
+    if (!encontrado) {
+        cout << "No existen contratos asociados a esa placa.\n";
+    }
+}
+
+void Utilidades::reporteHistorialCliente() {
+    limpiarConsola();
+    cout << "\n\t\t==============================================" << endl;
+    cout << "\t\t        HISTORIAL COMPLETO DEL CLIENTE        " << endl;
+    cout << "\t\t==============================================\n";
+
+    string id;
+    cout << "\t\tIngrese la cédula del cliente: ";
+    getline(cin, id);
+
+    bool encontrado = false;
+
+    // 🔹 Mostrar todas las solicitudes del cliente
+    cout << "\n\t\t--- SOLICITUDES DE ALQUILER ---" << endl;
+    NodoSolicitud* sol = listaSolicitudes->getCab();
+    int contadorSolicitudes = 0;
+
+    while (sol != nullptr) {
+        SolicitudAlquiler* s = sol->getDato();
+        if (s != nullptr && s->getCliente() != nullptr &&
+            s->getCliente()->getCedula() == id) {
+
+            encontrado = true;
+            contadorSolicitudes++;
+
+            cout << "\t\tSolicitud #" << contadorSolicitudes << endl;
+            cout << "\t\t  Código: " << s->getCodigoSoli() << endl;
+            cout << "\t\t  Vehículo: "
+                << (s->getVehiculo() ? s->getVehiculo()->getPlaca() : "N/A") << endl;
+            cout << "\t\t  Estado: " << s->getEstado() << endl;
+            cout << "\t\t----------------------------------------" << endl;
+        }
+        sol = sol->getSiguiente();
+    }
+
+    if (contadorSolicitudes == 0)
+        cout << "\t\t(No hay solicitudes registradas)\n";
+
+    // 🔹 Mostrar todos los contratos del cliente
+    cout << "\n\t\t--- CONTRATOS DE ALQUILER ---" << endl;
+    NodoContrato* con = listaContratos->getCab();
+    int contadorContratos = 0;
+
+    while (con != nullptr) {
+        ContratoAlquiler* c = con->getDato();
+        if (c != nullptr && c->getSolicitud() != nullptr) {
+            SolicitudAlquiler* s = c->getSolicitud();
+            if (s->getCliente() != nullptr && s->getCliente()->getCedula() == id) {
+
+                encontrado = true;
+                contadorContratos++;
+
+                cout << "\t\tContrato #" << contadorContratos << endl;
+                cout << "\t\t  Código: " << c->getCodigoContrato() << endl;
+                cout << "\t\t  Vehículo: "
+                    << (s->getVehiculo() ? s->getVehiculo()->getPlaca() : "N/A") << endl;
+                cout << "\t\t  Estado: " << c->getEstado() << endl;
+                cout << "\t\t----------------------------------------" << endl;
+            }
+        }
+        con = con->getSiguiente();
+    }
+
+    if (contadorContratos == 0)
+        cout << "\t\t(No hay contratos registrados)\n";
+
+    if (!encontrado) {
+        cout << "\n\t\tEl cliente no tiene solicitudes ni contratos registrados.\n";
+    }
+
+    cout << "\n\t\t==============================================\n";
+    pausa();
+}
+
+void Utilidades::reporteClientesPorContratos() {
+    limpiarConsola();
+    cout << "\n\t\t===============================================" << endl;
+    cout << "\t\tREPORTE DE CLIENTES POR CANTIDAD DE CONTRATOS" << endl;
+    cout << "\t\t===============================================\n";
+
+    if (listaClientes == nullptr || listaClientes->estaVacia()) {
+        cout << "\t\tNo hay clientes registrados.\n";
+        pausa();
+        return;
+    }
+
+    // 1️⃣ Estructuras paralelas simples (máx 100 clientes)
+    const int MAX = 100;
+    Cliente* clientes[MAX];
+    int cantidades[MAX];
+    string codigos[MAX];
+    int totalClientes = 0;
+
+    // 2️⃣ Recorremos todos los clientes
+    NodoCliente* nodoC = listaClientes->getCab();
+    while (nodoC != nullptr && totalClientes < MAX) {
+        Cliente* cli = nodoC->getDato();
+        int cantidadContratos = 0;
+        string listaCodigos = "";
+
+        // Recorremos todos los contratos
+        NodoContrato* nodoCon = listaContratos->getCab();
+        while (nodoCon != nullptr) {
+            ContratoAlquiler* contrato = nodoCon->getDato();
+            if (contrato != nullptr && contrato->getSolicitud() != nullptr) {
+                SolicitudAlquiler* soli = contrato->getSolicitud();
+                if (soli != nullptr && soli->getCliente() != nullptr &&
+                    soli->getCliente()->getCedula() == cli->getCedula()) {
+                    cantidadContratos++;
+                    listaCodigos += contrato->getCodigoContrato() + " ";
+                }
+            }
+            nodoCon = nodoCon->getSiguiente();
+        }
+
+        clientes[totalClientes] = cli;
+        cantidades[totalClientes] = cantidadContratos;
+        codigos[totalClientes] = listaCodigos;
+        totalClientes++;
+
+        nodoC = nodoC->getSiguiente();
+    }
+
+    // 3️⃣ Ordenamiento burbuja (descendente por cantidad)
+    for (int i = 0; i < totalClientes - 1; i++) {
+        for (int j = 0; j < totalClientes - i - 1; j++) {
+            if (cantidades[j] < cantidades[j + 1]) {
+                // intercambiar posiciones
+                Cliente* tempC = clientes[j];
+                clientes[j] = clientes[j + 1];
+                clientes[j + 1] = tempC;
+
+                int tempCant = cantidades[j];
+                cantidades[j] = cantidades[j + 1];
+                cantidades[j + 1] = tempCant;
+
+                string tempCod = codigos[j];
+                codigos[j] = codigos[j + 1];
+                codigos[j + 1] = tempCod;
+            }
+        }
+    }
+
+    // 4️⃣ Mostrar resultados
+    int sinContratos = 0;
+    for (int i = 0; i < totalClientes; i++) {
+        if (cantidades[i] == 0) {
+            sinContratos++;
+            continue;
+        }
+
+        cout << "\n\t\tCliente: " << clientes[i]->getNombre()
+            << " (" << clientes[i]->getCedula() << ")" << endl;
+        cout << "\t\tContratos realizados: " << cantidades[i] << endl;
+        cout << "\t\tCodigos de contratos: " << codigos[i] << endl;
+        cout << "\t\t---------------------------------------------" << endl;
+    }
+
+    cout << "\n\t\t===============================================" << endl;
+    cout << "\t\tTotal clientes: " << totalClientes << endl;
+    cout << "\t\tClientes sin contratos: " << sinContratos << endl;
+    cout << "\t\t===============================================" << endl;
+
+    pausa();
+}
+
+void Utilidades::reporteAlquileresPorColaborador() {
+    limpiarConsola();
+    cout << "\n\t\t===============================================" << endl;
+    cout << "\t\tREPORTE DE ALQUILERES POR COLABORADOR" << endl;
+    cout << "\t\t===============================================" << endl;
+
+    if (listaColaboradores == nullptr || listaColaboradores->estaVacia()) {
+        cout << "\t\tNo hay colaboradores registrados.\n";
+        pausa();
+        return;
+    }
+
+    string idCol;
+    cout << "\t\tIngrese el ID (cédula) del colaborador: ";
+    getline(cin, idCol);
+
+    Colaborador* colaboradorEncontrado = nullptr;
+
+    // Buscar colaborador
+    NodoColaborador* nodoC = listaColaboradores->getCab();
+    while (nodoC != nullptr) {
+        Colaborador* col = nodoC->getDato();
+        if (col != nullptr && col->getCedula() == idCol) {
+            colaboradorEncontrado = col;
+            break;
+        }
+        nodoC = nodoC->getSiguiente();
+    }
+
+    if (colaboradorEncontrado == nullptr) {
+        cout << "\t\tColaborador no encontrado.\n";
+        pausa();
+        return;
+    }
+
+    cout << "\n\t\tColaborador: " << colaboradorEncontrado->getNombre()
+        << " (" << colaboradorEncontrado->getCedula() << ")" << endl;
+    cout << "\t\t-----------------------------------------------" << endl;
+
+    bool tieneContratos = false;
+    int contadorContratos = 0;
+
+    // Recorremos todos los contratos para buscar los asociados al colaborador
+    NodoContrato* nodoCon = listaContratos->getCab();
+    while (nodoCon != nullptr) {
+        ContratoAlquiler* contrato = nodoCon->getDato();
+
+        if (contrato != nullptr && contrato->getSolicitud() != nullptr) {
+            SolicitudAlquiler* soli = contrato->getSolicitud();
+
+            if (soli != nullptr && soli->getColaborador() != nullptr &&
+                soli->getColaborador()->getCedula() == idCol) {
+
+                tieneContratos = true;
+                contadorContratos++;
+
+                Cliente* cli = soli->getCliente();
+                Vehiculo* veh = soli->getVehiculo();
+
+                cout << "\n\t\tContrato: " << contrato->getCodigoContrato() << endl;
+
+                if (veh != nullptr) {
+                    cout << "\t\tVehículo: " << veh->getPlaca() << endl;
+                }
+                else {
+                    cout << "\t\tVehículo: N/A" << endl;
+                }
+
+                if (cli != nullptr) {
+                    cout << "\t\tCliente ID: " << cli->getCedula() << endl;
+                }
+                else {
+                    cout << "\t\tCliente ID: N/A" << endl;
+                }
+
+                cout << "\t\t-----------------------------------------------" << endl;
+            }
+        }
+
+        nodoCon = nodoCon->getSiguiente();
+    }
+
+    if (!tieneContratos) {
+        cout << "\n\t\tEl colaborador no tiene alquileres registrados.\n";
+    }
+    else {
+        cout << "\n\t\tTotal de alquileres realizados por este colaborador: "
+            << contadorContratos << endl;
+    }
+
+    cout << "\t\t===============================================" << endl;
+    pausa();
+}
+
+
 //Cositas
 Cliente* Utilidades::leerDatosCliente() {
     string cedula, nombre, correo, telefono, fNacimiento, fInscripcion;
@@ -1031,7 +1372,7 @@ void Utilidades::CrearSolicitud() {
 
 
 // -----------------------------
-// VER SOLICITUDES/CONTRATOS (interactivo) - por sucursal
+// VER SOLICITUDES/CONTRATOS 
 // -----------------------------
 void Utilidades::VerSolicitudesContratos() {
     limpiarConsola();
@@ -1064,58 +1405,43 @@ void Utilidades::VerSolicitudesContratos() {
 
 
 //jaja
+// -----------------------------
+// APROBAR / RECHAZAR SOLICITUD
+// -----------------------------
 void Utilidades::AprobarRechazarSolicitud() {
-    string codigoSoli;
-    string idColaborador;
-    char opcion;
     limpiarConsola();
-    cout << "\n\t\t--- APROBACIoN / RECHAZO DE SOLICITUD (1 pto) ---" << endl;
+    cout << "\n\t\t--- APROBAR / RECHAZAR SOLICITUD ---" << endl;
+    string codigoS;
+    cout << "\t\tIngrese codigo de la solicitud: ";
+    getline(cin, codigoS);
 
-    cout << "\t\tIngrese el codigo de la Solicitud a procesar: ";
-    getline(cin, codigoSoli);
+    SolicitudAlquiler* s = listaSolicitudes->buscar(codigoS);
+    if (s == nullptr) {
+        cout << "\t\tSolicitud no encontrada.\n";
+        pausa(); return;
+    }
 
-    SolicitudAlquiler* solicitud = listaSolicitudes->buscar(codigoSoli);
+    cout << s->toString() << endl;
+    cout << "\t\tAprobar (A) / Rechazar (R) / Cancelar (C): ";
+    char op; cin >> op; cin.ignore(10000, '\n');
 
-    if (solicitud == NULL || solicitud->getEstado() != "Pendiente") {
-        cout << "\t\tERROR: Solicitud no encontrada o ya procesada." << endl;
+    if (op == 'A' || op == 'a') {
+        s->setEstado("Aprobada");
+        // Crear contrato a partir de solicitud (asumir constructor)
+        string codigoContrato = "C-" + s->getCodigoSoli() + "-" + to_string(rand() % 10000 + 1);
+        ContratoAlquiler* c = new ContratoAlquiler(codigoContrato, s->getPrecioTotal(),"Activo",s);
+        listaContratos->agregarContrato(c);
+        Sucursal* su = s->getSucursal();
+        if (su != nullptr && su->getListaContratos() != nullptr) su->getListaContratos()->agregarContrato(c);
+
+        cout << "\t\tSolicitud aprobada. Contrato creado con codigo: " << codigoContrato << endl;
+    }
+    else if (op == 'R' || op == 'r') {
+        s->setEstado("Rechazada");
+        cout << "\t\tSolicitud rechazada.\n";
     }
     else {
-        cout << "\n\t\t--- DETALLE DE LA SOLICITUD ---" << endl;
-        cout << solicitud->toString() << endl;
-        cout << "\t\tIngrese el ID del Colaborador que aprueba/rechaza: "; // Solicitud del ID
-        getline(cin, idColaborador);
-        cout << "\t\t[A]probar o [R]echazar la solicitud? (A/R): ";
-        cin >> opcion;
-        cin.ignore(10000, '\n');
-
-        if (opcion == 'A' || opcion == 'a') {
-            solicitud->setEstado("Aprobada");
-
-            // 1. Cambiar estado del vehiculo
-            Vehiculo* vehiculo = solicitud->getVehiculo();
-            string ubicacion = "EN_USO_" + solicitud->getCodigoSoli();
-            //string fechaActual = obtenerFechaActual();
-            vehiculo->setEstado("Alquilado", ubicacion, idColaborador);
-            //vehiculo->setEstado("Alquilado", ubicacion, idColaborador, fechaActual);
-
-            // 2. Crear Contrato
-            string codigoContrato = "CONT-" + codigoSoli;
-            ContratoAlquiler* nuevoContrato = new ContratoAlquiler(
-                codigoContrato, solicitud->getPrecioTotal(), "Activo", solicitud
-            );
-
-            listaContratos->agregarContrato(nuevoContrato);
-
-            cout << "\n\t\t¡APROBACIoN EXITOSA! Contrato " << codigoContrato << " creado." << endl;
-
-        }
-        else if (opcion == 'R' || opcion == 'r') {
-            solicitud->setEstado("Rechazada");
-            cout << "\n\t\t¡RECHAZO EXITOSO! Solicitud " << codigoSoli << " rechazada." << endl;
-        }
-        else {
-            cout << "\t\tOpcion invalida. No se realizo ninguna accion." << endl;
-        }
+        cout << "\t\tOperacion cancelada.\n";
     }
     pausa();
 }
@@ -1123,44 +1449,57 @@ void Utilidades::AprobarRechazarSolicitud() {
 
 
 
+// -----------------------------
+// RECEPCION DE VEHICULO Y FINALIZAR CONTRATO 
+// -----------------------------
 void Utilidades::RecepcionVehiculo() {
-    string codigoContrato, idColaborador;
     limpiarConsola();
-    cout << "\n\t\t--- RECEPCIoN DE VEHiCULO Y FINALIZACIoN DE CONTRATO (3 pts) ---" << endl;
-
-    cout << "\t\tIngrese el codigo del Contrato a finalizar: ";
-    getline(cin, codigoContrato);
+    cout << "\n\t\t--- RECEPCION Y FINALIZACION DE CONTRATO ---" << endl;
+    cout << "\t\tIngrese codigo del contrato a finalizar: ";
+    string codigoContrato; getline(cin, codigoContrato);
 
     ContratoAlquiler* contrato = listaContratos->buscar(codigoContrato);
-
-    if (contrato == NULL) {
-        cout << "\t\tERROR: Contrato con codigo " << codigoContrato << " no encontrado." << endl;
+    if (contrato == nullptr) {
+        cout << "\t\tContrato no encontrado.\n";
+        pausa(); return;
     }
-    else if (contrato->getEstado() == "Finalizado") {
-        cout << "\t\tERROR: El contrato ya se encuentra 'Finalizado'." << endl;
+
+    if (contrato->getEstado() == "Finalizado") {
+        cout << "\t\tContrato ya finalizado.\n";
+        pausa(); return;
     }
-    else if (contrato->getEstado() == "Activo") {
-        cout << "\t\tIngrese el ID del Colaborador que recibe el vehículo: ";
-        getline(cin, idColaborador);
 
-        // 1. Finalizar el Contrato
-        contrato->setEstado("Finalizado");
-
-        // 2. Obtener Vehiculo y cambiar su estado
-        Vehiculo* vehiculo = contrato->getSolicitud()->getVehiculo();
-        string ubicacion = "RECEPCION_PENDIENTE_PARKING";
-        // Transicion: Alquilado -> Devuelto (segun su logica interna)
-        vehiculo->setEstado("Devuelto", ubicacion, idColaborador);
-
-        cout << "\n\t\t¡RECEPCIoN EXITOSA!" << endl;
-        cout << "\t\tEl contrato " << codigoContrato << " ha sido marcado como 'Finalizado'." << endl;
-        cout << "\t\tEl vehiculo " << vehiculo->getPlaca() << " ha sido marcado como 'Devuelto'." << endl;
-        cout << "\t\tNOTA: El vehiculo en estado 'Devuelto' debe pasar a 'Revision' o 'Lavado'." << endl;
-
+    if (contrato->getEstado() != "Activo") {
+        cout << "\t\tContrato no se encuentra en estado Activo.\n";
+        pausa(); return;
     }
-    else {
-        cout << "\t\tERROR: El contrato no esta en estado 'Activo'." << endl;
+
+    // Cambiar estado del contrato y del vehiculo
+    contrato->setEstado("Finalizado");
+
+    SolicitudAlquiler* soli = contrato->getSolicitud();
+    if (soli == nullptr) {
+        cout << "\t\tSolicitud asociada no encontrada. Finalizando contrato de todas formas.\n";
+        pausa(); return;
     }
+
+    Vehiculo* veh = soli->getVehiculo();
+    if (veh == nullptr) {
+        cout << "\t\tVehiculo asociado no encontrado.\n";
+        pausa(); return;
+    }
+
+    // Cambiar estado del vehiculo: Alquilado -> Devuelto
+    veh->setEstado("Devuelto", "Recepcion", "Sistema");
+
+    // Liberar espacio en plantel
+    Estacionamiento* e = veh->getEspacio();
+    if (e != nullptr) {
+        e->desocupar();
+        e->setVehiculo(nullptr);
+    }
+
+    cout << "\t\tContrato finalizado y vehiculo devuelto. Espacio liberado.\n";
     pausa();
 }
 
@@ -1182,7 +1521,7 @@ int Utilidades::leerOpcion(int min, int max) {
     int opcion;
     cout << "\t\tDigite la opcion deseada: ";
 
-    // 🚨 USO EXPLiCITO DE cin >>
+    //USO EXPLiCITO DE cin >>
     while (!(cin >> opcion) || opcion < min || opcion > max) {
         cin.clear();
         cin.ignore(10000, '\n'); // Limpieza del buffer
@@ -1190,6 +1529,91 @@ int Utilidades::leerOpcion(int min, int max) {
     }
     cin.ignore(10000, '\n'); // Limpieza del buffer
     return opcion;
+}
+
+void Utilidades::liberarMemoria() {
+    cout << "\n\t\tLiberando memoria antes de salir..." << endl;
+
+    // ---------------------------
+    // 1. Eliminar Contratos
+    // ---------------------------
+    if (listaContratos != nullptr) {
+        NodoContrato* actualC = listaContratos->getCab();
+        while (actualC != nullptr) {
+            NodoContrato* temp = actualC;
+            actualC = actualC->getSiguiente();
+            delete temp->getDato(); // ContratoAlquiler*
+            delete temp;
+        }
+        delete listaContratos;
+        listaContratos = nullptr;
+    }
+
+    // ---------------------------
+    // 2. Eliminar Solicitudes
+    // ---------------------------
+    if (listaSolicitudes != nullptr) {
+        NodoSolicitud* actualS = listaSolicitudes->getCab();
+        while (actualS != nullptr) {
+            NodoSolicitud* temp = actualS;
+            actualS = actualS->getSiguiente();
+            delete temp->getDato(); // SolicitudAlquiler*
+            delete temp;
+        }
+        delete listaSolicitudes;
+        listaSolicitudes = nullptr;
+    }
+
+    // ---------------------------
+    // 3. Eliminar Clientes
+    // ---------------------------
+    if (listaClientes != nullptr) {
+        NodoCliente* actualCli = listaClientes->getCab();
+        while (actualCli != nullptr) {
+            NodoCliente* temp = actualCli;
+            actualCli = actualCli->getSiguiente();
+            delete temp->getDato(); // Cliente*
+            delete temp;
+        }
+        delete listaClientes;
+        listaClientes = nullptr;
+    }
+
+    // ---------------------------
+    // 4. Eliminar Colaboradores
+    // ---------------------------
+    if (listaColaboradores != nullptr) {
+        NodoColaborador* actualCol = listaColaboradores->getCab();
+        while (actualCol != nullptr) {
+            NodoColaborador* temp = actualCol;
+            actualCol = actualCol->getSiguiente();
+            delete temp->getDato(); // Colaborador*
+            delete temp;
+        }
+        delete listaColaboradores;
+        listaColaboradores = nullptr;
+    }
+
+    // ---------------------------
+    // 5. Eliminar Sucursales (y todo su contenido interno)
+    // ---------------------------
+    if (listaSucursales != nullptr) {
+        NodoSucursal* actualSuc = listaSucursales->getCab();
+        while (actualSuc != nullptr) {
+            Sucursal* suc = actualSuc->getDato();
+            if (suc != nullptr) {
+                suc->liberarRecursosInternos(); // método explicado abajo
+                delete suc;
+            }
+            NodoSucursal* temp = actualSuc;
+            actualSuc = actualSuc->getSiguiente();
+            delete temp;
+        }
+        delete listaSucursales;
+        listaSucursales = nullptr;
+    }
+
+    cout << "\t\tMemoria liberada correctamente.\n";
 }
 
 
@@ -1210,23 +1634,23 @@ void Utilidades::ejecutarSistema() {
             // ... (casos 0 a 5) ...
         case 1:
             // Llama al submenu de Sucursales
-            mostrarSubmenuSucursales();
+            Utilidades::mostrarSubmenuSucursales();
             break;
         case 2:
             // Llama al submenu de Colaboradores
-            mostrarSubmenuColaboradores();
+            Utilidades::mostrarSubmenuColaboradores();
             break;
         case 3:
             // Llama al submenu de Carros y Planteles
-            mostrarSubmenuCarrosPlanteles();
+            Utilidades::mostrarSubmenuCarrosPlanteles();
             break;
         case 4:
             // Llama al submenu de Solicitudes y Contratos
-            mostrarSubmenuSolicitudesContratos();
+            Utilidades::mostrarSubmenuSolicitudesContratos();
             break;
         case 5:
             // Llama al submenu de Clientes
-            mostrarSubmenuClientes();
+            Utilidades::mostrarSubmenuClientes();
             break;
         case 0:
             cout << "\n\t\tGracias por usar el sistema. ¡Adios!" << endl;
@@ -1280,15 +1704,15 @@ void Utilidades::mostrarSubmenuSucursales() {
         switch (opcionSubmenu) {
         case 1:
             cout << "\n\t\t>> Ejecutando: Ingresar Sucursal..." << endl;
-            this->ingresarSucursal();
+            Utilidades::ingresarSucursal();
             break;
         case 2:
             cout << "\n\t\t>> Ejecutando: Mostrar Sucursales..." << endl;
-            this->mostrarSucursales();
+            Utilidades::mostrarSucursales();
             break;
         case 3:
             cout << "\n\t\t>> Ejecutando: Eliminar Sucursal..." << endl;
-            this->eliminarSucursal();
+            Utilidades::eliminarSucursal();
             break;
         case 0:
             // El bucle terminara automaticamente despues de esta iteracion.
@@ -1331,19 +1755,19 @@ void Utilidades::mostrarSubmenuColaboradores() {
         switch (opcionSubmenu) {
         case 1:
             cout << "\n\t\t>> Ejecutando: Incluir Colaborador en Sucursal..." << endl;
-            this->gestionarColaboradoresPorSucursal(1);
+            Utilidades::gestionarColaboradoresPorSucursal(1);
             break;
         case 2:
             cout << "\n\t\t>> Ejecutando: Mostrar Colaborador..." << endl;
-            this->gestionarColaboradoresPorSucursal(2);
+            Utilidades::gestionarColaboradoresPorSucursal(2);
             break;
         case 3:
             cout << "\n\t\t>> Ejecutando: Eliminar Colaborador..." << endl;
-            this->gestionarColaboradoresPorSucursal(3);
+            Utilidades::gestionarColaboradoresPorSucursal(3);
             break;
         case 4:
             cout << "\n\t\t>> Ejecutando: Reporte de Alquileres..." << endl;
-            // llamar a funcion ReporteAlquileres();
+            Utilidades::reporteAlquileresPorColaborador();
             break;
         case 0:
             // El bucle terminara automaticamente despues de esta iteracion.
@@ -1407,32 +1831,42 @@ void Utilidades::mostrarSubmenuCarrosPlanteles() {
             break;
         case 4:
             cout << "\n\t\t>> Ejecutando: Visualizacion de Vehiculo..." << endl;
-            // llamar a funcion VisualizacionVehiculo();
+            {
+                string placa;
+                cout << "\t\tIngrese placa del vehiculo a visualizar: ";
+                getline(cin, placa);
+                Utilidades::mostrarInformacionVehiculoGlobal(placa);
+            }
             break;
         case 5:
             cout << "\n\t\t>> Ejecutando: Eliminacion de Vehiculo..." << endl;
-            // llamar a funcion EliminacionVehiculo();
+            Utilidades::EliminarVehiculo();
             break;
 
         case 6:
             cout << "\n\t\t>> Ejecutando: Reasignacion de Vehiculo en Plantel..." << endl;
-            // llamar a funcion ReasignaVehiculoPlantel();
+            Utilidades::reubicarVehiculoSucursal();
             break;
         case 7:
             cout << "\n\t\t>> Ejecutando: Cambio de Estado de Vehiculo..." << endl;
-            // llamar a funcion CambioEstadoVehiculo();
+            Utilidades::cambiarEstadoVehiculo();
             break;
         case 8:
             cout << "\n\t\t>> Ejecutando: Estados de un Vehiculo especifico..." << endl;
-            // llamar a funcion VerEstadosVehiculo();
+            {
+                string placa;
+                cout << "\t\tIngrese placa del vehiculo: ";
+                getline(cin, placa);
+                Utilidades::mostrarInformacionVehiculoGlobal(placa);
+            }
             break;
         case 9:
             cout << "\n\t\t>> Ejecutando: Reportaje de porcentaje de ocupacion de los planteles..." << endl;
-            // llamar a funcion PorcenOcupacionPlantel();
+            Utilidades::reporteOcupacionPlanteles();
             break;
         case 10:
             cout << "\n\t\t>> Ejecutando: Traslado de Vehiculos a Plantel (OPTATIVO)..." << endl;
-            // llamar a funcion TrasladoVehiculosPlantel();
+            Utilidades::trasladarVehiculos();
             break;
         case 0:
             // El bucle terminara automaticamente despues de esta iteracion.
@@ -1479,32 +1913,37 @@ void Utilidades::mostrarSubmenuSolicitudesContratos() {
         switch (opcionSubmenu) {
         case 1:
             cout << "\n\t\t>> Ejecutando: Creacion  de solicitud..." << endl;
-            this->CrearSolicitud();
+            Utilidades::CrearSolicitud();
             break;
         case 2:
             cout << "\n\t\t>> Ejecutando: Visualizacion de solicitudes/contratos por sucursal..." << endl;
-            // llamar a funcion VerSoliCont_Sucursal();
+            Utilidades::VerSolicitudesContratos();
             break;
         case 3:
             cout << "\n\t\t>> Ejecutando: Visualizacion de solicitud/contratos especifica..." << endl;
-            // llamar a funcion VerSoliCont_Especifico();
+            {
+                string placa;
+                cout << "\t\tIngrese placa del vehiculo: ";
+                getline(cin, placa);
+                Utilidades::mostrarInformacionVehiculoGlobal(placa);
+            }
             break;
         case 4:
             cout << "\n\t\t>> Ejecutando: Aprobacion/rechazo de solicitud..." << endl;
-            this->AprobarRechazarSolicitud();
+            Utilidades::AprobarRechazarSolicitud();
             break;
         case 5:
             cout << "\n\t\t>> Ejecutando: Recepcion de vehiculo en prestado ..." << endl;
             // llamar a funcion RecibirVehiPrestado();
-            this->RecepcionVehiculo();
+            Utilidades::RecepcionVehiculo();
             break;
         case 6:
             cout << "\n\t\t>> Ejecutando: Reporte de contratos para vehiculos especifico..." << endl;
-            // llamar a funcion ReporteContratosVehiEspecifico();
+            Utilidades::reporteContratosPorVehiculo();
             break;
         case 7:
             cout << "\n\t\t>> Ejecutando: Visualizacion de todas las solicitudes / contratos..." << endl;
-            this->VerSolicitudesContratos();
+            Utilidades::VerSolicitudesContratos();
             break;
         case 0:
             // El bucle terminara automaticamente despues de esta iteracion.
@@ -1550,23 +1989,23 @@ void Utilidades::mostrarSubmenuClientes() {
         switch (opcionSubmenu) {
         case 1:
             cout << "\n\t\t>> Ejecutando: Ingresar Cliente..." << endl;
-            this->gestionarClientesPorSucursal(1);
+            Utilidades::gestionarClientesPorSucursal(1);
             break;
         case 2:
             cout << "\n\t\t>> Ejecutando: Mostrar Cliente..." << endl;
-            this->gestionarClientesPorSucursal(2);
+            Utilidades::gestionarClientesPorSucursal(2);
             break;
         case 3:
             cout << "\n\t\t>> Ejecutando: Eliminar Cliente..." << endl;
-            this->gestionarClientesPorSucursal(3);
+            Utilidades::gestionarClientesPorSucursal(3);
             break;
         case 4:
             cout << "\n\t\t>> Ejecutando: Historial del Cliente..." << endl;
-            // llamarAFuncionHistorialCliente();
+            Utilidades::reporteHistorialCliente();
             break;
         case 5:
             cout << "\n\t\t>> Ejecutando: Reporte de clientes..." << endl;
-            // llamarAFuncionReporteClientes();
+            Utilidades::reporteClientesPorContratos();
             break;
         case 0:
             // El bucle terminara automaticamente despues de esta iteracion.

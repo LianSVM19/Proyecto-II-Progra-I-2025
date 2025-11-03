@@ -28,37 +28,7 @@ Sucursal::Sucursal(string cod, string nom, string dir, string tel) {
 // Destructor (Liberación de Memoria)
 // ----------------------
 Sucursal::~Sucursal() {
-
-
-    if (plantel != NULL) {
-        delete plantel;
-        plantel = NULL;
-    }
-    if (clientes != NULL) { // <-- LIBERACIÓN DE CLIENTES
-        delete clientes;
-        clientes = NULL;
-    }
-
-    if (colaboradores != NULL) { // <-- LIBERACIÓN DE COLABORADORES
-        delete colaboradores;
-        colaboradores = NULL;
-
-    }
-
-     if (inventarioVehiculos != NULL) {
-        delete inventarioVehiculos;
-        inventarioVehiculos = NULL;
-    }
-
-     if (solicitudes != NULL) {
-         delete solicitudes;
-         solicitudes = NULL;
-     }
-
-     if (Contratos!= NULL) {
-         delete Contratos;
-         Contratos = NULL;
-     }
+    liberarRecursosInternos();
 }
 
 
@@ -142,3 +112,78 @@ void Sucursal::setListaSolicitudes(ListaSolicitud* ls) {
     solicitudes = ls;
 }
 
+void Sucursal::liberarRecursosInternos() {
+    //Elimina todos los objetos dentro de las listas antes de destruirlas
+
+    if (plantel != nullptr) {
+        NodoPlantel* np = plantel->getCab();
+        while (np != nullptr) {
+            NodoPlantel* temp = np;
+            np = np->getSiguiente();
+            delete temp->getDato(); // Plantel*
+            delete temp;
+        }
+        delete plantel;
+        plantel = nullptr;
+    }
+
+    if (clientes != nullptr) {
+        NodoCliente* nc = clientes->getCab();
+        while (nc != nullptr) {
+            NodoCliente* temp = nc;
+            nc = nc->getSiguiente();
+            delete temp->getDato(); // Cliente*
+            delete temp;
+        }
+        delete clientes;
+        clientes = nullptr;
+    }
+
+    if (colaboradores != nullptr) {
+        NodoColaborador* nco = colaboradores->getCab();
+        while (nco != nullptr) {
+            NodoColaborador* temp = nco;
+            nco = nco->getSiguiente();
+            delete temp->getDato(); // Colaborador*
+            delete temp;
+        }
+        delete colaboradores;
+        colaboradores = nullptr;
+    }
+
+    if (inventarioVehiculos != nullptr) {
+        NodoVehiculo* nv = inventarioVehiculos->getCabeza();
+        while (nv != nullptr) {
+            NodoVehiculo* temp = nv;
+            nv = nv->getSig();
+            delete temp->getElemento(); // Vehiculo*
+            delete temp;
+        }
+        delete inventarioVehiculos;
+        inventarioVehiculos = nullptr;
+    }
+
+    if (solicitudes != nullptr) {
+        NodoSolicitud* ns = solicitudes->getCab();
+        while (ns != nullptr) {
+            NodoSolicitud* temp = ns;
+            ns = ns->getSiguiente();
+            delete temp->getDato(); // SolicitudAlquiler*
+            delete temp;
+        }
+        delete solicitudes;
+        solicitudes = nullptr;
+    }
+
+    if (Contratos != nullptr) {
+        NodoContrato* nc = Contratos->getCab();
+        while (nc != nullptr) {
+            NodoContrato* temp = nc;
+            nc = nc->getSiguiente();
+            delete temp->getDato(); // ContratoAlquiler*
+            delete temp;
+        }
+        delete Contratos;
+        Contratos = nullptr;
+    }
+}

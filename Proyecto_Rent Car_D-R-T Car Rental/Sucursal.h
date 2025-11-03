@@ -59,6 +59,7 @@ public:
     void setListaSolicitudes(ListaSolicitud* ls);
     ListaContrato* getListaContratos();
     void setListaContratos(ListaContrato* lc);
+    void liberarRecursosInternos();
 };
 
 #endif

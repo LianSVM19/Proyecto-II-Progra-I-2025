@@ -239,6 +239,11 @@ bool ListaCliente::estaVacia() {
     return cab == NULL; // o return tamano == 0;
 }
 
+NodoCliente* ListaCliente::getCab() {
+    return cab;
+}
+
+
 // ----------------------
 // Función "to string"
 // ----------------------
@@ -388,6 +393,11 @@ Colaborador* ListaColaborador::getColaborador() {
     }
     return actual->getDato();
 }
+
+NodoColaborador* ListaColaborador::getCab() {
+    return cab;
+}
+
 
 // ----------------------
 // Función "to string"
@@ -823,6 +833,10 @@ bool ListaSolicitud::estaVacia() {
     return cab == NULL;
 }
 
+NodoSolicitud* ListaSolicitud::getCab() {
+    return cab;
+}
+
 // ----------------------
 // Función "to string"
 // ----------------------
@@ -960,6 +974,10 @@ int ListaContrato::getTamano() {
 
 bool ListaContrato::estaVacia() {
     return cab == NULL;
+}
+
+NodoContrato* ListaContrato::getCab() {
+    return cab;
 }
 
 // ----------------------

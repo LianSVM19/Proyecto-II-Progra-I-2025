@@ -44,6 +44,8 @@ public:
 
     void mostrarMatriz();
     Estacionamiento* recomendarEspacio();
+    int getTotalEspacios();
+    int getOcupados();
 };
 
 #endif

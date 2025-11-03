@@ -63,6 +63,7 @@ public:
     Cliente* getCliente();
     int getTamano();
     bool estaVacia();
+    NodoCliente* getCab();
 
     // Función "to string" para mostrar todos los clientes
     string toString();
@@ -92,6 +93,7 @@ public:
     int getTamano();
     bool estaVacia();
     Colaborador* getColaborador();
+    NodoColaborador* getCab();
 
     // Función "to string" para mostrar todos los Colaboradores
     string toString();
@@ -181,6 +183,7 @@ public:
     // Getters y utilidades
     int getTamano();
     bool estaVacia();
+    NodoSolicitud* getCab();
 
     // Función "to string" para mostrar todas las solicitudes
     string toString();
@@ -209,6 +212,7 @@ public:
     // Getters y utilidades
     int getTamano();
     bool estaVacia();
+    NodoContrato* getCab();
 
     // Función "to string" para mostrar todas los Contratos
     string toString();

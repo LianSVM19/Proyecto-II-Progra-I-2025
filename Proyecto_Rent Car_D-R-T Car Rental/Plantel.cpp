@@ -71,3 +71,21 @@ void Plantel::mostrarMatriz() {
 Estacionamiento* Plantel::recomendarEspacio() {
     return matrizEstacionamientos->recomendarEspacioLibre();
 }
+
+int Plantel::getTotalEspacios(){
+    if (matrizEstacionamientos == nullptr) return 0;
+    return matrizEstacionamientos->getFilas() * matrizEstacionamientos->getColumnas();
+}
+
+int Plantel::getOcupados(){
+    if (matrizEstacionamientos == nullptr) return 0;
+    int ocupados = 0;
+    for (int i = 0; i < matrizEstacionamientos->getFilas(); ++i) {
+        for (int j = 0; j < matrizEstacionamientos->getColumnas(); ++j) {
+            Estacionamiento* e = matrizEstacionamientos->getEstacionamiento(i, j);
+            if (e != nullptr && e->getOcupado())
+                ocupados++;
+        }
+    }
+    return ocupados;
+}
