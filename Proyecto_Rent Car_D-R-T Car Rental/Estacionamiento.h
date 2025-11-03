@@ -4,9 +4,10 @@
 
 #include <string>
 #include <sstream>
-#include "Vehiculo.h"
+
 
 using namespace std;
+class Vehiculo;
 
 class Estacionamiento {
 private:

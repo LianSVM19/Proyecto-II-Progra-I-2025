@@ -41,7 +41,10 @@ public:
     void AprobarRechazarSolicitud();
     Sucursal* seleccionarSucursal();
     Estacionamiento* obtenerRecomendacion(Plantel* );
-    
+    void EliminarVehiculo();
+    void reubicarVehiculoSucursal();
+    void cambiarEstadoVehiculo();
+    void trasladarVehiculos();
     
 
     // Método que gestiona el ingreso de un nuevo cliente

@@ -11,6 +11,9 @@ class ListaCliente;
 class ListaColaborador;
 class ListaPlantel;
 class ListaVehiculo;
+class ListaSucursal;
+class ListaSolicitud;
+class ListaContrato;
 using namespace std;
 
 class Sucursal {
@@ -25,6 +28,8 @@ private:
     ListaColaborador* colaboradores;
     ListaPlantel* plantel;
     ListaVehiculo* inventarioVehiculos;
+    ListaSolicitud* solicitudes;
+    ListaContrato* Contratos;
 
 public:
     // Constructor
@@ -49,6 +54,11 @@ public:
     void setTelefono(string);
     // Función "to string"
     string toString();
+
+    ListaSolicitud* getListaSolicitudes();
+    void setListaSolicitudes(ListaSolicitud* ls);
+    ListaContrato* getListaContratos();
+    void setListaContratos(ListaContrato* lc);
 };
 
 #endif

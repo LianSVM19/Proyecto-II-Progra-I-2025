@@ -190,3 +190,35 @@ Vehiculo::~Vehiculo() {
         historialEstados = NULL;
     }
 };
+
+
+void Vehiculo::setPlantel(Plantel* p) {
+    plantelAsignado = p;
+}
+
+void Vehiculo::setEspacio(Estacionamiento* e) {
+    espacioAsignado = e;
+}
+
+Plantel* Vehiculo::getPlantel() {
+    return plantelAsignado;
+}
+
+Estacionamiento* Vehiculo::getEspacio() {
+    return espacioAsignado;
+}
+
+void Vehiculo::registrarBitacora(string linea) {
+    bitacora += linea + "\n";
+}
+
+void Vehiculo::mostrarBitacora() {
+    cout << "\n\t\t--- BITACORA DEL VEHICULO (" << placa << ") ---\n";
+    if (bitacora.empty()) {
+        cout << "\t\tNo hay registros.\n";
+    }
+    else {
+        cout << bitacora;
+    }
+    cout << "\t\t-----------------------------------------------\n";
+}

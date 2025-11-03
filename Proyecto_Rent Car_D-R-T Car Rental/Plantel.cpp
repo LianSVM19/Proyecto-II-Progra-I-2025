@@ -52,3 +52,22 @@ string Plantel::toString() {
     s << "\t\t************************************************" << endl;
     return s.str();
 }
+
+void Plantel::mostrarMatriz() {
+    cout << "\n\t\t=== DISTRIBUCION DEL PLANTEL ===" << endl;
+    cout << "\t\tCodigo: " << codigoPlantel
+        << " | Tipo: " << tipoPlantel
+        << " | Dimension: " << capacidadFilas
+        << "x" << capacidadColumnas << endl;
+
+    if (matrizEstacionamientos != nullptr) {
+        matrizEstacionamientos->mostrarMatriz();
+    }
+    else {
+        cout << "\t\tERROR: La matriz de estacionamientos no está inicializada." << endl;
+    }
+}
+
+Estacionamiento* Plantel::recomendarEspacio() {
+    return matrizEstacionamientos->recomendarEspacioLibre();
+}

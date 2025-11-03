@@ -1,4 +1,5 @@
 #include "Estacionamiento.h"
+#include "Vehiculo.h"
 
 using namespace std;
 

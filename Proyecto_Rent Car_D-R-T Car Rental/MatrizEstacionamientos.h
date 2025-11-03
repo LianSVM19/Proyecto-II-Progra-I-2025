@@ -36,6 +36,8 @@ public:
     // Utilidad
     bool estaOcupado(int, int);
     Estacionamiento* buscarEstacionamiento(string);
+    void mostrarMatriz();
+    Estacionamiento* recomendarEspacioLibre();
 };
 
 #endif

@@ -41,6 +41,9 @@ public:
 
     // Función "to string"
     string toString();
+
+    void mostrarMatriz();
+    Estacionamiento* recomendarEspacio();
 };
 
 #endif

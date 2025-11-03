@@ -5,6 +5,8 @@
 #include <string>
 #include <sstream>
 #include "BitacoraEstado.h"
+#include "Plantel.h"
+#include "Estacionamiento.h"
 
 using namespace std;
 
@@ -18,6 +20,9 @@ private:
     string tipoLicencia;
     string estado;
     BitacoraEstado* historialEstados;
+    Plantel* plantelAsignado = NULL;
+    Estacionamiento* espacioAsignado = NULL;
+    string bitacora;
 public:
     // Constructor
     Vehiculo(string /*placa*/, string/*marca*/, string/*modelo*/, 
@@ -43,6 +48,14 @@ public:
 
     // Función "to string" con el estilo solicitado
     string toString() const;
+
+    void setPlantel(Plantel* p);
+    void setEspacio(Estacionamiento* e);
+    Plantel* getPlantel();
+    Estacionamiento* getEspacio();
+    void registrarBitacora(string linea);
+    void mostrarBitacora();
+
 };
 
 #endif

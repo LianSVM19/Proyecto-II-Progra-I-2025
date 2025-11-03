@@ -150,3 +150,42 @@ Estacionamiento* MatrizEstacionamientos::buscarEstacionamiento(string codEspacio
     // Si el bucle termina sin encontrar el código, retorna NULL (o nullptr)
     return nullptr;
 }
+
+void MatrizEstacionamientos::mostrarMatriz() {
+    cout << "\t\t-------------------------------------" << endl;
+    cout << "\t\tDISTRIBUCION GRAFICA DE ESPACIOS" << endl;
+    cout << "\t\t-------------------------------------" << endl;
+
+    for (int i = 0; i < filas; ++i) {
+        cout << "\t\t"; // Sangría para formato de tabla
+        for (int j = 0; j < columnas; ++j) {
+            Estacionamiento* espacio = matriz[i][j];
+            if (espacio == nullptr) {
+                cout << "[ ] ";
+            }
+            else if (espacio->getOcupado()) {
+                cout << "[X] ";
+            }
+            else {
+                cout << "[ ] ";
+            }
+        }
+        cout << "  <- Fila " << (char)('A' + i) << endl;
+    }
+
+    cout << "\t\t-------------------------------------" << endl;
+    cout << "\t\t[ ] = Disponible | [X] = Ocupado" << endl;
+}
+
+
+Estacionamiento* MatrizEstacionamientos::recomendarEspacioLibre() {
+    for (int f = 0; f < filas; ++f) {
+        for (int c = 0; c < columnas; ++c) {
+            Estacionamiento* e = matriz[f][c];
+            if (e != nullptr && !e->getOcupado()) {
+                return e;
+            }
+        }
+    }
+    return nullptr;
+}

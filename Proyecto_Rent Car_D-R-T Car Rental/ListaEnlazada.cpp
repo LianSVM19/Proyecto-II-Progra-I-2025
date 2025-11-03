@@ -56,6 +56,39 @@ bool ListaVehiculo::estaVacia() {
     return cabeza == NULL;
 }
 
+bool ListaVehiculo::eliminarVehiculo(string placa) {
+    if (cabeza == nullptr) {
+        return false; // Lista vacía
+    }
+
+    NodoVehiculo* actual = cabeza;
+    NodoVehiculo* anterior = nullptr;
+
+    // Buscar el vehículo con la placa dada
+    while (actual != nullptr) {
+        Vehiculo* v = actual->getElemento();
+        if (v != nullptr && v->getPlaca() == placa) {
+            // Caso 1: el nodo a eliminar es la cabeza
+            if (anterior == nullptr) {
+                cabeza = actual->getSig();
+            }
+            else {
+                anterior->setSig(actual->getSig());
+            }
+
+            // Liberar memoria
+            delete actual;
+            tamano--;
+            return true;
+        }
+
+        anterior = actual;
+        actual = actual->getSig();
+    }
+
+    return false; // No se encontró
+}
+
 // ----------------------
 // Función "to string" (siguiendo el estilo solicitado)
 // ----------------------
@@ -286,14 +319,16 @@ void ListaColaborador::agregarColaborador(Colaborador* c) {
 // ----------------------
 // Buscar Colaborador por ID
 // ----------------------
-Colaborador* ListaColaborador::getColaborador() {
+Colaborador* ListaColaborador::buscar(string idColaborador) {
     NodoColaborador* actual = cab;
-    if (actual == NULL) return NULL;
-
-    while (actual->getSiguiente() != NULL) {
-        actual = actual->getSiguiente(); 
+    while (actual != NULL) {
+        // Accedemos al Colaborador* y luego a su método getId()
+        if (actual->getDato()->getCedula() == idColaborador) {
+            return actual->getDato();
+        }
+        actual = actual->getSiguiente();
     }
-    return actual->getDato();
+    return NULL; // Retorna NULL si no se encuentra
 }
 // ----------------------
 // Eliminar Colaborador por ID
@@ -346,16 +381,13 @@ bool ListaColaborador::estaVacia() {
 
 Colaborador* ListaColaborador::getColaborador() {
     NodoColaborador* actual = cab;
-    while (actual != NULL) {
-        // Accedemos al Colaborador* y luego a su método getId()
-        if (actual->getSiguiente() == NULL) {
-            return actual->getDato();
-        }
+    if (actual == NULL) return NULL;
+
+    while (actual->getSiguiente() != NULL) {
+        actual = actual->getSiguiente();
     }
-    return NULL; // Retorna NULL si no se encuentra
+    return actual->getDato();
 }
-
-
 
 // ----------------------
 // Función "to string"

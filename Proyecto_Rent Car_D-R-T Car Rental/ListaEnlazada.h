@@ -29,9 +29,14 @@ public:
     // Getters y utilidades
     int getTamano();
     bool estaVacia();
+    NodoVehiculo* getCabeza() { return cabeza; }
+    void setCabeza(NodoVehiculo* nuevo) { cabeza = nuevo; }
+    bool eliminarVehiculo(string);
 
     // Función "to string"
     string toString();
+
+
 };
 
 // =====================================

@@ -20,6 +20,8 @@ Sucursal::Sucursal(string cod, string nom, string dir, string tel) {
     colaboradores = new ListaColaborador();
     plantel = new ListaPlantel();
     inventarioVehiculos = new ListaVehiculo();
+    solicitudes = new ListaSolicitud();
+    Contratos = new ListaContrato();
 }
 
 // ----------------------
@@ -40,8 +42,26 @@ Sucursal::~Sucursal() {
     if (colaboradores != NULL) { // <-- LIBERACIÓN DE COLABORADORES
         delete colaboradores;
         colaboradores = NULL;
+
     }
+
+     if (inventarioVehiculos != NULL) {
+        delete inventarioVehiculos;
+        inventarioVehiculos = NULL;
+    }
+
+     if (solicitudes != NULL) {
+         delete solicitudes;
+         solicitudes = NULL;
+     }
+
+     if (Contratos!= NULL) {
+         delete Contratos;
+         Contratos = NULL;
+     }
 }
+
+
 
 
 
@@ -108,3 +128,17 @@ string Sucursal::toString() {
 
     return s.str();
 }
+
+ListaContrato* getListaContratos() { return Contratos; }
+
+void setListaContratos(ListaContrato* lc) { Contratos = lc; }
+
+
+ListaSolicitud* Sucursal::getListaSolicitudes() {
+    return solicitudes;
+}
+
+void Sucursal::setListaSolicitudes(ListaSolicitud* ls) {
+    solicitudes = ls;
+}
+
