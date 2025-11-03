@@ -23,7 +23,7 @@ void Estado::setDescripcion(string d) { descripcion = d; }
 void Estado::setUbicacion(string u) { ubicacion = u; }
 
 // ----------------------
-// Función "to string" 
+// Funcion "to string" 
 // ----------------------
 string Estado::toString() {
     stringstream s;

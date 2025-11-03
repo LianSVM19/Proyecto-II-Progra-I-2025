@@ -38,10 +38,10 @@ public:
     // Setters 
     void setCab(NodoEstado*);
 
-    // Método para agregar un nuevo estado
+    // Metodo para agregar un nuevo estado
     void agregarEstado(Estado*);
 
-    // Función "to string"
+    // Funcion "to string"
     string toString();
 };
 

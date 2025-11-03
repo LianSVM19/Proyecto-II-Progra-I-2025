@@ -25,7 +25,7 @@ public:
     void setDescripcion(string);
     void setUbicacion(string);
 
-    // Función "to string" 
+    // Funcion "to string" 
     string toString();
 };
 

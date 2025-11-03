@@ -5,7 +5,7 @@ using namespace std;
 ListaVehiculo::ListaVehiculo() : cabeza(NULL), tamano(0) {}
 
 // ----------------------
-// Destructor (CRÍTICO: Liberación total de memoria dinámica)
+// Destructor (CRiTICO: Liberacion total de memoria dinamica)
 // ----------------------
 ListaVehiculo::~ListaVehiculo() {
     NodoVehiculo* actual = cabeza;
@@ -58,13 +58,13 @@ bool ListaVehiculo::estaVacia() {
 
 bool ListaVehiculo::eliminarVehiculo(string placa) {
     if (cabeza == NULL) {
-        return false; // Lista vacía
+        return false; // Lista vacia
     }
 
     NodoVehiculo* actual = cabeza;
     NodoVehiculo* anterior = NULL;
 
-    // Buscar el vehículo con la placa dada
+    // Buscar el vehiculo con la placa dada
     while (actual != NULL) {
         Vehiculo* v = actual->getElemento();
         if (v != NULL && v->getPlaca() == placa) {
@@ -86,7 +86,7 @@ bool ListaVehiculo::eliminarVehiculo(string placa) {
         actual = actual->getSig();
     }
 
-    return false; // No se encontró
+    return false; // No se encontro
 }
 
 bool ListaVehiculo::removerSinBorrar(string placa) {
@@ -101,7 +101,7 @@ bool ListaVehiculo::removerSinBorrar(string placa) {
             else
                 anterior->setSig(actual->getSig());
 
-            // ? No hacemos delete v; porque se moverá a otra sucursal
+            // ? No hacemos delete v; porque se movera a otra sucursal
             delete actual;
             tamano--;
             return true;
@@ -115,7 +115,7 @@ bool ListaVehiculo::removerSinBorrar(string placa) {
 
 
 // ----------------------
-// Función "to string" (siguiendo el estilo solicitado)
+// Funcion "to string" (siguiendo el estilo solicitado)
 // ----------------------
 string ListaVehiculo::toString() {
     stringstream s;
@@ -145,16 +145,16 @@ string ListaVehiculo::toString() {
 
 
 // =====================================
-// IMPLEMENTACIÓN DE LISTACLIENTE
+// IMPLEMENTACIoN DE LISTACLIENTE
 // =====================================
 
 // ----------------------
-// Constructor (Inicialización)
+// Constructor (Inicializacion)
 // ----------------------
 ListaCliente::ListaCliente() : cab(NULL), tamano(0) {} // Usando inicializador de lista
 
 // ----------------------
-// Destructor (Liberación de memoria de Nodos y Clientes)
+// Destructor (Liberacion de memoria de Nodos y Clientes)
 // ----------------------
 ListaCliente::~ListaCliente() {
     NodoCliente* actual = cab;
@@ -177,12 +177,12 @@ void ListaCliente::agregarCliente(Cliente* c) {
     // 1. Crear el nuevo nodo
     NodoCliente* nuevoNodo = new NodoCliente(c);
 
-    // 2. Si la lista está vacía, el nuevo nodo es la cabecera
+    // 2. Si la lista esta vacia, el nuevo nodo es la cabecera
     if (cab == NULL) {
         cab = nuevoNodo;
     }
     else {
-        // 3. Buscar el último nodo
+        // 3. Buscar el ultimo nodo
         NodoCliente* actual = cab;
         while (actual->getSiguiente() != NULL) {
             actual = actual->getSiguiente();
@@ -195,7 +195,7 @@ void ListaCliente::agregarCliente(Cliente* c) {
 Cliente* ListaCliente::buscar(string cedula) {
     NodoCliente* actual = cab;
     while (actual != NULL) {
-        // Accedemos al Cliente* y luego a su método getCedula()
+        // Accedemos al Cliente* y luego a su metodo getCedula()
         if (actual->getDato()->getCedula() == cedula) {
             return actual->getDato();
         }
@@ -205,7 +205,7 @@ Cliente* ListaCliente::buscar(string cedula) {
 }
 
 // ----------------------
-// Eliminar Cliente por cédula
+// Eliminar Cliente por cedula
 // ----------------------
 bool ListaCliente::eliminar(string cedula) {
     if (cab == NULL) {
@@ -229,7 +229,7 @@ bool ListaCliente::eliminar(string cedula) {
         actual = actual->getSiguiente();
     }
 
-    // Si el nodo no se encontró
+    // Si el nodo no se encontro
     if (actual == NULL) {
         return false;
     }
@@ -270,7 +270,7 @@ NodoCliente* ListaCliente::getCab() {
 
 
 // ----------------------
-// Función "to string"
+// Funcion "to string"
 // ----------------------
 string ListaCliente::toString() {
     stringstream s;
@@ -299,16 +299,16 @@ string ListaCliente::toString() {
 }
 
 // =====================================
-// IMPLEMENTACIÓN DE LISTACOLABORADORES
+// IMPLEMENTACIoN DE LISTACOLABORADORES
 // =====================================
 
 // ----------------------
-// Constructor (Inicialización)
+// Constructor (Inicializacion)
 // ----------------------
 ListaColaborador::ListaColaborador() : cab(NULL), tamano(0) {} // Usando inicializador de lista
 
 // ----------------------
-// Destructor (Liberación de memoria de Nodos y Colaboradores)
+// Destructor (Liberacion de memoria de Nodos y Colaboradores)
 // ----------------------
 ListaColaborador::~ListaColaborador() {
     NodoColaborador* actual = cab;
@@ -331,12 +331,12 @@ void ListaColaborador::agregarColaborador(Colaborador* c) {
     // 1. Crear el nuevo nodo
     NodoColaborador* nuevoNodo = new NodoColaborador(c);
 
-    // 2. Si la lista está vacía, el nuevo nodo es la cabecera
+    // 2. Si la lista esta vacia, el nuevo nodo es la cabecera
     if (cab == NULL) {
         cab = nuevoNodo;
     }
     else {
-        // 3. Buscar el último nodo
+        // 3. Buscar el ultimo nodo
         NodoColaborador* actual = cab;
         while (actual->getSiguiente() != NULL) {
             actual = actual->getSiguiente();
@@ -352,7 +352,7 @@ void ListaColaborador::agregarColaborador(Colaborador* c) {
 Colaborador* ListaColaborador::buscar(string idColaborador) {
     NodoColaborador* actual = cab;
     while (actual != NULL) {
-        // Accedemos al Colaborador* y luego a su método getId()
+        // Accedemos al Colaborador* y luego a su metodo getId()
         if (actual->getDato()->getCedula() == idColaborador) {
             return actual->getDato();
         }
@@ -385,7 +385,7 @@ bool ListaColaborador::eliminar(string idColaborador) {
         actual = actual->getSiguiente();
     }
 
-    // Si el nodo no se encontró
+    // Si el nodo no se encontro
     if (actual == NULL) {
         return false;
     }
@@ -425,7 +425,7 @@ NodoColaborador* ListaColaborador::getCab() {
 
 
 // ----------------------
-// Función "to string"
+// Funcion "to string"
 // ----------------------
 string ListaColaborador::toString() {
     stringstream s;
@@ -453,7 +453,7 @@ string ListaColaborador::toString() {
     return s.str();
 }
 // =====================================
-// IMPLEMENTACIÓN DE LISTASUCURSAL
+// IMPLEMENTACIoN DE LISTASUCURSAL
 // =====================================
 
 // ----------------------
@@ -462,7 +462,7 @@ string ListaColaborador::toString() {
 ListaSucursal::ListaSucursal() : cab(NULL), tamano(0) {}
 
 // ----------------------
-// Destructor (Liberación de memoria de Nodos y Sucursales)
+// Destructor (Liberacion de memoria de Nodos y Sucursales)
 // ----------------------
 ListaSucursal::~ListaSucursal() {
     NodoSucursal* actual = cab;
@@ -502,7 +502,7 @@ void ListaSucursal::agregarSucursal(Sucursal* s) {
 }
 
 // ----------------------
-// Buscar Sucursal por código
+// Buscar Sucursal por codigo
 // ----------------------
 Sucursal* ListaSucursal::buscar(string codigo) {
     NodoSucursal* actual = cab;
@@ -517,7 +517,7 @@ Sucursal* ListaSucursal::buscar(string codigo) {
 
 
 // ----------------------
-// Eliminar Sucursal por código
+// Eliminar Sucursal por codigo
 // ----------------------
 bool ListaSucursal::eliminar(string codigo) {
     if (cab == NULL) {
@@ -541,7 +541,7 @@ bool ListaSucursal::eliminar(string codigo) {
         actual = actual->getSiguiente();
     }
 
-    // Si el nodo no se encontró
+    // Si el nodo no se encontro
     if (actual == NULL) {
         return false;
     }
@@ -566,7 +566,7 @@ bool ListaSucursal::estaVacia() {
 }
 
 // ----------------------
-// Función "to string"
+// Funcion "to string"
 // ----------------------
 string ListaSucursal::toString() {
     stringstream s;
@@ -596,7 +596,7 @@ string ListaSucursal::toString() {
 
 
 // =====================================
-// IMPLEMENTACIÓN DE LISTAPLANTEL
+// IMPLEMENTACIoN DE LISTAPLANTEL
 // =====================================
 
 // ----------------------
@@ -605,7 +605,7 @@ string ListaSucursal::toString() {
 ListaPlantel::ListaPlantel() : cab(NULL), tamano(0) {}
 
 // ----------------------
-// Destructor (Liberación de memoria de Nodos yPlanteles)
+// Destructor (Liberacion de memoria de Nodos yPlanteles)
 // ----------------------
 ListaPlantel::~ListaPlantel() {
     NodoPlantel* actual = cab;
@@ -641,7 +641,7 @@ void ListaPlantel::agregarPlantel(Plantel* s) {
 }
 
 // ----------------------
-// Buscar Plantel por código
+// Buscar Plantel por codigo
 // ----------------------
 Plantel* ListaPlantel::buscar(string codigo) {
     NodoPlantel* actual = cab;
@@ -656,7 +656,7 @@ Plantel* ListaPlantel::buscar(string codigo) {
 
 
 // ----------------------
-// Eliminar Plantel por código
+// Eliminar Plantel por codigo
 // ----------------------
 bool ListaPlantel::eliminar(string codigo) {
     if (cab == NULL) {
@@ -680,7 +680,7 @@ bool ListaPlantel::eliminar(string codigo) {
         actual = actual->getSiguiente();
     }
 
-    // Si el nodo no se encontró
+    // Si el nodo no se encontro
     if (actual == NULL) {
         return false;
     }
@@ -711,7 +711,7 @@ bool ListaPlantel::estaVacia() {
 Sucursal* ListaSucursal::getSucursal() {
     NodoSucursal* actual = cab;
     while (actual != NULL) {
-        // Accedemos al Sucursal* y luego a su método getId()
+        // Accedemos al Sucursal* y luego a su metodo getId()
         if (actual->getSiguiente() == NULL) {
             return actual->getDato();
         }
@@ -721,17 +721,17 @@ Sucursal* ListaSucursal::getSucursal() {
 
 Plantel* ListaPlantel::buscarPorCodigo(string cod) {
     NodoPlantel* actual = cab;
-    while (actual != nullptr) {
+    while (actual != NULL) {
         if (actual->getDato()->getCodigoPlantel() == cod)
             return actual->getDato();
         actual = actual->getSiguiente();
     }
-    return nullptr;
+    return NULL;
 }
 
 void ListaPlantel::mostrarCodigos() {
     NodoPlantel* actual = cab;
-    while (actual != nullptr) {
+    while (actual != NULL) {
         Plantel* p = actual->getDato();
         cout << "\t\t- " << p->getCodigoPlantel() << " ("
             << p->getTipoPlantel() << ", "
@@ -742,7 +742,7 @@ void ListaPlantel::mostrarCodigos() {
 
 
 // ----------------------
-// Función "to string"
+// Funcion "to string"
 // ----------------------
 string ListaPlantel::toString() {
     stringstream s;
@@ -771,7 +771,7 @@ string ListaPlantel::toString() {
 }
 
 // =====================================
-// IMPLEMENTACIÓN DE LISTASOLICITUD
+// IMPLEMENTACIoN DE LISTASOLICITUD
 // =====================================
 
 // ----------------------
@@ -780,7 +780,7 @@ string ListaPlantel::toString() {
 ListaSolicitud::ListaSolicitud() : cab(NULL), tamano(0) {}
 
 // ----------------------
-// Destructor (Liberación de memoria de Nodos y Solicitudes)
+// Destructor (Liberacion de memoria de Nodos y Solicitudes)
 // ----------------------
 ListaSolicitud::~ListaSolicitud() {
     NodoSolicitud* actual = cab;
@@ -816,7 +816,7 @@ void ListaSolicitud::agregarSolicitud(SolicitudAlquiler* s) {
 }
 
 // ----------------------
-// Buscar Solicitud por código
+// Buscar Solicitud por codigo
 // ----------------------
 SolicitudAlquiler* ListaSolicitud::buscar(string codigo) {
     NodoSolicitud* actual = cab;
@@ -831,7 +831,7 @@ SolicitudAlquiler* ListaSolicitud::buscar(string codigo) {
 
 
 // ----------------------
-// Eliminar Solicitud por código
+// Eliminar Solicitud por codigo
 // ----------------------
 bool ListaSolicitud::eliminar(string codigo) {
     if (cab == NULL) {
@@ -855,7 +855,7 @@ bool ListaSolicitud::eliminar(string codigo) {
         actual = actual->getSiguiente();
     }
 
-    // Si el nodo no se encontró
+    // Si el nodo no se encontro
     if (actual == NULL) {
         return false;
     }
@@ -884,7 +884,7 @@ NodoSolicitud* ListaSolicitud::getCab() {
 }
 
 // ----------------------
-// Función "to string"
+// Funcion "to string"
 // ----------------------
 string ListaSolicitud::toString() {
     stringstream s;
@@ -914,7 +914,7 @@ string ListaSolicitud::toString() {
 
 
 // =====================================
-// IMPLEMENTACIÓN DE LISTACONTRATO
+// IMPLEMENTACIoN DE LISTACONTRATO
 // =====================================
 
 // ----------------------
@@ -923,7 +923,7 @@ string ListaSolicitud::toString() {
 ListaContrato::ListaContrato() : cab(NULL), tamano(0) {}
 
 // ----------------------
-// Destructor (Liberación de memoria de Nodos y Contratos)
+// Destructor (Liberacion de memoria de Nodos y Contratos)
 // ----------------------
 ListaContrato::~ListaContrato() {
     NodoContrato* actual = cab;
@@ -959,7 +959,7 @@ void ListaContrato::agregarContrato(ContratoAlquiler* s) {
 }
 
 // ----------------------
-// Buscar Contratopor código
+// Buscar Contratopor codigo
 // ----------------------
 ContratoAlquiler* ListaContrato::buscar(string codigo) {
     NodoContrato* actual = cab;
@@ -974,7 +974,7 @@ ContratoAlquiler* ListaContrato::buscar(string codigo) {
 
 
 // ----------------------
-// Eliminar Contrato por código
+// Eliminar Contrato por codigo
 // ----------------------
 bool ListaContrato::eliminar(string codigo) {
     if (cab == NULL) {
@@ -998,7 +998,7 @@ bool ListaContrato::eliminar(string codigo) {
         actual = actual->getSiguiente();
     }
 
-    // Si el nodo no se encontró
+    // Si el nodo no se encontro
     if (actual == NULL) {
         return false;
     }
@@ -1027,7 +1027,7 @@ NodoContrato* ListaContrato::getCab() {
 }
 
 // ----------------------
-// Función "to string"
+// Funcion "to string"
 // ----------------------
 string ListaContrato::toString() {
     stringstream s;

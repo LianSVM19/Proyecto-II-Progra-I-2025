@@ -5,7 +5,7 @@
 using namespace std;
 
 // ----------------------
-// Constructor (Asignación Dinámica de la Matriz)
+// Constructor (Asignacion Dinamica de la Matriz)
 // ----------------------
 MatrizEstacionamientos::MatrizEstacionamientos(int f, int c) {
     filas = f;
@@ -21,7 +21,7 @@ MatrizEstacionamientos::MatrizEstacionamientos(int f, int c) {
         matriz[i] = new Estacionamiento * [columnas];
 
         for (int j = 0; j < columnas; ++j) {
-            // Generación de código
+            // Generacion de codigo
             stringstream codigoSS; //varible como el "s" que contiene texto
             codigoSS << (char)('A' + i);
             codigoSS << (j + 1 < 10 ? "0" : "") << j + 1;
@@ -33,7 +33,7 @@ MatrizEstacionamientos::MatrizEstacionamientos(int f, int c) {
 }
 
 // ----------------------
-// Destructor (Liberación de Memoria TRIPLE PUNTERO)
+// Destructor (Liberacion de Memoria TRIPLE PUNTERO)
 // ----------------------
 MatrizEstacionamientos::~MatrizEstacionamientos() {
     if (matriz != NULL) {
@@ -71,7 +71,7 @@ Estacionamiento* MatrizEstacionamientos::getEstacionamiento(int fila, int column
 // ----------------------
 
 // Nota: Cambiar las filas/columnas requiere reasignar TODA la matriz
-// La implementación simplificada solo cambia los atributos, no la estructura en sí.
+// La implementacion simplificada solo cambia los atributos, no la estructura en si.
 void MatrizEstacionamientos::setFilas(int f) {
     if (f > 0) filas = f;
 }
@@ -102,7 +102,7 @@ bool MatrizEstacionamientos::estaOcupado(int fila, int columna) {
 
 
 // ----------------------
-// Función "to string"
+// Funcion "to string"
 // ----------------------
 string MatrizEstacionamientos::toString() {
     stringstream s;
@@ -110,22 +110,38 @@ string MatrizEstacionamientos::toString() {
     s << "\t\t*************************************" << endl;
     s << "\t\t[MATRIZ DE ESTACIONAMIENTOS (" << filas << "x" << columnas << ")]" << endl;
     s << "\t\t-------------------------------------" << endl;
-    s << "\t\tLeyenda: [Código - E] (O=Ocupado, D=Disponible)" << endl;
+    s << "\t\tLeyenda: [Codigo - E] (O=Ocupado, D=Disponible)" << endl;
     s << "\t\t-------------------------------------" << endl;
 
-    for (int i = 0; i < filas; ++i) {
+    for (int i = 0; i < filas; i++) {
         s << "\t\tFILA " << (char)('A' + i) << ": ";
-        for (int j = 0; j < columnas; ++j) {
+
+        for (int j = 0; j < columnas; j++) {
             Estacionamiento* espacio = matriz[i][j];
+
             if (espacio != NULL) {
-                s << "[" << espacio->getCodigo() << "-"
-                    << (espacio->getOcupado() ? "O" : "D") << "] ";
+                string codigoSeguro = espacio->getCodigo();
+
+                // Verificar si el código está vacío de forma segura
+                bool vacio = (codigoSeguro.size() == 0 || codigoSeguro[0] == '\0');
+                if (vacio) {
+                    codigoSeguro = "SIN-COD";
+                }
+
+                string estadoTexto = "D";
+                if (espacio->getOcupado()) {
+                    estadoTexto = "O";
+                }
+
+                s << "[" << codigoSeguro << "-" << estadoTexto << "] ";
+            }
+            else {
+                s << "[NULL] ";
             }
         }
+
         s << endl;
     }
-
-    
 
     s << "\t\t*************************************" << endl;
     return s.str();
@@ -140,14 +156,14 @@ Estacionamiento* MatrizEstacionamientos::buscarEstacionamiento(string codEspacio
             Estacionamiento* espacio = matriz[i][j]; // Acceso directo al puntero de Estacionamiento
 
             // 1. Verifica que el espacio exista (no sea NULL)
-            // 2. Compara el código del espacio con el código buscado.
-            //    Asumo que la clase Estacionamiento tiene un método getCodigo().
+            // 2. Compara el codigo del espacio con el codigo buscado.
+            //    Asumo que la clase Estacionamiento tiene un metodo getCodigo().
             if (espacio != NULL && espacio->getCodigo() == codEspacio) {
                 return espacio; // Retorna el puntero al objeto Estacionamiento
             }
         }
     }
-    // Si el bucle termina sin encontrar el código, retorna NULL (o NULL)
+    // Si el bucle termina sin encontrar el codigo, retorna NULL (o NULL)
     return NULL;
 }
 
@@ -157,7 +173,7 @@ void MatrizEstacionamientos::mostrarMatriz() {
     cout << "\t\t-------------------------------------" << endl;
 
     for (int i = 0; i < filas; ++i) {
-        cout << "\t\t"; // Sangría para formato de tabla
+        cout << "\t\t"; // Sangria para formato de tabla
         for (int j = 0; j < columnas; ++j) {
             Estacionamiento* espacio = matriz[i][j];
             if (espacio == NULL) {

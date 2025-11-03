@@ -9,7 +9,7 @@ using namespace std;
 
 class Cliente : public Persona {
 private:
-    // Atributos específicos del cliente
+    // Atributos especificos del cliente
     string fechaNacimiento;
     string fechaInscripcion;
 
@@ -28,7 +28,7 @@ public:
     void setFechaNacimiento(string);
     void setFechaInscripcion(string);
 
-    // Función "to string" 
+    // Funcion "to string" 
     virtual string toString();
 };
 

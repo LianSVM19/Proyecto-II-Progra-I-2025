@@ -8,12 +8,12 @@ using namespace std;
 
 class ClienteJuridico : public Cliente {
 private:
-    // Atributos específicos del cliente jurídico
+    // Atributos especificos del cliente juridico
     double porcentajeDescuento;
     string actividadEconomica;
 
 public:
-    // Constructor: Recibe todos los datos base más los datos de Jurídico
+    // Constructor: Recibe todos los datos base mas los datos de Juridico
     ClienteJuridico(string, string, string, string, char, string, string, double, string);
 
     // Destructor
@@ -27,7 +27,7 @@ public:
     void setPorcentajeDescuento(double desc);
     void setActividadEconomica(string actEcon);
 
-    // Función "to string"
+    // Funcion "to string"
     string toString();
 };
 

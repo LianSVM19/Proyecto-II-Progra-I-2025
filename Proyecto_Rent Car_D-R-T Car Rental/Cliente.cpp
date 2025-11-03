@@ -10,7 +10,7 @@ Cliente::Cliente(string ced, string nom, string corr, string tel, char s,
     string fNac, string fIns)
     : Persona(ced, nom, corr, tel, s) {
 
-    // Asignación de atributos propios
+    // Asignacion de atributos propios
     fechaNacimiento = fNac;
     fechaInscripcion = fIns;
 }
@@ -34,7 +34,7 @@ void Cliente::setFechaInscripcion(string fIns) { fechaInscripcion = fIns; }
 
 
 // ----------------------
-// Función "to string" 
+// Funcion "to string" 
 // ----------------------
 string Cliente::toString() {
     stringstream s;
@@ -42,7 +42,7 @@ string Cliente::toString() {
     s << "\t\t************************************************" << endl;
     s << "\t\t--- INFORMACION COMPLETA DEL CLIENTE (BASE) ---" << endl;
 
-    // 1. Llama a la función toString de la clase base para incluir sus datos
+    // 1. Llama a la funcion toString de la clase base para incluir sus datos
     s << Persona::toString();
 
     s << "\t\tFecha Nacimiento Cliente: " << fechaNacimiento << endl;

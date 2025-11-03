@@ -4,7 +4,7 @@
 using namespace std;
 
 // =====================================
-// IMPLEMENTACIÓN DE NODOESTADO
+// IMPLEMENTACIoN DE NODOESTADO
 // =====================================
 
 NodoEstado::NodoEstado(Estado* e, NodoEstado* sig) {
@@ -25,7 +25,7 @@ void NodoEstado::setSiguiente(NodoEstado* sig) { siguiente = sig; }
 
 
 // =====================================
-// IMPLEMENTACIÓN DE BITACORAESTADO (LISTA ENLAZADA)
+// IMPLEMENTACIoN DE BITACORAESTADO (LISTA ENLAZADA)
 // =====================================
 
 // ----------------------
@@ -82,7 +82,7 @@ void BitacoraEstado::agregarEstado(Estado* nuevoEstado) {
 }
 
 // ----------------------
-// Función "to string" 
+// Funcion "to string" 
 // ----------------------
 string BitacoraEstado::toString() {
     stringstream s;
@@ -92,7 +92,7 @@ string BitacoraEstado::toString() {
     s << "\t\t--- BITACORA DE ESTADOS (Crecimiento Indefinido) ---" << endl;
 
     if (actual == NULL) {
-        s << "\t\tLa Bitácora esta vacia." << endl;
+        s << "\t\tLa Bitacora esta vacia." << endl;
     }
     else {
         while (actual != NULL) {

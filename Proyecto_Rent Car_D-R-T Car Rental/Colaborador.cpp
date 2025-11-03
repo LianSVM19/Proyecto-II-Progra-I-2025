@@ -10,7 +10,7 @@ Colaborador::Colaborador(string ced, string nom, string corr, string tel, char s
     string fIng, string pto)
     : Persona(ced, nom, corr, tel, s) {
 
-    // Asignación de atributos propios
+    // Asignacion de atributos propios
     fechaIngreso = fIng;
     puesto = pto;
 }
@@ -35,18 +35,18 @@ void Colaborador::setPuesto(string pto) { puesto = pto; }
 
 
 // ----------------------
-// Función "to string"
+// Funcion "to string"
 // ----------------------
 string Colaborador::toString() {
     stringstream s;
 
     s << "\t\t************************************************" << endl;
-    s << "\t\t--- INFORMACIÓN DEL COLABORADOR ---" << endl;
+    s << "\t\t--- INFORMACIoN DEL COLABORADOR ---" << endl;
 
-    // 1. Llama a la función toString de la clase base para incluir sus datos
+    // 1. Llama a la funcion toString de la clase base para incluir sus datos
     s << Persona::toString();
 
-    // 2. Agrega los atributos específicos del Colaborador
+    // 2. Agrega los atributos especificos del Colaborador
     s << "\t\tPuesto Ocupado: " << puesto << endl;
     s << "\t\tFecha de Ingreso: " << fechaIngreso << endl;
 

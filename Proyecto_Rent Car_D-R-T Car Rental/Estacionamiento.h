@@ -28,7 +28,7 @@ public:
     void setOcupado(bool);
     void setVehiculo(Vehiculo*);
 
-    // Métodos especificos
+    // Metodos especificos
     void ocupar();
     void desocupar();
 

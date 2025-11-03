@@ -10,7 +10,7 @@ using namespace std;
 
 class Colaborador : public Persona {
 private:
-    // Atributos específicos del colaborador
+    // Atributos especificos del colaborador
     string fechaIngreso;
     string puesto;
 
@@ -30,7 +30,7 @@ public:
     void setFechaIngreso(string);
     void setPuesto(string);
 
-    // Función "to string"
+    // Funcion "to string"
     string toString();
 };
 

@@ -3,12 +3,12 @@
 
 #include <string>
 #include <sstream>
-#include "Nodo.h" // Incluye la definición de NodoVehiculo y NodoCliente
+#include "Nodo.h" // Incluye la definicion de NodoVehiculo y NodoCliente
 
 using namespace std;
 
 // =====================================
-// DEFINICIÓN DE LISTAVEHICULO
+// DEFINICIoN DE LISTAVEHICULO
 // =====================================
 class ListaVehiculo {
 private:
@@ -19,10 +19,10 @@ public:
     // Constructor
     ListaVehiculo();
 
-    // Destructor (liberará toda la lista y los Vehiculos asociados)
+    // Destructor (liberara toda la lista y los Vehiculos asociados)
     ~ListaVehiculo();
 
-    // Métodos de gestión de la colección
+    // Metodos de gestion de la coleccion
     void agregarAlInicio(Vehiculo*);
     Vehiculo* buscar(string);
 
@@ -34,7 +34,7 @@ public:
     bool eliminarVehiculo(string);
     bool removerSinBorrar(string);
 
-    // Función "to string"
+    // Funcion "to string"
     string toString();
 
 
@@ -42,7 +42,7 @@ public:
 };
 
 // =====================================
-// DEFINICIÓN DE LISTACLIENTE
+// DEFINICIoN DE LISTACLIENTE
 // =====================================
 class ListaCliente {
 private:
@@ -50,13 +50,13 @@ private:
     int tamano;
 
 public:
-    // Constructor (inicia la lista vacía)
+    // Constructor (inicia la lista vacia)
     ListaCliente();
 
     // Destructor (libera todos los nodos y sus clientes)
     ~ListaCliente();
 
-    // Método para agregar un nuevo cliente al final de la lista
+    // Metodo para agregar un nuevo cliente al final de la lista
     void agregarCliente(Cliente* c);
     Cliente* buscar(string);
     bool eliminar(string);
@@ -67,12 +67,12 @@ public:
     bool estaVacia();
     NodoCliente* getCab();
 
-    // Función "to string" para mostrar todos los clientes
+    // Funcion "to string" para mostrar todos los clientes
     string toString();
 };
 
 // =====================================
-// DEFINICIÓN DE LISTACOLABORADOR
+// DEFINICIoN DE LISTACOLABORADOR
 // =====================================
 class ListaColaborador {
 private:
@@ -80,13 +80,13 @@ private:
     int tamano;
 
 public:
-    // Constructor (inicia la lista vacía)
+    // Constructor (inicia la lista vacia)
     ListaColaborador();
 
     // Destructor (libera todos los nodos y sus Colaboradores)
     ~ListaColaborador();
 
-    // Método para agregar un nuevo cliente al final de la lista
+    // Metodo para agregar un nuevo cliente al final de la lista
     void agregarColaborador(Colaborador* c);
     Colaborador* buscar(string);
     bool eliminar(string);
@@ -97,12 +97,12 @@ public:
     Colaborador* getColaborador();
     NodoColaborador* getCab();
 
-    // Función "to string" para mostrar todos los Colaboradores
+    // Funcion "to string" para mostrar todos los Colaboradores
     string toString();
 };
 
 // =====================================
-// DEFINICIÓN DE LISTASUCURSAL
+// DEFINICIoN DE LISTASUCURSAL
 // =====================================
 class ListaSucursal {
 private:
@@ -110,16 +110,16 @@ private:
     int tamano;
 
 public:
-    // Constructor (inicia la lista vacía)
+    // Constructor (inicia la lista vacia)
     ListaSucursal();
 
     // Destructor (libera todos los nodos y sus sucursales)
     ~ListaSucursal();
 
-    // Métodos de gestión de la colección
+    // Metodos de gestion de la coleccion
     void agregarSucursal(Sucursal*);
-    Sucursal* buscar(string); // Busca una sucursal por su código
-    bool eliminar(string); // Elimina una sucursal por su código
+    Sucursal* buscar(string); // Busca una sucursal por su codigo
+    bool eliminar(string); // Elimina una sucursal por su codigo
 
     // Getters y utilidades
     int getTamano();
@@ -127,14 +127,14 @@ public:
     Sucursal* getSucursal();
     NodoSucursal* getCab();
 
-    // Función "to string" para mostrar todas las sucursales
+    // Funcion "to string" para mostrar todas las sucursales
     string toString();
 };
 
 
 
 // =====================================
-// DEFINICIÓN DE LISTAPLANTEL
+// DEFINICIoN DE LISTAPLANTEL
 // =====================================
 class ListaPlantel {
 private:
@@ -142,16 +142,16 @@ private:
     int tamano;
 
 public:
-    // Constructor (inicia la lista vacía)
+    // Constructor (inicia la lista vacia)
     ListaPlantel();
 
     // Destructor (libera todos los nodos y sus planteles)
     ~ListaPlantel();
 
-    // Métodos de gestión de la colección
+    // Metodos de gestion de la coleccion
     void agregarPlantel(Plantel*);
-    Plantel* buscar(string); // Busca un plantel por su código
-    bool eliminar(string); // Elimina un plantel por su código
+    Plantel* buscar(string); // Busca un plantel por su codigo
+    bool eliminar(string); // Elimina un plantel por su codigo
 
     // Getters y utilidades
     int getTamano();
@@ -160,12 +160,12 @@ public:
     Plantel* buscarPorCodigo(string);
     void mostrarCodigos();
 
-    // Función "to string" para mostrar todas los planteles
+    // Funcion "to string" para mostrar todas los planteles
     string toString();
 };
 
 // =====================================
-// DEFINICIÓN DE LISTASOLICITUD
+// DEFINICIoN DE LISTASOLICITUD
 // =====================================
 class ListaSolicitud {
 private:
@@ -173,28 +173,28 @@ private:
     int tamano;
 
 public:
-    // Constructor (inicia la lista vacía)
+    // Constructor (inicia la lista vacia)
     ListaSolicitud();
 
     // Destructor (libera todos los nodos y sus planteles)
     ~ListaSolicitud();
 
-    // Métodos de gestión de la colección
+    // Metodos de gestion de la coleccion
     void agregarSolicitud(SolicitudAlquiler*);
-    SolicitudAlquiler* buscar(string); // Busca una Solicitud por su código
-    bool eliminar(string); // Elimina una Solicitud por su código
+    SolicitudAlquiler* buscar(string); // Busca una Solicitud por su codigo
+    bool eliminar(string); // Elimina una Solicitud por su codigo
 
     // Getters y utilidades
     int getTamano();
     bool estaVacia();
     NodoSolicitud* getCab();
 
-    // Función "to string" para mostrar todas las solicitudes
+    // Funcion "to string" para mostrar todas las solicitudes
     string toString();
 };
 
 // =====================================
-// DEFINICIÓN DE LISTACONTRATO
+// DEFINICIoN DE LISTACONTRATO
 // =====================================
 class ListaContrato {
 private:
@@ -202,23 +202,23 @@ private:
     int tamano;
 
 public:
-    // Constructor (inicia la lista vacía)
+    // Constructor (inicia la lista vacia)
     ListaContrato();
 
     // Destructor (libera todos los nodos y sus planteles)
     ~ListaContrato();
 
-    // Métodos de gestión de la colección
+    // Metodos de gestion de la coleccion
     void agregarContrato(ContratoAlquiler*);
-    ContratoAlquiler* buscar(string); // Busca un Contrato por su código
-    bool eliminar(string); // Elimina un Contrato por su código
+    ContratoAlquiler* buscar(string); // Busca un Contrato por su codigo
+    bool eliminar(string); // Elimina un Contrato por su codigo
 
     // Getters y utilidades
     int getTamano();
     bool estaVacia();
     NodoContrato* getCab();
 
-    // Función "to string" para mostrar todas los Contratos
+    // Funcion "to string" para mostrar todas los Contratos
     string toString();
 };
 

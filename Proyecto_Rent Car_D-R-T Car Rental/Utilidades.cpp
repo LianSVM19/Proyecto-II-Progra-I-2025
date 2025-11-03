@@ -33,28 +33,28 @@ Utilidades::~Utilidades() {
 }
 
 Sucursal* Utilidades::seleccionarSucursal() {
-    cout << "\t\t--- SELECCIÓN DE SUCURSAL ---\n";
+    cout << "\t\t--- SELECCIoN DE SUCURSAL ---\n";
 
     // 🔹 Limpia el buffer de entrada antes de leer con getline
     cin.clear();                // limpia errores previos
     cin.ignore(10000, '\n');    // elimina el Enter pendiente del buffer
 
-    cout << "\t\tIngrese código de sucursal: ";
+    cout << "\t\tIngrese codigo de sucursal: ";
     string codigo;
-    getline(cin, codigo); // ahora sí, leerá correctamente
+    getline(cin, codigo); // ahora si, leera correctamente
 
     // 🔹 Buscar la sucursal
     NodoSucursal* actual = listaSucursales->getCab();
-    while (actual != nullptr) {
+    while (actual != NULL) {
         Sucursal* suc = actual->getDato();
-        if (suc != nullptr && suc->getCodigoSucursal() == codigo) {
+        if (suc != NULL && suc->getCodigoSucursal() == codigo) {
             return suc; // 
         }
         actual = actual->getSiguiente();
     }
 
     cout << "\t\tSucursal no encontrada.\n";
-    return nullptr;
+    return NULL;
 }
 
 void Utilidades::crearPlantelSucursal() {
@@ -239,19 +239,19 @@ void Utilidades::ingresarVehiculo() {
 void Utilidades::visualizarPlantel() {
     limpiarConsola();
     cout << "\n\t\t===============================================" << endl;
-    cout << "\t\t     VISUALIZACIÓN DE PLANTEL DE ESTACIONAMIENTO" << endl;
+    cout << "\t\t     VISUALIZACIoN DE PLANTEL DE ESTACIONAMIENTO" << endl;
     cout << "\t\t===============================================" << endl;
 
     // 1️ Seleccionar sucursal
     Sucursal* suc = seleccionarSucursal();
-    if (suc == nullptr) {
+    if (suc == NULL) {
         pausa();
         return;
     }
 
     // 2️⃣ Obtener la lista de planteles
     ListaPlantel* listaPlanteles = suc->getListaPlantel();
-    if (listaPlanteles == nullptr || listaPlanteles->estaVacia()) {
+    if (listaPlanteles == NULL || listaPlanteles->estaVacia()) {
         cout << "\n\t\tLa sucursal no tiene planteles registrados.\n";
         pausa();
         return;
@@ -260,10 +260,10 @@ void Utilidades::visualizarPlantel() {
     // 3️⃣ Mostrar planteles disponibles
     cout << "\n\t\t--- PLANTELES DISPONIBLES EN LA SUCURSAL ---\n";
     NodoPlantel* actual = listaPlanteles->getCab();
-    while (actual != nullptr) {
+    while (actual != NULL) {
         Plantel* p = actual->getDato();
-        if (p != nullptr) {
-            cout << "\t\tCódigo: " << p->getCodigoPlantel()
+        if (p != NULL) {
+            cout << "\t\tCodigo: " << p->getCodigoPlantel()
                 << " | Tipo: " << p->getTipoPlantel()
                 << " | Tamaño: " << p->getCapacidadFilas()
                 << "x" << p->getCapacidadColumnas() << endl;
@@ -273,11 +273,11 @@ void Utilidades::visualizarPlantel() {
 
     // 4️⃣ Elegir el plantel
     string codPlantel;
-    cout << "\n\t\tIngrese el código del plantel que desea visualizar: ";
+    cout << "\n\t\tIngrese el codigo del plantel que desea visualizar: ";
     getline(cin, codPlantel);
 
     Plantel* plantel = listaPlanteles->buscar(codPlantel);
-    if (plantel == nullptr) {
+    if (plantel == NULL) {
         cout << "\t\tPlantel no encontrado.\n";
         pausa();
         return;
@@ -285,59 +285,66 @@ void Utilidades::visualizarPlantel() {
 
     // 5️⃣ Mostrar la matriz de estacionamientos
     MatrizEstacionamientos* matriz = plantel->getMatrizEstacionamientos();
-    if (matriz == nullptr) {
+    if (matriz == NULL) {
         cout << "\t\tERROR: El plantel no tiene matriz inicializada.\n";
         pausa();
         return;
     }
 
-    cout << "\n\t\t--- DISTRIBUCIÓN DEL PLANTEL " << codPlantel << " ---\n";
+    cout << "\n\t\t--- DISTRIBUCIoN DEL PLANTEL " << codPlantel << " ---\n";
     cout << "\t\tLeyenda: [D]=Disponible | [O]=Ocupado\n\n";
 
     for (int i = 0; i < plantel->getCapacidadFilas(); ++i) {
         cout << "\t\t";
         for (int j = 0; j < plantel->getCapacidadColumnas(); ++j) {
             Estacionamiento* e = matriz->getEstacionamiento(i, j);
-            if (e != nullptr)
+            if (e != NULL)
                 cout << "[" << (e->getOcupado() ? "O" : "D") << "] ";
         }
         cout << endl;
     }
 
-    // 6️⃣ Calcular porcentaje de ocupación
+    // 6️⃣ Calcular porcentaje de ocupacion
     int total = plantel->getTotalEspacios();
     int ocupados = plantel->getOcupados();
-    double porcentaje = (total == 0) ? 0.0 : (ocupados * 100.0 / total);
+    double porcentaje = 0.0;
+
+    if (total > 0) {
+        porcentaje = (ocupados * 100.0) / total;
+    }
+    else {
+        porcentaje = 0.0;
+    }
 
     cout << "\n\t\tTotal de espacios: " << total
         << " | Ocupados: " << ocupados
         << " | Porcentaje de ocupación: " << porcentaje << "%" << endl;
 
-    // 7️⃣ Consultar espacio específico
+    // 7️⃣ Consultar espacio especifico
     char opcion;
-    cout << "\n\t\t¿Desea consultar un espacio específico? (S/N): ";
+    cout << "\n\t\t¿Desea consultar un espacio especifico? (S/N): ";
     cin >> opcion;
-    cin.ignore(); // este sí es seguro y básico
+    cin.ignore(); // este si es seguro y basico
 
     if (opcion == 'S' || opcion == 's') {
         string codEspacio;
-        cout << "\t\tIngrese el código del espacio (ej: A01): ";
+        cout << "\t\tIngrese el codigo del espacio (ej: A01): ";
         getline(cin, codEspacio);
 
         Estacionamiento* espacio = matriz->buscarEstacionamiento(codEspacio);
-        if (espacio == nullptr) {
-            cout << "\t\tEl código ingresado no existe.\n";
+        if (espacio == NULL) {
+            cout << "\t\tEl codigo ingresado no existe.\n";
         }
         else if (!espacio->getOcupado()) {
-            cout << "\t\tEl espacio " << codEspacio << " está disponible.\n";
+            cout << "\t\tEl espacio " << codEspacio << " esta disponible.\n";
         }
-        else if (espacio->getVehiculo() != nullptr) {
+        else if (espacio->getVehiculo() != NULL) {
             cout << "\t\tEl espacio " << codEspacio
-                << " está ocupado por el vehículo con placa: "
+                << " esta ocupado por el vehiculo con placa: "
                 << espacio->getVehiculo()->getPlaca() << endl;
         }
         else {
-            cout << "\t\tEl espacio figura como ocupado pero sin vehículo asignado.\n";
+            cout << "\t\tEl espacio figura como ocupado pero sin vehiculo asignado.\n";
         }
     }
 
@@ -356,22 +363,22 @@ void Utilidades::EliminarVehiculo() {
     // 1. Seleccionar sucursal
     Sucursal* sucursalSeleccionada = seleccionarSucursal();
     if (sucursalSeleccionada == NULL) {
-        cout << "\t\tNo se seleccionó ninguna sucursal.\n";
+        cout << "\t\tNo se selecciono ninguna sucursal.\n";
         pausa();
         return;
     }
 
-    // 2. Obtener lista de vehículos
+    // 2. Obtener lista de vehiculos
     ListaVehiculo* listaVehiculos = sucursalSeleccionada->getListaVehiculos();
     if (listaVehiculos == NULL) {
-        cout << "\t\tError: La sucursal no tiene lista de vehículos.\n";
+        cout << "\t\tError: La sucursal no tiene lista de vehiculos.\n";
         pausa();
         return;
     }
 
     // 3. Ingresar placa
     string placa;
-    cout << "\t\tIngrese la placa del vehículo a eliminar: ";
+    cout << "\t\tIngrese la placa del vehiculo a eliminar: ";
     getline(cin, placa);
 
     // 4. Recorremos la lista
@@ -390,7 +397,7 @@ void Utilidades::EliminarVehiculo() {
     }
 
     if (vehiculo == NULL) {
-        cout << "\t\tVehículo no encontrado.\n";
+        cout << "\t\tVehiculo no encontrado.\n";
         pausa();
         return;
     }
@@ -405,16 +412,16 @@ void Utilidades::EliminarVehiculo() {
 
     // 6. Eliminar el nodo de la lista
     if (anterior == NULL) {
-        // El nodo a eliminar está en la cabeza
+        // El nodo a eliminar esta en la cabeza
         listaVehiculos->setCabeza(actual->getSig());
     }
     else {
         anterior->setSig(actual->getSig());
     }
 
-    delete actual; // Esto elimina también el vehículo, porque el destructor de NodoVehiculo lo borra
+    delete actual; // Esto elimina tambien el vehiculo, porque el destructor de NodoVehiculo lo borra
 
-    cout << "\t\tVehículo con placa [" << placa << "] eliminado correctamente.\n";
+    cout << "\t\tVehiculo con placa [" << placa << "] eliminado correctamente.\n";
     pausa();
 }
 
@@ -490,26 +497,26 @@ void Utilidades::cambiarEstadoVehiculo() {
     // 1. Seleccionar sucursal
     Sucursal* suc = seleccionarSucursal();
     if (suc == NULL) {
-        cout << "\t\tNo se seleccionó ninguna sucursal.\n";
+        cout << "\t\tNo se selecciono ninguna sucursal.\n";
         pausa();
         return;
     }
 
-    // 2. Buscar vehículo por placa
+    // 2. Buscar vehiculo por placa
     string placa;
-    cout << "\t\tIngrese la placa del vehículo: ";
+    cout << "\t\tIngrese la placa del vehiculo: ";
     getline(cin, placa);
 
     ListaVehiculo* lista = suc->getListaVehiculos();
     if (lista == NULL) {
-        cout << "\t\tLa sucursal no tiene lista de vehículos.\n";
+        cout << "\t\tLa sucursal no tiene lista de vehiculos.\n";
         pausa();
         return;
     }
 
     Vehiculo* v = lista->buscar(placa);
     if (v == NULL) {
-        cout << "\t\tVehículo no encontrado.\n";
+        cout << "\t\tVehiculo no encontrado.\n";
         pausa();
         return;
     }
@@ -523,14 +530,14 @@ void Utilidades::cambiarEstadoVehiculo() {
 
     // 4. Ingresar colaborador responsable
     string colaboradorId;
-    cout << "\t\tIngrese la cédula o ID del colaborador que realiza el cambio: ";
+    cout << "\t\tIngrese la cedula o ID del colaborador que realiza el cambio: ";
     getline(cin, colaboradorId);
 
     // 5. Llamar directamente al setEstado (usa internamente FechaActual)
     v->setEstado(nuevoEstado, suc->getNombre(), colaboradorId);
 
     cout << "\n\t\tEl cambio de estado fue procesado correctamente.\n";
-    cout << "\t\tVerifique la bitácora del vehículo para confirmar el registro.\n";
+    cout << "\t\tVerifique la bitacora del vehiculo para confirmar el registro.\n";
     pausa();
 }
 
@@ -595,7 +602,7 @@ void Utilidades::trasladarVehiculos() {
                     // Agregar a destino
                     destino->getListaVehiculos()->agregarAlInicio(v);
 
-                    // ⚠️ Remover de origen sin borrar el vehículo
+                    // ⚠️ Remover de origen sin borrar el vehiculo
                     lvOrigen->removerSinBorrar(v->getPlaca());
 
                     trasladados++;
@@ -698,7 +705,7 @@ void Utilidades::reporteHistorialCliente() {
     cout << "\t\t==============================================\n";
 
     string id;
-    cout << "\t\tIngrese la cédula del cliente: ";
+    cout << "\t\tIngrese la cedula del cliente: ";
     getline(cin, id);
 
     bool encontrado = false;
@@ -717,8 +724,8 @@ void Utilidades::reporteHistorialCliente() {
             contadorSolicitudes++;
 
             cout << "\t\tSolicitud #" << contadorSolicitudes << endl;
-            cout << "\t\t  Código: " << s->getCodigoSoli() << endl;
-            cout << "\t\t  Vehículo: "
+            cout << "\t\t  Codigo: " << s->getCodigoSoli() << endl;
+            cout << "\t\t  Vehiculo: "
                 << (s->getVehiculo() ? s->getVehiculo()->getPlaca() : "N/A") << endl;
             cout << "\t\t  Estado: " << s->getEstado() << endl;
             cout << "\t\t----------------------------------------" << endl;
@@ -744,8 +751,8 @@ void Utilidades::reporteHistorialCliente() {
                 contadorContratos++;
 
                 cout << "\t\tContrato #" << contadorContratos << endl;
-                cout << "\t\t  Código: " << c->getCodigoContrato() << endl;
-                cout << "\t\t  Vehículo: "
+                cout << "\t\t  Codigo: " << c->getCodigoContrato() << endl;
+                cout << "\t\t  Vehiculo: "
                     << (s->getVehiculo() ? s->getVehiculo()->getPlaca() : "N/A") << endl;
                 cout << "\t\t  Estado: " << c->getEstado() << endl;
                 cout << "\t\t----------------------------------------" << endl;
@@ -777,7 +784,7 @@ void Utilidades::reporteClientesPorContratos() {
         return;
     }
 
-    // 1️⃣ Estructuras paralelas simples (máx 100 clientes)
+    // 1️⃣ Estructuras paralelas simples (max 100 clientes)
     const int MAX = 100;
     Cliente* clientes[MAX];
     int cantidades[MAX];
@@ -870,7 +877,7 @@ void Utilidades::reporteAlquileresPorColaborador() {
     }
 
     string idCol;
-    cout << "\t\tIngrese el ID (cédula) del colaborador: ";
+    cout << "\t\tIngrese el ID (cedula) del colaborador: ";
     getline(cin, idCol);
 
     Colaborador* colaboradorEncontrado = NULL;
@@ -919,10 +926,10 @@ void Utilidades::reporteAlquileresPorColaborador() {
                 cout << "\n\t\tContrato: " << contrato->getCodigoContrato() << endl;
 
                 if (veh != NULL) {
-                    cout << "\t\tVehículo: " << veh->getPlaca() << endl;
+                    cout << "\t\tVehiculo: " << veh->getPlaca() << endl;
                 }
                 else {
-                    cout << "\t\tVehículo: N/A" << endl;
+                    cout << "\t\tVehiculo: N/A" << endl;
                 }
 
                 if (cli != NULL) {
@@ -1363,7 +1370,7 @@ void Utilidades::CrearSolicitud() {
     Sucursal* suc = seleccionarSucursal();
     if (suc == NULL) { pausa(); return; }
 
-    // Datos mínimos: cliente (cedula), placa vehiculo, dias, fecha inicio
+    // Datos minimos: cliente (cedula), placa vehiculo, dias, fecha inicio
     string cedulaCliente;
     cout << "\t\tIngrese cedula del cliente: ";
     getline(cin, cedulaCliente);
@@ -1660,7 +1667,7 @@ void Utilidades::liberarMemoria() {
         while (actualSuc != NULL) {
             Sucursal* suc = actualSuc->getDato();
             if (suc != NULL) {
-                suc->liberarRecursosInternos(); // método explicado abajo
+                suc->liberarRecursosInternos(); // metodo explicado abajo
                 delete suc;
             }
             NodoSucursal* temp = actualSuc;

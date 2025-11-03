@@ -8,7 +8,7 @@ using namespace std;
 
 class ClienteFisico : public Cliente {
 private:
-    // No requiere atributos adicionales específicos para una persona física.
+    // No requiere atributos adicionales especificos para una persona fisica.
     // Utiliza todos los atributos heredados de Persona y Cliente.
 
 public:
@@ -18,7 +18,7 @@ public:
     // Destructor 
     ~ClienteFisico();
 
-    // Función "to string"
+    // Funcion "to string"
     string toString();
 };
 

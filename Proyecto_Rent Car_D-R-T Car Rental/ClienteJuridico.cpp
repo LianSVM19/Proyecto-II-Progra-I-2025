@@ -11,7 +11,7 @@ ClienteJuridico::ClienteJuridico(string ced, string nom, string corr, string tel
     string fNac, string fIns, double desc, string actEcon)
     : Cliente(ced, nom, corr, tel, s, fNac, fIns) {
 
-    // Asignación de atributos propios
+    // Asignacion de atributos propios
     porcentajeDescuento = desc;
     actividadEconomica = actEcon;
 }
@@ -35,7 +35,7 @@ void ClienteJuridico::setActividadEconomica(string actEcon) { actividadEconomica
 
 
 // ----------------------
-// Función "to string"
+// Funcion "to string"
 // ----------------------
 string ClienteJuridico::toString() {
     stringstream s;
@@ -43,10 +43,10 @@ string ClienteJuridico::toString() {
     s << "\t\t************************************************" << endl;
     s << "\t\t--- CLIENTE JURIDICO (EMPRESA) ---" << endl;
 
-    // 1. Llama a la función toString de la clase base Cliente (Persona + fechas)
+    // 1. Llama a la funcion toString de la clase base Cliente (Persona + fechas)
     s << Cliente::toString();
 
-    // 2. Agrega los atributos específicos del Cliente Jurídico
+    // 2. Agrega los atributos especificos del Cliente Juridico
     s << "\t\tActividad Economica: " << actividadEconomica << endl;
     s << "\t\tPorcentaje de Descuento: " << porcentajeDescuento << "%" << endl;
 

@@ -37,7 +37,7 @@ void ContratoAlquiler::setEstado(string est) { estado = est; }
 void ContratoAlquiler::setSolicitud(SolicitudAlquiler* sol) { solicitud = sol; }
 
 // ----------------------
-// Función "to string"
+// Funcion "to string"
 // ----------------------
 string ContratoAlquiler::toString() {
     stringstream s;
@@ -50,7 +50,7 @@ string ContratoAlquiler::toString() {
     s << "\t\t-------------------------------------------------" << endl;
 
     if (solicitud != NULL) {
-        s << "\t\tSOLICITUD DE ORIGEN (Código: " << solicitud->getCodigoSoli() << "):" << endl;
+        s << "\t\tSOLICITUD DE ORIGEN (Codigo: " << solicitud->getCodigoSoli() << "):" << endl;
         s << solicitud->toString();
     }
     else {

@@ -3,13 +3,26 @@
 
 using namespace std;
 
-Estacionamiento::Estacionamiento(string cod,Vehiculo* vehi) {
-    codigo = cod;
-    ocupado = false;
-    vehiculo = vehi;
+Estacionamiento::Estacionamiento(string cod, Vehiculo* vehi) {
+    // Si el código viene vacío o con caracteres no válidos, se asigna uno por defecto
+    if (cod.length() == 0) {
+        codigo = "SIN-COD";
+    }
+    else {
+        codigo = cod;
+    }
+
+    // Inicializar el puntero al vehículo
+    if (vehi != NULL) {
+        vehiculo = vehi;
+        ocupado = true;  // Si ya viene con vehículo, está ocupado
+    }
+    else {
+        vehiculo = NULL;
+        ocupado = false; // Si no tiene vehículo, está libre
+    }
 }
 
-// ----------------------
 // Getters
 // ----------------------
 string Estacionamiento::getCodigo() { return codigo; }
@@ -24,7 +37,7 @@ void Estacionamiento::setOcupado(bool estado) { ocupado = estado; }
 void Estacionamiento::setVehiculo(Vehiculo* v) { vehiculo = v; }
 
 // ----------------------
-// Métodos especificos
+// Metodos especificos
 // ----------------------
 void Estacionamiento::ocupar() { ocupado = true; }
 void Estacionamiento::desocupar() { ocupado = false; }
